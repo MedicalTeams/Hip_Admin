@@ -1,4 +1,5 @@
 
+
 @model List<HealthInformationProgram.Models.RevisitModel>
     @{
         ViewBag.Title = "Database Management";
@@ -8,6 +9,8 @@
 
 
     <style class="cp-pen-styles">
+        
+        .highlight { background-color: red; }
         .odd {
             background: #fff;
         }
@@ -132,11 +135,33 @@
                 alert("this is doSubmit!");
             }
 
-    function clickRow(obj) {
+            var lastClickedRow = undefined;
+            var lastCssClass = undefined;
+function clickRow(obj) {
+
+    lastCssClass = document.getElementById(obj.id).className;
+
+        document.getElementById(obj.id).className = "highlight";
+
+        if (  document.getElementById(lastClickedRow) != undefined ) {
+            document.getElementById(lastClickedRow).className = lastCssClass;
+            console.log("YEP for " + lastClickedRow + "   and " + lastCssClass);
+
+        } else {
+
+            console.log("NOPE for " + lastClickedRow + "   and " + lastCssClass); 
+        }
+
+        lastClickedRow = obj.id;
+        lastCssClass = document.getElementById(obj.id).className;
+        
+
+
+        
         for (var key in matrix[obj.id]) {
             document.getElementById(key).value = matrix[obj.id][key];
         }
-    }
+}
         </script>
 
 
