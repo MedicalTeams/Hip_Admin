@@ -16,13 +16,13 @@ namespace HealthInformationProgram.Data
             {
                 var visitView = new RevisitModel();
 
-                visitView.RevisitId = visit.rvisit_id;
-                visitView.SortOrder = visit.user_intrfc_sort_ord.Value;
+                visitView.RevisitId = visit.rvisit_id.ToString();
+                visitView.SortOrder = visit.user_intrfc_sort_ord.Value.ToString();
                 visitView.Indicator = visit.rvisit_ind;
                 visitView.Description = visit.rvisit_descn;
-                visitView.CreateDate = visit.rec_creat_dt;
+                visitView.CreateDate = visit.rec_creat_dt.ToString();
                 visitView.CreatedBy = visit.rec_creat_user_id_cd;
-                visitView.UpdateDate = visit.rec_updt_dt;
+                visitView.UpdateDate = visit.rec_updt_dt.ToString();
                 visitView.UpdatedBy = visit.rec_updt_user_id_cd;
 
                 revisitList.Add(visitView);
@@ -36,13 +36,13 @@ namespace HealthInformationProgram.Data
             var visitView = new RevisitModel();
 
             visitView.Indicator = visitData.rvisit_ind;
-            visitView.RevisitId = visitData.rvisit_id;
-            visitView.SortOrder = visitData.user_intrfc_sort_ord.Value;
+            visitView.RevisitId = visitData.rvisit_id.ToString();
+            visitView.SortOrder = visitData.user_intrfc_sort_ord.Value.ToString();
            
             visitView.Description = visitData.rvisit_descn;
-            visitView.CreateDate = visitData.rec_creat_dt;
+            visitView.CreateDate = visitData.rec_creat_dt.ToString();
             visitView.CreatedBy = visitData.rec_creat_user_id_cd;
-            visitView.UpdateDate = visitData.rec_updt_dt;
+            visitView.UpdateDate = visitData.rec_updt_dt.ToString();
             visitView.UpdatedBy = visitData.rec_updt_user_id_cd;
 
 
@@ -55,9 +55,9 @@ namespace HealthInformationProgram.Data
             var dataModel = new HealthInformationProgram.Data.Tables.lkup_rvisit();
 
             dataModel.rvisit_ind = model.Indicator;
-            dataModel.rvisit_id= model.RevisitId;
+            dataModel.rvisit_id= Convert.ToDecimal(model.RevisitId);
             dataModel.rvisit_descn = model.Description;
-            dataModel.user_intrfc_sort_ord = model.SortOrder;
+            dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
             dataModel.rec_creat_dt = DateTime.Now;
             dataModel.rec_creat_user_id_cd = "dbadmin"; //needs to get current user
 
@@ -78,9 +78,9 @@ namespace HealthInformationProgram.Data
            
                
             dataModel.rvisit_ind = model.Indicator;
-            dataModel.rvisit_id = model.RevisitId;
+            dataModel.rvisit_id = Convert.ToDecimal(model.RevisitId);
             dataModel.rvisit_descn = model.Description;
-            dataModel.user_intrfc_sort_ord = model.SortOrder;
+            dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
             dataModel.rec_creat_dt = DateTime.Now;
             dataModel.rec_creat_user_id_cd = "dbadmin"; //needs to get current user
 
