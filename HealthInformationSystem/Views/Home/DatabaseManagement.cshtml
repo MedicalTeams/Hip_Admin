@@ -12,9 +12,7 @@
 
 
                    <style class="cp-pen-styles">
-                               tr:hover {
-          background-color: #ffff99;
-        }
+        
 
                        .odd { 
 
@@ -28,6 +26,11 @@
 
                        .table-header-rotated {
                            border-collapse: collapse;
+
+    height: 400px;
+    overflow: scroll;
+
+
                        }
 
                        .csstransforms .table-header-rotated td {
@@ -68,41 +71,10 @@
                    </style>
                </head>
                <body>
-                   <!--
-                   <table class="table table-header-rotated">
-                       <thead>
-                           <tr>
-                               <th class="rotate"><div><span>This is a column</span></div></th>
-                               <th class="rotate"><div><span>Another column</span></div></th>
-                               <th class="rotate"><div><span>something</span></div></th>
-                               <th class="rotate"><div><span>and another thing</span></div></th>
-                           </tr>
-                       </thead>
-                       <tbody>
-                           <tr class="odd">
-
-                               <td>something</td>
-                               <td>something else</td>
-                               <td>another thing</td>
-                               <td>this is a string </td>
-                           </tr>
-                           <tr class="even">
-
-                               <td>something</td>
-                               <td>something else</td>
-                               <td>another thing</td>
-                               <td>this is a string </td>
-                           </tr>
-
-                       </tbody>
-                   </table>
-
--->
                    <div id="the_editor"></div>
-                   <div id="the_table">
-
-
-
+                   <div id="scroll">
+                       <div id="the_table">
+                       </div>
                    </div>
 
                    <script>
@@ -112,6 +84,19 @@
                            matrix[0] = ["Column one", "Another long column", "Yet another thing", "something else"];
                            matrix[1] = ["1", "2", "dog", "finch"];
                            matrix[2] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
+                           matrix[3] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
+                           matrix[4] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
+                           matrix[5] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
+                           matrix[6] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
+                           matrix[7] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
+                           matrix[8] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
+                           matrix[9] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
+                           matrix[10] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
+                           matrix[11] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
+                           matrix[12] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
+
+
+
                            var editor = "";
                            var html = "";
                            for (var row = 0; row < matrix.length; row++) {
@@ -155,6 +140,10 @@
                                var id = "e" + col;
                                console.log("ID|" + id);
                                document.getElementById('e' + col).value = matrix[obj.id][col];
+
+
+                               document.getElementById( id ).style.backgroundColor ="#ffff99";
+        
                            }
                        }
                    </script>
