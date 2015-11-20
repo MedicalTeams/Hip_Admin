@@ -7,5 +7,6 @@ namespace HealthInformationProgram.Data
 {
     public class OrganizationData
     {
+
     }
 }
