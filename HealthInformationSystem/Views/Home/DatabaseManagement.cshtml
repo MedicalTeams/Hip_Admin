@@ -4,11 +4,30 @@
     ViewBag.Title = "DatabaseManagement";
 }
 
-<h2>DatabaseManagement</h2>
-<ul>
+<h2>Database Management</h2>
+<div>
+    <h5>Create/Update Revisit Constants</h5>
+    <label>Description:</label>
+    <input type="text" id="txtDescription" />
 
-    @foreach ( var item in Model )
+    <label>Sort Order:</label>
+    <input type="text" id="txtSortOrder" />
+
+    <label>Indicator:</label>
+    <input type="text" id="txtIndicator" />
+
+    
+</div>
+
+<table>
+    <thead>
+        <tr><th>Revisit Id</th> <th>Description</th><th>Sort Order</th><th>Indicator</th></tr>
+    </thead>
+    <tbody>
+     @foreach ( var item in Model )
     { 
-        <li>@item.Description</li>
+         
+        <tr><td><a id=""></a></td><td>@item.RevisitId</td><td>@item.Description </td><td>@item.SortOrder</td> <td>@item.Indicator</td></tr>
     }
-</ul>
+        </tbody>
+</table>
