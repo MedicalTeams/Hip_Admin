@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HealthInformationProgram;
 using HealthInformationProgram.Controllers;
 
+
 namespace HealthInformationProgram.Tests.Controllers
 {
     [TestClass]
@@ -49,6 +50,15 @@ namespace HealthInformationProgram.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void Can_GetEntity()
+        {
+            // Arrange
+            HomeController controller = new HomeController();
+
+            var result = controller.GetEntity("RevisitModel");
         }
     }
 }
