@@ -1,182 +1,173 @@
-﻿
-
-
-
 
 @model List<HealthInformationProgram.Models.RevisitModel>
-@{
-    ViewBag.Title = "Database Management";
-}
-
-
-
-
-                   <style class="cp-pen-styles">
-        
-
-                       .odd { 
-
-                           background: #fff
-                       }
-
-                       .even {
-                           background: #eee
-
-                       }
-
-                       .table-header-rotated {
-                           border-collapse: collapse;
-
-    height: 400px;
-    overflow: scroll;
-
-
-                       }
-
-                       .csstransforms .table-header-rotated td {
-                           width: 30px;
-                       }
-
-                       .no-csstransforms .table-header-rotated th {
-                           padding: 5px 10px;
-                       }
-
-                       .table-header-rotated td {
-                           text-align: center;
-                           padding: 10px 5px;
-                           border: 1px solid #ccc;
-                       }
-
-                       .csstransforms .table-header-rotated th.rotate {
-                           height: 140px;
-                           white-space: nowrap;
-                       }
-
-                           .csstransforms .table-header-rotated th.rotate > div {
-                               -webkit-transform: translate(25px, 51px) rotate(315deg);
-                               -ms-transform: translate(25px, 51px) rotate(315deg);
-                               transform: translate(25px, 51px) rotate(315deg);
-                               width: 30px;
-                           }
-
-                               .csstransforms .table-header-rotated th.rotate > div > span {
-                                   border-bottom: 1px solid #ccc;
-                                   padding: 5px 10px;
-                               }
-    
-                       .table-header-rotated th.row-header {
-                           padding: 0 10px;
-                           border-bottom: 1px solid #ccc;
-                       }
-                   </style>
-               </head>
-               <body>
-                   <div id="the_editor"></div>
-                   <div id="scroll">
-                       <div id="the_table">
-                       </div>
-</div>
-
-                   <script>
-                       var matrix = [];
-                       function populate() {
-                           matrix[0] = [];
-                           matrix[0] = ["Column one", "Another long column", "Yet another thing", "something else"];
-                           matrix[1] = ["1", "2", "dog", "finch"];
-                           matrix[2] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
-                           matrix[3] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
-                           matrix[4] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
-                           matrix[5] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
-                           matrix[6] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
-                           matrix[7] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
-                           matrix[8] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
-                           matrix[9] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
-                           matrix[10] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
-                           matrix[11] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
-                           matrix[12] = ["chicken", "I like lollipops", "Dobby has socks", "Satisfied rock."];
-
-
-
-                           var editor = "";
-                           var html = "";
-                           for (var row = 0; row < matrix.length; row++) {
-                               if (row === 0) {
-                                   editor = "<ul>";
-
-                                   html += "<table class='table table-header-rotated'><thead><tr>";
-                                   for (var col = 0; col < matrix[row].length; col++) {
-                                       html += "<th class='rotate'><div><span>" + matrix[row][col] + "</span></div></th>";
-
-                                       editor += "<ul><input type='text' id='e" + col + "' size='30' value=''></input>&nbsp;" + matrix[row][col] + "</ul>";
-                                   }
-                                   editor += "</ul>";
-                               } else {
-                                   var css_class = "odd";
-                                   if (row % 2 == 0) {
-                                       css_class = "even";
-                                   }
-                                   console.log(col + "  class: " + css_class);
-                                   html += "<tr class='" + css_class + "' id='" + row + "' onclick='clickRow(this);'>";
-                                   for (var col = 0; col < matrix[row].length; col++) {
-                                       html += "<td>" + matrix[row][col] + "</td>";
-                                   }
-                                   html += "</tr>";
-                               }
-                           }
-                           document.getElementById("the_table").innerHTML = html;
-                           editor += "<br><button id='edit' onclick='doSubmit();'>update</button><hr>";
-                           document.getElementById("the_editor").innerHTML = editor;
-                       }
-
-                       populate();
-
-                       function doSubmit() {
-                           alert("this is doSubmit!");
-                       }
-
-                       function clickRow(obj) {
-
-                           for (var col = 0; col < matrix[obj.id].length; col++) {
-                               var id = "e" + col;
-                               console.log("ID|" + id);
-                               document.getElementById('e' + col).value = matrix[obj.id][col];
-
-
-                               document.getElementById( id ).style.backgroundColor ="#ffff99";
-        
-                           }
-                       }
-                   </script>
-
-
-
-<table border='1'>
-    <thead>
-        <tr>
-            <th>Revisit Id</th>
-            <th>Description</th>
-            <th>Sort Order</th>
-            <th>Indicator</th>
-        </tr>
-    </thead>
-    <tbody>
-     @foreach ( var item in Model )
-    { 
-         
-            <tr>
-                <td></td>
-                <td>@item.RevisitId</td>
-                <td>@item.Description </td>
-                <td>@item.SortOrder</td>
-                <td>@item.Indicator</td>
-            </tr>
+    @{
+        ViewBag.Title = "Database Management";
     }
-        </tbody>
-</table>
-<script src="~/Scripts/jquery-1.8.2.min.js"></script>
-<button id="btn" type="button" value="RevisitModel">Revisit</button>
 
-<script>
+
+
+
+    <style class="cp-pen-styles">
+        .odd {
+            background: #fff;
+        }
+
+        .even {
+            background: #eee;
+        }
+
+        .table-header-rotated {
+            border-collapse: collapse;
+            height: 400px;
+            overflow: scroll;
+        }
+
+        .csstransforms .table-header-rotated td {
+            width: 30px;
+        }
+
+        .no-csstransforms .table-header-rotated th {
+            padding: 5px 10px;
+        }
+
+        .table-header-rotated td {
+            text-align: center;
+            padding: 10px 5px;
+            border: 1px solid #ccc;
+        }
+
+        .csstransforms .table-header-rotated th.rotate {
+            height: 140px;
+            white-space: nowrap;
+        }
+
+            .csstransforms .table-header-rotated th.rotate > div {
+                -webkit-transform: translate(25px, 51px) rotate(315deg);
+                -ms-transform: translate(25px, 51px) rotate(315deg);
+                transform: translate(25px, 51px) rotate(315deg);
+                width: 30px;
+            }
+
+                .csstransforms .table-header-rotated th.rotate > div > span {
+                    border-bottom: 1px solid #ccc;
+                    padding: 5px 10px;
+                }
+
+        .table-header-rotated th.row-header {
+            padding: 0 10px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+    </head>
+    <body>
+        <div id="the_editor"></div>
+        <div id="scroll">
+            <div id="the_table">
+            </div>
+        </div>
+
+        <script>
+            var matrix = [];
+
+    function populate() {
+                matrix = [{
+                    "RevisitId": 1,
+                    "Description": "Visit",
+                    "SortOrder": 1,
+                    "Indicator": "V",
+                    "CreateDate": "10/10/2015",
+                    "CreatedBy": "dbadmin",
+                    "UpdateDate": "10/10/2015",
+                    "UpdatedBy": "dbadmin"
+                }, {
+                    "RevisitId": 2,
+                    "Description": "Re-Visit",
+                    "SortOrder": 2,
+                    "Indicator": "R",
+                    "CreateDate": "10/10/2015",
+                    "CreatedBy": "dbadmin",
+                    "UpdateDate": "10/10/2015",
+                    "UpdatedBy": "dbadmin"
+                }];
+
+
+                var editor = "";
+                var html = "";
+
+                editor = "<ul>";
+
+                html += "<table class='table table-header-rotated'><thead><tr>";
+
+
+                for (var key in matrix[0]) {
+                    html += "<th class='rotate'><div><span>" + key + "</span></div></th>";
+
+                    editor += "<ul><input type='text' id='" + key +"' size='30' value=''></input>&nbsp;" + key + "</ul>";
+
+                }
+                editor += "</ul>";
+
+                for (var row = 0; row < matrix.length; row++) {
+                    var css_class = "odd";
+                    if (row % 2 == 0) {
+                        css_class = "even";
+                    }
+                    html += "<tr class='" + css_class + "' id='" + row + "' onclick='clickRow(this);'>";
+
+                    for (var key in matrix[row]) {
+                        value = matrix[row][key];
+                        html += "<td>" + value + "</td>";
+                    }
+                    html += "</tr>";
+                }
+
+                document.getElementById("the_table").innerHTML = html;
+                editor += "<br><button id='edit' onclick='doSubmit();'>update</button><hr>";
+                document.getElementById("the_editor").innerHTML = editor;
+            }
+
+            populate();
+
+            function doSubmit() {
+                alert("this is doSubmit!");
+            }
+
+    function clickRow(obj) {
+        for (var key in matrix[obj.id]) {
+            document.getElementById(key).value = matrix[obj.id][key];
+        }
+    }
+        </script>
+
+
+
+        <table border='1'>
+            <thead>
+                <tr>
+                    <th>Revisit Id</th>
+                    <th>Description</th>
+                    <th>Sort Order</th>
+                    <th>Indicator</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td></td>
+                        <td>@item.RevisitId</td>
+                        <td>@item.Description </td>
+                        <td>@item.SortOrder</td>
+                        <td>@item.Indicator</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+        <button id="btn" type="button" value="RevisitModel">Revisit</button>
+
+        <script>
 
     function getTable(entityName) {
         $.ajax({
@@ -191,7 +182,7 @@
                 // $('#link').empty().append(mydata);
             },
             error: function (mydata) { alert("error"); alert(mydata); },
-           
+
         });
     }
     $(document).ready(function () {
@@ -202,4 +193,6 @@
             //("click", getTable(this))
         })
     });
-</script>
+        </script>
+﻿
+
