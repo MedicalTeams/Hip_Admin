@@ -1,4 +1,4 @@
-
+﻿
 
 @model List<HealthInformationProgram.Models.RevisitModel>
     @{
@@ -132,7 +132,14 @@
             populate();
 
             function doSubmit() {
-                alert("this is doSubmit!");
+
+                var results = {};
+                for (var key in matrix[0]) {
+                    results[key] = document.getElementById(key).value;
+                }
+
+                update(results, "RevisitModel");
+               
             }
 
             var lastClickedRow = undefined;
@@ -145,11 +152,11 @@ function clickRow(obj) {
 
         if (  document.getElementById(lastClickedRow) != undefined ) {
             document.getElementById(lastClickedRow).className = lastCssClass;
-            console.log("YEP for " + lastClickedRow + "   and " + lastCssClass);
+         
 
         } else {
 
-            console.log("NOPE for " + lastClickedRow + "   and " + lastCssClass); 
+          
         }
 
         lastClickedRow = obj.id;
@@ -199,6 +206,24 @@ function clickRow(obj) {
 
             url: "/Home/GetEntity",
             data: { entityName: entityName  },
+            type: 'POST',
+            dataType: 'json',
+            success: function (mydata) {
+                alert("success");
+                console.log(mydata)
+                // $('#link').empty().append(mydata);
+            },
+            error: function (mydata) { alert("error"); alert(mydata); },
+
+        });
+    }
+
+    function update(keyValue, entityName) {
+        alert(" entering ajax call");
+        $.ajax({
+
+            url: "/Home/UpdateEntity",
+            data: {keyValues: JSON.stringify(keyValue), entityName: entityName },
             type: 'POST',
             dataType: 'json',
             success: function (mydata) {

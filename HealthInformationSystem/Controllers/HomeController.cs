@@ -62,6 +62,12 @@ namespace HealthInformationProgram.Controllers
            return Json(jsonString);
         }
 
+        [HttpPost]
+        public ActionResult UpdateEntity(string keyValues, string entityName)
+        {
+
+            return View();
+        }
        
         private string GenerateValidationModel(string entityName)
         {
