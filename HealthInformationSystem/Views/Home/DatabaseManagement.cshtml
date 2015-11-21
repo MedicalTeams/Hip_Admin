@@ -95,10 +95,7 @@ margin-right:10px;
             var matrix = [];
 
             function populate() {
-                /*
-             
 
-        */
                 var editor = "";
                 var html = "";
 
@@ -162,79 +159,55 @@ margin-right:10px;
                 document.getElementById("the_editor").innerHTML = editor;
             }
 
-       //     populate();
-
-                function doSubmit() {
-
-                    var results = {};
-                    for (var key in matrix[0]) {
-                        results[key] = document.getElementById(key).value;
-                    }
-
-                    update(results, "RevisitModel");
-
-                }
-            
-
-
-
-            var lastClickedRow = undefined;
-            var lastCssClass = undefined;
-function clickRow(obj) {
-
-    lastCssClass = document.getElementById(obj.id).className;
-
+    function doSubmit() {
+        var results = {};
+        for (var key in matrix[0]) {
+            results[key] = document.getElementById(key).value;
+        }
+        update(results, "RevisitModel");
+    }
+     var lastClickedRow = undefined;
+     var lastCssClass = undefined;
+    function clickRow(obj) {
+        lastCssClass = document.getElementById(obj.id).className;
         document.getElementById(obj.id).className = "highlight";
 
         if (  document.getElementById(lastClickedRow) != undefined ) {
             document.getElementById(lastClickedRow).className = lastCssClass;
             console.log("YEP for " + lastClickedRow + "   and " + lastCssClass);
-
         } else {
-
             console.log("NOPE for " + lastClickedRow + "   and " + lastCssClass); 
         }
-
         lastClickedRow = obj.id;
         lastCssClass = document.getElementById(obj.id).className;
-        
-
-
-        
         for (var key in matrix[obj.id]) {
             document.getElementById(key).value = matrix[obj.id][key];
         }
 }
-        </script>
-
-
-        <script src="~/Scripts/jquery-1.8.2.min.js"></script>
-
-        <script>
+</script>
+<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script>
 
     function getTable(entityName) {
         $.ajax({
-
             url: "/Home/GetEntity",
             data: { entityName: entityName  },
             type: 'POST',
             dataType: 'json',
             success: function (mydata) {
+                // Need to eval mydata into an object. Before the eval mydata is just a complicated string
                 matrix = eval("(" + mydata + ')');
-                console.log("length " + matrix.length + " and it is " + matrix);
+                /*console.log("length " + matrix.length + " and it is " + matrix);
                 for (var i = 0 ; i < matrix.length ; i++) {
-
                     for (var key in matrix[0]) {
-                console.log(i + "   key " + key + "   ?? " + matrix[0][key]);
+                        console.log(i + "   key " + key + "   ?? " + matrix[0][key]);
                     }
-                }
+                }*/
                 populate();
-                // $('#link').empty().append(mydata);
             },
             error: function (mydata) { alert("error"); alert(mydata); },
         });
     }
-
 
     function update(keyValue, entityName) {
 
@@ -247,10 +220,8 @@ function clickRow(obj) {
             success: function (mydata) {
                 alert("success");
                 console.log(mydata)
-                // $('#link').empty().append(mydata);
             },
             error: function (mydata) { alert("error"); alert(mydata); },
-
         });
     }
 
