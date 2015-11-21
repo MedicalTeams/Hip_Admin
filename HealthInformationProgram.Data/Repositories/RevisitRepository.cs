@@ -66,12 +66,13 @@ namespace HealthInformationProgram.Data.Repositories
             {
                 using ( var ctx = new ClinicDataContext(connString) )
                 {
-                    var lookupRevisit = ctx.lkup_rvisit.FirstOrDefault(x => x.rvisit_id == entity.rvisit_id);
+                    var lookupRevisit = new lkup_rvisit();
+                     lookupRevisit = ctx.lkup_rvisit.FirstOrDefault(x => x.rvisit_id == entity.rvisit_id);
                     if ( lookupRevisit == null )
                     {
                         throw new Exception("Record doesn't exist and cannot be updated");
                     }
-                    lookupRevisit.rvisit_id = entity.rvisit_id;
+                   // lookupRevisit.rvisit_id = entity.rvisit_id;
                     lookupRevisit.rvisit_descn = entity.rvisit_descn;
                     lookupRevisit.rec_updt_dt = entity.rec_updt_dt;
                     lookupRevisit.rec_updt_user_id_cd = entity.rec_updt_user_id_cd;

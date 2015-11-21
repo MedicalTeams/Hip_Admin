@@ -9,19 +9,19 @@ namespace HealthInformationProgram.Data.Mapping
         public vw_lkup_rvisitMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.rvisit_id, t.rvisit_descn, t.rvisit_ind });
-
+            //this.HasKey(t => new { t.rvisit_id, t.rvisit_descn, t.rvisit_ind });
+            this.HasKey(t => new { t.rvisit_id });
             // Properties
-            this.Property(t => t.rvisit_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            //this.Property(t => t.rvisit_id)
+            //    .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
-            this.Property(t => t.rvisit_descn)
-                .IsRequired()
-                .HasMaxLength(10);
+            //this.Property(t => t.rvisit_descn)
+            //    .IsRequired()
+            //    .HasMaxLength(10);
 
-            this.Property(t => t.rvisit_ind)
-                .IsRequired()
-                .HasMaxLength(1);
+            //this.Property(t => t.rvisit_ind)
+            //    .IsRequired()
+            //    .HasMaxLength(1);
 
             // Table & Column Mappings
             this.ToTable("vw_lkup_rvisit");

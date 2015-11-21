@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using HealthInformationProgram.Models;
+using Newtonsoft.Json.Linq;
 
 namespace HealthInformationProgram.Controllers
 {
@@ -65,8 +66,35 @@ namespace HealthInformationProgram.Controllers
         [HttpPost]
         public ActionResult UpdateEntity(string keyValues, string entityName)
         {
+            var jsonObject = JObject.Parse(keyValues);
+
+            switch ( entityName )
+            { 
+                case "RevisitModel":
+                    UpdateRevisit(jsonObject);
+                    break;
+
+            }
+           
 
             return View();
+        }
+
+        private void UpdateRevisit(JObject jsonObject)
+        {
+            var model = new HealthInformationProgram.Models.RevisitModel();
+            var repo = new HealthInformationProgram.Data.RevisitData();
+
+            model.Description = (string) jsonObject["Description"];
+            model.RevisitId= (string)jsonObject["RevisitId"];
+            model.Indicator = (string) jsonObject["Indicator"];
+            model.SortOrder = (string) jsonObject["SortOrder"];
+            model.UpdateDate = DateTime.Now.ToString();
+            model.UpdatedBy = "current user";
+           
+
+            repo.UpdateRevisit(model);
+
         }
        
         private string GenerateValidationModel(string entityName)

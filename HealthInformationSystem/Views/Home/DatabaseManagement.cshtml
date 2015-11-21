@@ -1,67 +1,83 @@
-﻿
+﻿@model List<HealthInformationProgram.Models.RevisitModel>
+@{
+    ViewBag.Title = "Database Management";
+}
 
-@model List<HealthInformationProgram.Models.RevisitModel>
-    @{
-        ViewBag.Title = "Database Management";
+
+
+
+<style class="cp-pen-styles">
+    .highlight
+    {
+        background-color: red;
     }
 
+    .odd
+    {
+        background: #fff;
+    }
 
+    .disabled_input
+    {
+        background-color: #e0e0e0;
+    }
 
+    .even
+    {
+        background: #eee;
+    }
 
-    <style class="cp-pen-styles">
-        
-        .highlight { background-color: red; }
-        .odd {
-            background: #fff;
-        }
+    .table-header-rotated
+    {
+        border-collapse: collapse;
+        height: 400px;
+        overflow: scroll;
+    }
 
-        .even {
-            background: #eee;
-        }
+    .csstransforms .table-header-rotated td
+    {
+        width: 30px;
+    }
 
-        .table-header-rotated {
-            border-collapse: collapse;
-            height: 400px;
-            overflow: scroll;
-        }
+    .no-csstransforms .table-header-rotated th
+    {
+        padding: 5px 10px;
+    }
 
-        .csstransforms .table-header-rotated td {
+    .table-header-rotated td
+    {
+        text-align: center;
+        padding: 10px 5px;
+        border: 1px solid #ccc;
+    }
+
+    .csstransforms .table-header-rotated th.rotate
+    {
+        height: 140px;
+        white-space: nowrap;
+    }
+
+        .csstransforms .table-header-rotated th.rotate > div
+        {
+            -webkit-transform: translate(25px, 51px) rotate(315deg);
+            -ms-transform: translate(25px, 51px) rotate(315deg);
+            transform: translate(25px, 51px) rotate(315deg);
             width: 30px;
         }
 
-        .no-csstransforms .table-header-rotated th {
-            padding: 5px 10px;
-        }
-
-        .table-header-rotated td {
-            text-align: center;
-            padding: 10px 5px;
-            border: 1px solid #ccc;
-        }
-
-        .csstransforms .table-header-rotated th.rotate {
-            height: 140px;
-            white-space: nowrap;
-        }
-
-            .csstransforms .table-header-rotated th.rotate > div {
-                -webkit-transform: translate(25px, 51px) rotate(315deg);
-                -ms-transform: translate(25px, 51px) rotate(315deg);
-                transform: translate(25px, 51px) rotate(315deg);
-                width: 30px;
+            .csstransforms .table-header-rotated th.rotate > div > span
+            {
+                border-bottom: 1px solid #ccc;
+                padding: 5px 10px;
             }
 
-                .csstransforms .table-header-rotated th.rotate > div > span {
-                    border-bottom: 1px solid #ccc;
-                    padding: 5px 10px;
-                }
-
-        .table-header-rotated th.row-header {
-            padding: 0 10px;
-            border-bottom: 1px solid #ccc;
-        }
-    </style>
-    </head>
+    .table-header-rotated th.row-header
+    {
+        padding: 0 10px;
+        border-bottom: 1px solid #ccc;
+    }
+</style>
+</head>
     <body>
         <div id="the_editor"></div>
         <div id="scroll">
@@ -72,8 +88,44 @@
         <script>
             var matrix = [];
 
-    function populate() {
+            function populate() {
                 matrix = [{
+                    "RevisitId": 1,
+                    "Description": "Visit",
+                    "SortOrder": 1,
+                    "Indicator": "V",
+                    "CreateDate": "10/10/2015",
+                    "CreatedBy": "dbadmin",
+                    "UpdateDate": "10/10/2015",
+                    "UpdatedBy": "dbadmin"
+                }, {
+                    "RevisitId": 2,
+                    "Description": "Re-Visit",
+                    "SortOrder": 2,
+                    "Indicator": "R",
+                    "CreateDate": "10/10/2015",
+                    "CreatedBy": "dbadmin",
+                    "UpdateDate": "10/10/2015",
+                    "UpdatedBy": "dbadmin"
+                }, {
+                    "RevisitId": 1,
+                    "Description": "Visit",
+                    "SortOrder": 1,
+                    "Indicator": "V",
+                    "CreateDate": "10/10/2015",
+                    "CreatedBy": "dbadmin",
+                    "UpdateDate": "10/10/2015",
+                    "UpdatedBy": "dbadmin"
+                }, {
+                    "RevisitId": 2,
+                    "Description": "Re-Visit",
+                    "SortOrder": 2,
+                    "Indicator": "R",
+                    "CreateDate": "10/10/2015",
+                    "CreatedBy": "dbadmin",
+                    "UpdateDate": "10/10/2015",
+                    "UpdatedBy": "dbadmin"
+                }, {
                     "RevisitId": 1,
                     "Description": "Visit",
                     "SortOrder": 1,
@@ -102,12 +154,42 @@
                 html += "<table class='table table-header-rotated'><thead><tr>";
 
 
+
+
+                //value does not matter. Just treating this assoc array as a Set.
+                var do_not_edit = {};
+                do_not_edit["RevisitId"] = "";
+                do_not_edit["CreateDate"] = "";
+                do_not_edit["CreatedBy"] = "";
+                do_not_edit["UpdateDate"] = "";
+                do_not_edit["curr_sys_id"] = "";
+                do_not_edit["diag_alert_thrshld_id"] = "";
+                do_not_edit["faclty_hw_invtry_id"] = "";
+                do_not_edit["bnfcry_id"] = "";
+                do_not_edit["diag_id"] = "";
+                do_not_edit["faclty_id"] = "";
+                do_not_edit["gndr_id"] = "";
+                do_not_edit["orgzn_id"] = "";
+                do_not_edit["rvisit_id"] = "";
+                do_not_edit["splmtl_diag_id"] = "";
+                do_not_edit["splmtl_diag_cat_id"] = "";
+                do_not_edit["faclty_id"] = "";
+                do_not_edit["ov_diag_id"] = "";
+                do_not_edit["visit_uuid"] = "";
+                do_not_edit["element_id"] = "";
+
+
+
                 for (var key in matrix[0]) {
                     html += "<th class='rotate'><div><span>" + key + "</span></div></th>";
+                    if (do_not_edit.hasOwnProperty(key)) {
+                        editor += "<ul><input type='text' class='disabled_input' id='" + key + "' size='30' value='' disabled></input>&nbsp;" + key + "</ul>";
 
-                    editor += "<ul><input type='text' id='" + key +"' size='30' value=''></input>&nbsp;" + key + "</ul>";
-
+                    } else {
+                        editor += "<ul><input type='text' id='" + key + "' size='30' value=''></input>&nbsp;" + key + "</ul>";
+                    }
                 }
+
                 editor += "</ul>";
 
                 for (var row = 0; row < matrix.length; row++) {
@@ -139,110 +221,88 @@
                 }
 
                 update(results, "RevisitModel");
-               
+
             }
 
             var lastClickedRow = undefined;
             var lastCssClass = undefined;
-function clickRow(obj) {
+            function clickRow(obj) {
 
-    lastCssClass = document.getElementById(obj.id).className;
+                lastCssClass = document.getElementById(obj.id).className;
 
-        document.getElementById(obj.id).className = "highlight";
+                document.getElementById(obj.id).className = "highlight";
 
-        if (  document.getElementById(lastClickedRow) != undefined ) {
-            document.getElementById(lastClickedRow).className = lastCssClass;
-         
-
-        } else {
-
-          
-        }
-
-        lastClickedRow = obj.id;
-        lastCssClass = document.getElementById(obj.id).className;
-        
+                if (document.getElementById(lastClickedRow) != undefined) {
+                    document.getElementById(lastClickedRow).className = lastCssClass;
 
 
-        
-        for (var key in matrix[obj.id]) {
-            document.getElementById(key).value = matrix[obj.id][key];
-        }
-}
+                } else {
+
+
+                }
+
+                lastClickedRow = obj.id;
+                lastCssClass = document.getElementById(obj.id).className;
+
+
+
+
+                for (var key in matrix[obj.id]) {
+                    document.getElementById(key).value = matrix[obj.id][key];
+                }
+            }
         </script>
 
 
 
-        <table border='1'>
-            <thead>
-                <tr>
-                    <th>Revisit Id</th>
-                    <th>Description</th>
-                    <th>Sort Order</th>
-                    <th>Indicator</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-
-                    <tr>
-                        <td></td>
-                        <td>@item.RevisitId</td>
-                        <td>@item.Description </td>
-                        <td>@item.SortOrder</td>
-                        <td>@item.Indicator</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+  
         <script src="~/Scripts/jquery-1.8.2.min.js"></script>
-        <button id="btn" type="button" value="RevisitModel">Revisit</button>
+        @*<button id="btn" type="button" value="RevisitModel">Revisit</button>*@
 
         <script>
 
-    function getTable(entityName) {
-        $.ajax({
+            function getTable(entityName) {
+                $.ajax({
 
-            url: "/Home/GetEntity",
-            data: { entityName: entityName  },
-            type: 'POST',
-            dataType: 'json',
-            success: function (mydata) {
-                alert("success");
-                console.log(mydata)
-                // $('#link').empty().append(mydata);
-            },
-            error: function (mydata) { alert("error"); alert(mydata); },
+                    url: "/Home/GetEntity",
+                    data: { entityName: entityName },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (mydata) {
+                        alert("success");
+                        console.log(mydata)
+                        // $('#link').empty().append(mydata);
+                    },
+                    error: function (mydata) { alert("error"); alert(mydata); },
 
-        });
-    }
+                });
+            }
 
-    function update(keyValue, entityName) {
-        alert(" entering ajax call");
-        $.ajax({
+            function update(keyValue, entityName) {
 
-            url: "/Home/UpdateEntity",
-            data: {keyValues: JSON.stringify(keyValue), entityName: entityName },
-            type: 'POST',
-            dataType: 'json',
-            success: function (mydata) {
-                alert("success");
-                console.log(mydata)
-                // $('#link').empty().append(mydata);
-            },
-            error: function (mydata) { alert("error"); alert(mydata); },
+                $.ajax({
 
-        });
-    }
-    $(document).ready(function () {
+                    url: "/Home/UpdateEntity",
+                    data: { keyValues: JSON.stringify(keyValue), entityName: entityName },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (mydata) {
+                        alert("success");
+                        console.log(mydata)
+                        // $('#link').empty().append(mydata);
+                    },
+                    error: function (mydata) { alert("error"); alert(mydata); },
 
-        $('#btn').click(function(){
-            var entityName = $(this).val()
-            getTable(entityName);
-            //("click", getTable(this))
-        })
-    });
+                });
+            }
+            $(document).ready(function () {
+
+                $('#btn').click(function () {
+                    var entityName = $(this).val()
+                    getTable(entityName);
+                    //("click", getTable(this))
+                })
+            });
         </script>
 ﻿
 
