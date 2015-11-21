@@ -1,0 +1,235 @@
+
+@model List<HealthInformationProgram.Models.RevisitModel>
+    @{
+        ViewBag.Title = "Database Management";
+    }
+
+
+
+
+    <style class="cp-pen-styles">
+        .disabled_input {
+            background-color: #e0e0e0;
+        }
+
+        #the_editor {
+margin-right:10px;
+             border-right-style: solid;
+    border-right-width: 1px;
+        }
+        .highlight { background-color: red; }
+        .odd {
+            background: #fff;
+        }
+        .entry {
+            margin-bottom: 10px;
+        }
+
+        .even {
+            background: #eee;
+        }
+
+        .table-header-rotated {
+            border-collapse: collapse;
+            height: 400px;
+            overflow: scroll;
+        }
+
+        .csstransforms .table-header-rotated td {
+            width: 30px;
+        }
+
+        .no-csstransforms .table-header-rotated th {
+            padding: 5px 10px;
+        }
+
+        .table-header-rotated td {
+            text-align: center;
+            padding: 10px 5px;
+            border: 1px solid #ccc;
+        }
+
+        .csstransforms .table-header-rotated th.rotate {
+            height: 140px;
+            white-space: nowrap;
+        }
+
+            .csstransforms .table-header-rotated th.rotate > div {
+                -webkit-transform: translate(25px, 51px) rotate(315deg);
+                -ms-transform: translate(25px, 51px) rotate(315deg);
+                transform: translate(25px, 51px) rotate(315deg);
+                width: 30px;
+            }
+
+                .csstransforms .table-header-rotated th.rotate > div > span {
+                    border-bottom: 1px solid #ccc;
+                    padding: 5px 10px;
+                }
+
+        .table-header-rotated th.row-header {
+            padding: 0 10px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+    </head>
+    <body>
+
+        <button id="btn" type="button" value="">Revisit</button>
+        <button id="btn" type="button" value="AccountModels">AccountModels</button>
+
+        <hr />
+
+
+        <table><tr><td valign="top">
+                    <div id="the_editor"></div>
+       
+            </td>
+            <td valign="top">
+            <div id="the_table">
+        </div>
+
+   </td>         
+            </tr></table>
+
+        <script>
+            var matrix = [];
+
+            function populate() {
+
+                var editor = "";
+                var html = "";
+
+                editor = "<ul>";
+
+                html += "<table class='table table-header-rotated'><thead><tr>";
+            
+
+        //value does not matter. Just treating this assoc array as a Set.
+                var do_not_edit = {};
+                do_not_edit["RevisitId"]="";
+                do_not_edit["CreateDate"]="";
+                do_not_edit["CreatedBy"] = "";
+                do_not_edit["UpdateDate"] = "";
+                do_not_edit["curr_sys_id"] = "";
+                do_not_edit["diag_alert_thrshld_id"]="";
+                do_not_edit["faclty_hw_invtry_id"]="";
+                do_not_edit["bnfcry_id"]="";
+                do_not_edit["diag_id"]="";
+                do_not_edit["faclty_id"]="";
+                do_not_edit["gndr_id"]="";
+                do_not_edit["orgzn_id"]="";
+                do_not_edit["rvisit_id"]="";
+                do_not_edit["splmtl_diag_id"]="";
+                do_not_edit["splmtl_diag_cat_id"]="";
+                do_not_edit["faclty_id"]="";
+                do_not_edit["ov_diag_id"]="";
+                do_not_edit["visit_uuid"]="";
+                do_not_edit["element_id"]="";
+
+
+                var disabled = ""; 
+                for (var key in matrix[0]) {
+                    html += "<th class='rotate'><div><span>" + key + "</span></div></th>";
+                    if ( do_not_edit.hasOwnProperty( key )) {
+                        disabled += key + "<div class='entry'><br><input type='text' class='disabled_input' id='" + key + "' size='30' value='' disabled></input></div>";
+
+                    } else {
+                        editor += key + "<div class='entry' <br><input type='text' id='" + key + "' size='30' value=''></input></div>";
+                    }
+                    
+                }
+                editor += disabled;
+        
+                for (var row = 0; row < matrix.length; row++) {
+                    var css_class = "odd";
+                    if (row % 2 == 0) {
+                        css_class = "even";
+                    }
+                    html += "<tr class='" + css_class + "' id='" + row + "' onclick='clickRow(this);'>";
+
+                    for (var key in matrix[row]) {
+                        value = matrix[row][key];
+                        html += "<td>" + value + "</td>";
+                    }
+                    html += "</tr>";
+                }
+
+                document.getElementById("the_table").innerHTML = html;
+                editor += "<br><button id='edit' onclick='doSubmit();'>update</button><hr>";
+                document.getElementById("the_editor").innerHTML = editor;
+            }
+
+    function doSubmit() {
+        var results = {};
+        for (var key in matrix[0]) {
+            results[key] = document.getElementById(key).value;
+        }
+        update(results, "RevisitModel");
+    }
+     var lastClickedRow = undefined;
+     var lastCssClass = undefined;
+    function clickRow(obj) {
+        lastCssClass = document.getElementById(obj.id).className;
+        document.getElementById(obj.id).className = "highlight";
+
+        if (  document.getElementById(lastClickedRow) != undefined ) {
+            document.getElementById(lastClickedRow).className = lastCssClass;
+            console.log("YEP for " + lastClickedRow + "   and " + lastCssClass);
+        } else {
+            console.log("NOPE for " + lastClickedRow + "   and " + lastCssClass); 
+        }
+        lastClickedRow = obj.id;
+        lastCssClass = document.getElementById(obj.id).className;
+        for (var key in matrix[obj.id]) {
+            document.getElementById(key).value = matrix[obj.id][key];
+        }
+}
+</script>
+<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script>
+
+    function getTable(entityName) {
+        $.ajax({
+            url: "/Home/GetEntity",
+            data: { entityName: entityName  },
+            type: 'POST',
+            dataType: 'json',
+            success: function (mydata) {
+                // Need to eval mydata into an object. Before the eval mydata is just a complicated string
+                matrix = eval("(" + mydata + ')');
+                /*console.log("length " + matrix.length + " and it is " + matrix);
+                for (var i = 0 ; i < matrix.length ; i++) {
+                    for (var key in matrix[0]) {
+                        console.log(i + "   key " + key + "   ?? " + matrix[0][key]);
+                    }
+                }*/
+                populate();
+            },
+            error: function (mydata) { alert("error"); alert(mydata); },
+        });
+    }
+
+    function update(keyValue, entityName) {
+
+        $.ajax({
+
+            url: "/Home/UpdateEntity",
+            data: { keyValues: JSON.stringify(keyValue), entityName: entityName },
+            type: 'POST',
+            dataType: 'json',
+            success: function (mydata) {
+                alert("success");
+                console.log(mydata)
+            },
+            error: function (mydata) { alert("error"); alert(mydata); },
+        });
+    }
+
+    $(document).ready(function () {
+
+        $('#btn').click(function(){
+            var entityName = $(this).val()
+            getTable(entityName);
+        })
+    });
+</script>
