@@ -25,7 +25,7 @@ namespace HealthInformationProgram.Data.Repositories
             }
         }
 
-        public diag_alert_thrshld GetRevisit(decimal id)
+        public diag_alert_thrshld GetDiagnosisAlertThreshold(decimal id)
         {
 
             try
@@ -41,7 +41,7 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateRevisitConstant(diag_alert_thrshld entity)
+        public int CreateDiagnosisAlertThreshold(diag_alert_thrshld entity)
         {
             try
             {

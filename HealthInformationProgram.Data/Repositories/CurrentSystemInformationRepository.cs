@@ -26,7 +26,7 @@ namespace HealthInformationProgram.Data.Repositories
             }
         }
 
-        public curr_sys_info GetRevisit(decimal id)
+        public curr_sys_info GetCurrentSystemInfo(decimal id)
         {
 
             try
@@ -42,7 +42,7 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateRevisitConstant(curr_sys_info entity)
+        public int CreateCurrentSystemInfo(curr_sys_info entity)
         {
             try
             {

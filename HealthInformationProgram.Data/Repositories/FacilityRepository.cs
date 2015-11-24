@@ -26,7 +26,7 @@ namespace HealthInformationProgram.Data.Repositories
             }
         }
 
-        public lkup_faclty GetRevisit(decimal id)
+        public lkup_faclty GetFacility(decimal id)
         {
 
             try
@@ -42,7 +42,23 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateRevisitConstant(lkup_faclty entity)
+        public lkup_faclty GetFacilityByOrganization(decimal id)
+        {
+
+            try
+            {
+                using ( var ctx = new ClinicDataContext(connString) )
+                {
+
+                    return ctx.lkup_faclty.Where(v => v.orgzn_id == id).FirstOrDefault();
+                }
+            }
+            catch ( Exception ex )
+            {
+                throw ex;
+            }
+        }
+        public int CreateFacility(lkup_faclty entity)
         {
             try
             {

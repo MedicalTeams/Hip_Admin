@@ -26,7 +26,7 @@ namespace HealthInformationProgram.Data.Repositories
             }
         }
 
-        public lkup_bnfcry GetRevisit(decimal id)
+        public lkup_bnfcry GetBeneficiaryType(decimal id)
         {
 
             try
@@ -42,7 +42,7 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateRevisitConstant(lkup_bnfcry entity)
+        public int CreateBeneficiaryType(lkup_bnfcry entity)
         {
             try
             {

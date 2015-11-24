@@ -25,7 +25,7 @@ namespace HealthInformationProgram.Data.Repositories
             }
         }
 
-        public ov GetRevisit(decimal id)
+        public ov GetOfficeVisit(decimal id)
         {
 
             try
@@ -41,7 +41,7 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateRevisitConstant(ov entity)
+        public int CreateOfficeVisit(ov entity)
         {
             try
             {

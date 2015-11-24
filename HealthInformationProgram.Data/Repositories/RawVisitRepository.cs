@@ -25,7 +25,7 @@ namespace HealthInformationProgram.Data.Repositories
             }
         }
 
-        public raw_visit GetRevisit(string id)
+        public raw_visit GetRawVisit(string id)
         {
 
             try
@@ -41,7 +41,7 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateRevisitConstant(raw_visit entity)
+        public int CreateRawVisit(raw_visit entity)
         {
             try
             {

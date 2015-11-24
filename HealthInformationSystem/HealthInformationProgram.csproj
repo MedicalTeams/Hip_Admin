@@ -191,6 +191,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Data\DiagnosisData.cs" />
+    <Compile Include="Data\FacilityData.cs" />
+    <Compile Include="Data\FacilityHardwareData.cs" />
     <Compile Include="Data\OrganizationData.cs" />
     <Compile Include="Data\RevisitData.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -198,7 +201,19 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\BeneficiaryModel.cs" />
+    <Compile Include="Models\CurrentSystemInformationModel.cs" />
+    <Compile Include="Models\DiagnosisModel.cs" />
+    <Compile Include="Models\DiagnosisAlertThresholdModel.cs" />
+    <Compile Include="Models\FacilityHardwareInventoryModel.cs" />
+    <Compile Include="Models\FacilityModel.cs" />
+    <Compile Include="Models\GenderModel.cs" />
+    <Compile Include="Models\OrganizationModel.cs" />
+    <Compile Include="Models\RawVisitModel.cs" />
     <Compile Include="Models\RevisitModel.cs" />
+    <Compile Include="Models\SupplementalDiagnosisModel.cs" />
+    <Compile Include="Models\SupplementleDiagnosisCategoryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using HealthInformationProgram.Data.DataContext;
 using HealthInformationProgram.Data.Tables;
 
@@ -30,7 +26,7 @@ namespace HealthInformationProgram.Data.Repositories
             }
         }
 
-        public lkup_gndr GetRevisit(decimal id)
+        public lkup_gndr GetGender(decimal id)
         {
 
             try
@@ -46,7 +42,7 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateRevisitConstant(lkup_gndr entity)
+        public int CreateGender(lkup_gndr entity)
         {
             try
             {

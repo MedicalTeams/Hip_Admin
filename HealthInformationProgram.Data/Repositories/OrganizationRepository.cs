@@ -25,7 +25,7 @@ namespace HealthInformationProgram.Data.Repositories
             }
         }
 
-        public lkup_orgzn GetRevisit(decimal id)
+        public lkup_orgzn GetOrganization(decimal id)
         {
 
             try
@@ -41,7 +41,7 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateRevisitConstant(lkup_orgzn entity)
+        public int CreateOragization(lkup_orgzn entity)
         {
             try
             {

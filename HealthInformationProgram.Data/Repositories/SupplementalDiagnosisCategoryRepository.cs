@@ -25,7 +25,7 @@ namespace HealthInformationProgram.Data.Repositories
             }
         }
 
-        public lkup_splmtl_diag_cat GetRevisit(decimal id)
+        public lkup_splmtl_diag_cat GetSupplementalDiagnosisCat(decimal id)
         {
 
             try
@@ -41,7 +41,7 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateRevisitConstant(lkup_splmtl_diag_cat entity)
+        public int CreateSupplementalDiagnosisCat(lkup_splmtl_diag_cat entity)
         {
             try
             {

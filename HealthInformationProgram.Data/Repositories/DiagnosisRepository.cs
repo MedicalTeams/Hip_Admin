@@ -25,7 +25,7 @@ namespace HealthInformationProgram.Data.Repositories
             }
         }
 
-        public lkup_diag GetRevisit(decimal id)
+        public lkup_diag GetDiagnosis(decimal id)
         {
 
             try
@@ -41,7 +41,7 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateRevisitConstant(lkup_diag entity)
+        public int CreateDiagnosis(lkup_diag entity)
         {
             try
             {

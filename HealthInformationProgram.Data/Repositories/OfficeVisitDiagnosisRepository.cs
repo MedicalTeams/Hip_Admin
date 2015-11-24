@@ -25,7 +25,7 @@ namespace HealthInformationProgram.Data.Repositories
             }
         }
 
-        public ov_diag GetRevisit(decimal id)
+        public ov_diag GetOfficeDiagnosis(decimal id)
         {
 
             try
@@ -41,7 +41,7 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateRevisitConstant(ov_diag entity)
+        public int CreateOfficeDiagnosis(ov_diag entity)
         {
             try
             {
