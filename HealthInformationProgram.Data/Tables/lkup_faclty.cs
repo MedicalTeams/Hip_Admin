@@ -5,6 +5,12 @@ namespace HealthInformationProgram.Data.Tables
 {
     public partial class lkup_faclty
     {
+        public lkup_faclty()
+        {
+            this.faclty_hw_invtry = new List<faclty_hw_invtry>();
+            this.ovs = new List<ov>();
+        }
+
         public decimal faclty_id { get; set; }
         public string hlth_care_faclty { get; set; }
         public string hlth_care_faclty_lvl { get; set; }
@@ -23,5 +29,8 @@ namespace HealthInformationProgram.Data.Tables
         public string rec_creat_user_id_cd { get; set; }
         public System.DateTime rec_updt_dt { get; set; }
         public string rec_updt_user_id_cd { get; set; }
+        public virtual ICollection<faclty_hw_invtry> faclty_hw_invtry { get; set; }
+        public virtual ICollection<ov> ovs { get; set; }
+        public virtual lkup_orgzn lkup_orgzn { get; set; }
     }
 }

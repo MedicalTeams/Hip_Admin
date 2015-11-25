@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using HealthInformationProgram.Data.Tables;
 
-
 namespace HealthInformationProgram.Data.Mapping
 {
     public class lkup_facltyMap : EntityTypeConfiguration<lkup_faclty>
@@ -10,12 +9,9 @@ namespace HealthInformationProgram.Data.Mapping
         public lkup_facltyMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.faclty_id, t.hlth_care_faclty, t.hlth_care_faclty_lvl, t.hlth_coordtr, t.setlmt, t.cntry, t.rgn, t.orgzn_id, t.faclty_stat, t.faclty_strt_eff_dt, t.faclty_end_eff_dt, t.rec_creat_dt, t.rec_creat_user_id_cd, t.rec_updt_dt, t.rec_updt_user_id_cd });
+            this.HasKey(t => t.faclty_id);
 
             // Properties
-            this.Property(t => t.faclty_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
             this.Property(t => t.hlth_care_faclty)
                 .IsRequired()
                 .HasMaxLength(50);
@@ -39,9 +35,6 @@ namespace HealthInformationProgram.Data.Mapping
             this.Property(t => t.rgn)
                 .IsRequired()
                 .HasMaxLength(50);
-
-            this.Property(t => t.orgzn_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             this.Property(t => t.faclty_stat)
                 .IsRequired()
@@ -75,6 +68,12 @@ namespace HealthInformationProgram.Data.Mapping
             this.Property(t => t.rec_creat_user_id_cd).HasColumnName("rec_creat_user_id_cd");
             this.Property(t => t.rec_updt_dt).HasColumnName("rec_updt_dt");
             this.Property(t => t.rec_updt_user_id_cd).HasColumnName("rec_updt_user_id_cd");
+
+            // Relationships
+            this.HasRequired(t => t.lkup_orgzn)
+                .WithMany(t => t.lkup_faclty)
+                .HasForeignKey(d => d.orgzn_id);
+
         }
     }
 }

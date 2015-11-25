@@ -13,6 +13,7 @@ namespace HealthInformationProgram.Models
         public string DiagnosisEffectiveStartDate { get; set; }
         public string DiagnosisEffectiveEndDate { get; set; }
         public string IcdCode { get; set; }
+        public string SortOrder { get; set; }
         
     }
 }

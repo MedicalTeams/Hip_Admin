@@ -1,6 +1,6 @@
-using HealthInformationProgram.Data.Tables;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
+using HealthInformationProgram.Data.Tables;
 
 namespace HealthInformationProgram.Data.Mapping
 {
@@ -9,18 +9,9 @@ namespace HealthInformationProgram.Data.Mapping
         public ov_diagMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.ov_diag_id, t.ov_id, t.diag_id, t.rec_creat_dt, t.rec_creat_user_id_cd, t.rec_updt_dt, t.rec_updt_user_id_cd });
+            this.HasKey(t => t.ov_diag_id);
 
             // Properties
-            this.Property(t => t.ov_diag_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
-            this.Property(t => t.ov_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
-            this.Property(t => t.diag_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
             this.Property(t => t.oth_diag_descn)
                 .HasMaxLength(100);
 
@@ -49,6 +40,21 @@ namespace HealthInformationProgram.Data.Mapping
             this.Property(t => t.rec_creat_user_id_cd).HasColumnName("rec_creat_user_id_cd");
             this.Property(t => t.rec_updt_dt).HasColumnName("rec_updt_dt");
             this.Property(t => t.rec_updt_user_id_cd).HasColumnName("rec_updt_user_id_cd");
+
+            // Relationships
+            this.HasRequired(t => t.lkup_diag)
+                .WithMany(t => t.ov_diag)
+                .HasForeignKey(d => d.diag_id);
+            this.HasOptional(t => t.lkup_splmtl_diag)
+                .WithMany(t => t.ov_diag)
+                .HasForeignKey(d => d.splmtl_diag_id);
+            this.HasOptional(t => t.lkup_splmtl_diag_cat)
+                .WithMany(t => t.ov_diag)
+                .HasForeignKey(d => d.splmtl_diag_cat_id);
+            this.HasRequired(t => t.ov)
+                .WithMany(t => t.ov_diag)
+                .HasForeignKey(d => d.ov_id);
+
         }
     }
 }

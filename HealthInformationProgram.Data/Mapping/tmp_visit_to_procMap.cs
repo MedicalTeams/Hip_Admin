@@ -9,37 +9,16 @@ namespace HealthInformationProgram.Data.Mapping
         public tmp_visit_to_procMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.visit_uuid, t.bnfcry_id, t.faclty_id, t.faclty_hw_invtry_id, t.gndr_id, t.rvisit_id, t.infnt_age_mos, t.staff_mbr_name, t.dt_of_visit, t.diag_id, t.proc_stat, t.rec_creat_dt, t.rec_creat_user_id_cd, t.rec_updt_dt, t.rec_updt_user_id_cd });
+            this.HasKey(t => t.visit_to_proc_id);
 
             // Properties
             this.Property(t => t.visit_uuid)
                 .IsRequired()
                 .HasMaxLength(100);
 
-            this.Property(t => t.bnfcry_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
-            this.Property(t => t.faclty_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
-            this.Property(t => t.faclty_hw_invtry_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
-            this.Property(t => t.gndr_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
-            this.Property(t => t.rvisit_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
-            this.Property(t => t.infnt_age_mos)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
             this.Property(t => t.staff_mbr_name)
                 .IsRequired()
                 .HasMaxLength(100);
-
-            this.Property(t => t.diag_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             this.Property(t => t.oth_diag_descn)
                 .HasMaxLength(100);
@@ -49,9 +28,6 @@ namespace HealthInformationProgram.Data.Mapping
 
             this.Property(t => t.proc_stat)
                 .IsRequired()
-                .HasMaxLength(1);
-
-            this.Property(t => t.err_cd)
                 .HasMaxLength(1);
 
             this.Property(t => t.rec_creat_user_id_cd)
@@ -86,6 +62,7 @@ namespace HealthInformationProgram.Data.Mapping
             this.Property(t => t.rec_creat_user_id_cd).HasColumnName("rec_creat_user_id_cd");
             this.Property(t => t.rec_updt_dt).HasColumnName("rec_updt_dt");
             this.Property(t => t.rec_updt_user_id_cd).HasColumnName("rec_updt_user_id_cd");
+            this.Property(t => t.visit_to_proc_id).HasColumnName("visit_to_proc_id");
         }
     }
 }

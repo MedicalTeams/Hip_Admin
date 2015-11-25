@@ -9,12 +9,9 @@ namespace HealthInformationProgram.Data.Mapping
         public lkup_gndrMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.gndr_id, t.gndr_descn, t.gndr_cd, t.rec_creat_dt, t.rec_creat_user_id_cd, t.rec_updt_dt, t.rec_updt_user_id_cd });
+            this.HasKey(t => t.gndr_id);
 
             // Properties
-            this.Property(t => t.gndr_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
             this.Property(t => t.gndr_descn)
                 .IsRequired()
                 .HasMaxLength(10);

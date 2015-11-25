@@ -39,10 +39,8 @@ namespace HealthInformationProgram.Controllers
         }
         public ActionResult DatabaseManagement()
         {
-            var model = new List<RevisitModel>();
-            var data = new Data.RevisitData();
-            model = data.GetAllRevisits();
-            return View(model);
+            //TODO: Set a default entity for initial load
+            return View();
         }
         public ActionResult Report()
         {
@@ -52,32 +50,61 @@ namespace HealthInformationProgram.Controllers
         [HttpPost]
         public ActionResult GetEntity(string entityName)
         {
+
            
-           //var tableHeaders =  GenerateValidationModel(entityName);
-           var model = new List<RevisitModel>();
-           var data = new Data.RevisitData();
-           model = data.GetAllRevisits();
-           System.Web.Script.Serialization.JavaScriptSerializer jSearializer =
-                  new System.Web.Script.Serialization.JavaScriptSerializer();
-           var jsonString = jSearializer.Serialize(model);
-           return Json(jsonString);
+            var jsonString = GetEntityDefinition(entityName);
+            return Json(jsonString);
+        }
+
+        private static string GetEntityDefinition(string entityName)
+        {
+            string jsonString = string.Empty;
+
+            switch ( entityName )
+            {
+                case "RevisitModel":
+                    var model = new List<RevisitModel>();
+                    var data = new Data.RevisitData();
+                    model = data.GetAllRevisits();
+                    jsonString= GetJsonString( model);
+                    break;
+                case "DiagnosisModel":
+                    var diagnosisModel = new List<DiagnosisModel>();
+                    var diagnosisData = new Data.DiagnosisData();
+                    diagnosisModel = diagnosisData.GetAllDiagnosis();
+                    jsonString = GetJsonString(diagnosisModel);
+                    break;
+            }
+            return jsonString;
+        }
+
+        private static string GetJsonString<T>( List<T> model)
+        {
+            System.Web.Script.Serialization.JavaScriptSerializer jSearializer =
+                   new System.Web.Script.Serialization.JavaScriptSerializer();
+            var jsonString = jSearializer.Serialize(model);
+            return jsonString;
         }
 
         [HttpPost]
         public ActionResult UpdateEntity(string keyValues, string entityName)
         {
             var jsonObject = JObject.Parse(keyValues);
+            string jsonString = string.Empty;
 
             switch ( entityName )
-            { 
+            {
                 case "RevisitModel":
+                    UpdateRevisit(jsonObject);
+                    break;
+                case "DiagnosisModel":
                     UpdateRevisit(jsonObject);
                     break;
 
             }
-           
 
-            return View();
+            jsonString = GetEntityDefinition(entityName);
+            return Json(jsonString);
         }
 
         private void UpdateRevisit(JObject jsonObject)
@@ -86,23 +113,38 @@ namespace HealthInformationProgram.Controllers
             var repo = new HealthInformationProgram.Data.RevisitData();
 
             model.Description = (string) jsonObject["Description"];
-            model.RevisitId= (string)jsonObject["RevisitId"];
+            model.RevisitId = (string) jsonObject["RevisitId"];
             model.Indicator = (string) jsonObject["Indicator"];
             model.SortOrder = (string) jsonObject["SortOrder"];
             model.UpdateDate = DateTime.Now.ToString();
             model.UpdatedBy = "current user";
-           
+
 
             repo.UpdateRevisit(model);
 
         }
-       
+        private void UpdateDiagnosis(JObject jsonObject)
+        {
+            var model = new HealthInformationProgram.Models.DiagnosisModel();
+            var repo = new HealthInformationProgram.Data.DiagnosisData();
+
+            model.DiagnosisStatus = (string) jsonObject["DiagnosisStatus"];
+            model.DiagnosisId = (string) jsonObject["DiagnosisId"];
+            model.DiagnosisAbbreviation = (string) jsonObject["DiagnosisAbbreviation"];
+            model.SortOrder = (string) jsonObject["SortOrder"];
+            model.UpdateDate = DateTime.Now.ToString();
+            model.UpdatedBy = "current user";
+
+
+            //repo.UpdateDiagnosis(model);
+
+        }
         private string GenerateValidationModel(string entityName)
         {
             Type type = Type.GetType("HealthInformationProgram.Models." + entityName);
-            
-       
-            
+
+
+
             //var name = type.Name.Replace("Model", "ViewModel");
             //name = Char.ToLowerInvariant(name[0]) + name.Substring(1);
 
@@ -145,7 +187,7 @@ namespace HealthInformationProgram.Controllers
 
         public class Generic<T>
         {
-            public Generic() {}
+            public Generic() { }
         }
     }
 }

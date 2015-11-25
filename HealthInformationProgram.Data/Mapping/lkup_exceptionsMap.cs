@@ -4,17 +4,23 @@ using HealthInformationProgram.Data.Tables;
 
 namespace HealthInformationProgram.Data.Mapping
 {
-    public class lkup_bnfcryMap : EntityTypeConfiguration<lkup_bnfcry>
+    public class lkup_exceptionsMap : EntityTypeConfiguration<lkup_exceptions>
     {
-        public lkup_bnfcryMap()
+        public lkup_exceptionsMap()
         {
             // Primary Key
-            this.HasKey(t => t.bnfcry_id);
+            this.HasKey(t => t.err_cd);
 
             // Properties
-            this.Property(t => t.bnfcry)
+            this.Property(t => t.err_cd)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
+            this.Property(t => t.exception_descn)
                 .IsRequired()
-                .HasMaxLength(10);
+                .HasMaxLength(25);
+
+            this.Property(t => t.exception_comment)
+                .HasMaxLength(400);
 
             this.Property(t => t.rec_creat_user_id_cd)
                 .IsRequired()
@@ -25,9 +31,10 @@ namespace HealthInformationProgram.Data.Mapping
                 .HasMaxLength(20);
 
             // Table & Column Mappings
-            this.ToTable("lkup_bnfcry");
-            this.Property(t => t.bnfcry_id).HasColumnName("bnfcry_id");
-            this.Property(t => t.bnfcry).HasColumnName("bnfcry");
+            this.ToTable("lkup_exceptions");
+            this.Property(t => t.err_cd).HasColumnName("err_cd");
+            this.Property(t => t.exception_descn).HasColumnName("exception_descn");
+            this.Property(t => t.exception_comment).HasColumnName("exception_comment");
             this.Property(t => t.user_intrfc_sort_ord).HasColumnName("user_intrfc_sort_ord");
             this.Property(t => t.rec_creat_dt).HasColumnName("rec_creat_dt");
             this.Property(t => t.rec_creat_user_id_cd).HasColumnName("rec_creat_user_id_cd");

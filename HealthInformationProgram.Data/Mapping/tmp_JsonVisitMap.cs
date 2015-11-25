@@ -4,9 +4,9 @@ using HealthInformationProgram.Data.Tables;
 
 namespace HealthInformationProgram.Data.Mapping
 {
-    public class tmp_JsonVisitMap : EntityTypeConfiguration<tmp_JsonVisit>
+    public class tmp_jsonvisitMap : EntityTypeConfiguration<tmp_jsonvisit>
     {
-        public tmp_JsonVisitMap()
+        public tmp_jsonvisitMap()
         {
             // Primary Key
             this.HasKey(t => new { t.element_id, t.StringValue, t.ValueType, t.visit_uuid });
@@ -30,7 +30,7 @@ namespace HealthInformationProgram.Data.Mapping
                 .HasMaxLength(100);
 
             // Table & Column Mappings
-            this.ToTable("tmp_JsonVisit");
+            this.ToTable("tmp_jsonvisit");
             this.Property(t => t.element_id).HasColumnName("element_id");
             this.Property(t => t.sequenceNo).HasColumnName("sequenceNo");
             this.Property(t => t.parent_ID).HasColumnName("parent_ID");

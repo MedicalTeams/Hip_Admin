@@ -24,6 +24,8 @@ namespace HealthInformationProgram.Data.Mapping
             this.Property(t => t.itm_descn).HasColumnName("itm_descn");
             this.Property(t => t.itm_vrsn).HasColumnName("itm_vrsn");
             this.Property(t => t.dt_of_rlse).HasColumnName("dt_of_rlse");
+            this.Property(t => t.last_exception_rpt).HasColumnName("last_exception_rpt");
+            this.Property(t => t.last_constant_update).HasColumnName("last_constant_update");
         }
     }
 }

@@ -1,7 +1,6 @@
-using HealthInformationProgram.Data.Tables;
-
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
+using HealthInformationProgram.Data.Tables;
 
 namespace HealthInformationProgram.Data.Mapping
 {
@@ -10,12 +9,9 @@ namespace HealthInformationProgram.Data.Mapping
         public lkup_splmtl_diag_catMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.splmtl_diag_cat_id, t.splmtl_diag_cat, t.splmtl_diag_cat_stat, t.splmtl_diag_cat_strt_eff_dt, t.splmtl_diag_cat_end_eff_dt, t.rec_creat_dt, t.rec_creat_user_id_cd, t.rec_updt_dt, t.rec_updt_user_id_cd });
+            this.HasKey(t => t.splmtl_diag_cat_id);
 
             // Properties
-            this.Property(t => t.splmtl_diag_cat_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
             this.Property(t => t.splmtl_diag_cat)
                 .IsRequired()
                 .HasMaxLength(25);

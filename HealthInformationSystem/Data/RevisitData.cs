@@ -54,12 +54,12 @@ namespace HealthInformationProgram.Data
             var repo = new RevisitRepository();
             var dataModel = new HealthInformationProgram.Data.Tables.lkup_rvisit();
 
+            dataModel.rvisit_id = Convert.ToDecimal(model.RevisitId);
             dataModel.rvisit_ind = model.Indicator;
-            dataModel.rvisit_id= Convert.ToDecimal(model.RevisitId);
             dataModel.rvisit_descn = model.Description;
             dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
             dataModel.rec_creat_dt = DateTime.Now;
-            dataModel.rec_creat_user_id_cd = "dbadmin"; //needs to get current user
+            dataModel.rec_creat_user_id_cd = "dbadmin"; //TODO: change to use AD when wired up
 
             try
             {
@@ -75,14 +75,14 @@ namespace HealthInformationProgram.Data
         {
             var repo = new RevisitRepository();
             var dataModel = new HealthInformationProgram.Data.Tables.lkup_rvisit();
-           
-               
-            dataModel.rvisit_ind = model.Indicator;
+
+
             dataModel.rvisit_id = Convert.ToDecimal(model.RevisitId);
+            dataModel.rvisit_ind = model.Indicator;            
             dataModel.rvisit_descn = model.Description;
             dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
-            dataModel.rec_creat_dt = DateTime.Now;
-            dataModel.rec_creat_user_id_cd = "dbadmin"; //needs to get current user
+            dataModel.rec_updt_dt = DateTime.Now;
+            dataModel.rec_updt_user_id_cd = "dbadmin"; //TODO: change to use AD when wired up
 
             try
             {

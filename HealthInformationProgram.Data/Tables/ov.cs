@@ -5,6 +5,11 @@ namespace HealthInformationProgram.Data.Tables
 {
     public partial class ov
     {
+        public ov()
+        {
+            this.ov_diag = new List<ov_diag>();
+        }
+
         public decimal faclty_id { get; set; }
         public decimal gndr_id { get; set; }
         public decimal bnfcry_id { get; set; }
@@ -21,5 +26,10 @@ namespace HealthInformationProgram.Data.Tables
         public string rec_creat_user_id_cd { get; set; }
         public System.DateTime rec_updt_dt { get; set; }
         public string rec_updt_user_id_cd { get; set; }
+        public virtual faclty_hw_invtry faclty_hw_invtry { get; set; }
+        public virtual lkup_bnfcry lkup_bnfcry { get; set; }
+        public virtual lkup_faclty lkup_faclty { get; set; }
+        public virtual lkup_gndr lkup_gndr { get; set; }
+        public virtual ICollection<ov_diag> ov_diag { get; set; }
     }
 }

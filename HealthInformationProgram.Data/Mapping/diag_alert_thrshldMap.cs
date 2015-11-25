@@ -9,21 +9,9 @@ namespace HealthInformationProgram.Data.Mapping
         public diag_alert_thrshldMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.diag_alert_thrshld_id, t.diag_id, t.case_cnt, t.baseln_multr, t.rec_creat_dt, t.rec_creat_user_id_cd, t.rec_updt_dt, t.rec_updt_user_id_cd });
+            this.HasKey(t => t.diag_alert_thrshld_id);
 
             // Properties
-            this.Property(t => t.diag_alert_thrshld_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
-            this.Property(t => t.diag_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
-            this.Property(t => t.case_cnt)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
-            this.Property(t => t.baseln_multr)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
             this.Property(t => t.rec_creat_user_id_cd)
                 .IsRequired()
                 .HasMaxLength(20);

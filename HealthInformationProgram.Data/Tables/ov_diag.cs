@@ -17,5 +17,9 @@ namespace HealthInformationProgram.Data.Tables
         public string rec_creat_user_id_cd { get; set; }
         public System.DateTime rec_updt_dt { get; set; }
         public string rec_updt_user_id_cd { get; set; }
+        public virtual lkup_diag lkup_diag { get; set; }
+        public virtual lkup_splmtl_diag lkup_splmtl_diag { get; set; }
+        public virtual lkup_splmtl_diag_cat lkup_splmtl_diag_cat { get; set; }
+        public virtual ov ov { get; set; }
     }
 }

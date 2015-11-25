@@ -56,6 +56,7 @@
     <Compile Include="Mapping\faclty_hw_invtryMap.cs" />
     <Compile Include="Mapping\lkup_bnfcryMap.cs" />
     <Compile Include="Mapping\lkup_diagMap.cs" />
+    <Compile Include="Mapping\lkup_exceptionsMap.cs" />
     <Compile Include="Mapping\lkup_facltyMap.cs" />
     <Compile Include="Mapping\lkup_gndrMap.cs" />
     <Compile Include="Mapping\lkup_orgznMap.cs" />
@@ -65,10 +66,11 @@
     <Compile Include="Mapping\ovMap.cs" />
     <Compile Include="Mapping\ov_diagMap.cs" />
     <Compile Include="Mapping\raw_visitMap.cs" />
-    <Compile Include="Mapping\tmp_JsonVisitMap.cs" />
+    <Compile Include="Mapping\tmp_jsonvisitMap.cs" />
     <Compile Include="Mapping\tmp_visit_to_procMap.cs" />
     <Compile Include="Mapping\vw_diag_alertMap.cs" />
     <Compile Include="Mapping\vw_lkup_all_splmtl_diagMap.cs" />
+    <Compile Include="Mapping\vw_lkup_base_splmtl_diagMap.cs" />
     <Compile Include="Mapping\vw_lkup_bnfcryMap.cs" />
     <Compile Include="Mapping\vw_lkup_chronic_diagMap.cs" />
     <Compile Include="Mapping\vw_lkup_diagMap.cs" />
@@ -79,6 +81,8 @@
     <Compile Include="Mapping\vw_lkup_mental_diagMap.cs" />
     <Compile Include="Mapping\vw_lkup_rvisitMap.cs" />
     <Compile Include="Mapping\vw_lkup_sti_diagMap.cs" />
+    <Compile Include="Mapping\vw_ov_detailsMap.cs" />
+    <Compile Include="Mapping\vw_raw_data_errsMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\RawVisitRepository.cs" />
@@ -100,6 +104,7 @@
     <Compile Include="Tables\faclty_hw_invtry.cs" />
     <Compile Include="Tables\lkup_bnfcry.cs" />
     <Compile Include="Tables\lkup_diag.cs" />
+    <Compile Include="Tables\lkup_exceptions.cs" />
     <Compile Include="Tables\lkup_faclty.cs" />
     <Compile Include="Tables\lkup_gndr.cs" />
     <Compile Include="Tables\lkup_orgzn.cs" />
@@ -109,10 +114,11 @@
     <Compile Include="Tables\ov.cs" />
     <Compile Include="Tables\ov_diag.cs" />
     <Compile Include="Tables\raw_visit.cs" />
-    <Compile Include="Tables\tmp_JsonVisit.cs" />
+    <Compile Include="Tables\tmp_jsonvisit.cs" />
     <Compile Include="Tables\tmp_visit_to_proc.cs" />
     <Compile Include="Tables\vw_diag_alert.cs" />
     <Compile Include="Tables\vw_lkup_all_splmtl_diag.cs" />
+    <Compile Include="Tables\vw_lkup_base_splmtl_diag.cs" />
     <Compile Include="Tables\vw_lkup_bnfcry.cs" />
     <Compile Include="Tables\vw_lkup_chronic_diag.cs" />
     <Compile Include="Tables\vw_lkup_diag.cs" />
@@ -123,6 +129,8 @@
     <Compile Include="Tables\vw_lkup_mental_diag.cs" />
     <Compile Include="Tables\vw_lkup_rvisit.cs" />
     <Compile Include="Tables\vw_lkup_sti_diag.cs" />
+    <Compile Include="Tables\vw_ov_details.cs" />
+    <Compile Include="Tables\vw_raw_data_errs.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

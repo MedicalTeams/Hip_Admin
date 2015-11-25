@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HealthInformationProgram.Data.Tables
 {
-    public partial class tmp_JsonVisit
+    public partial class tmp_jsonvisit
     {
         public int element_id { get; set; }
         public Nullable<int> sequenceNo { get; set; }

@@ -5,6 +5,11 @@ namespace HealthInformationProgram.Data.Tables
 {
     public partial class lkup_splmtl_diag
     {
+        public lkup_splmtl_diag()
+        {
+            this.ov_diag = new List<ov_diag>();
+        }
+
         public decimal splmtl_diag_id { get; set; }
         public string splmtl_diag_descn { get; set; }
         public decimal diag_id { get; set; }
@@ -16,5 +21,7 @@ namespace HealthInformationProgram.Data.Tables
         public string rec_creat_user_id_cd { get; set; }
         public System.DateTime rec_updt_dt { get; set; }
         public string rec_updt_user_id_cd { get; set; }
+        public virtual lkup_diag lkup_diag { get; set; }
+        public virtual ICollection<ov_diag> ov_diag { get; set; }
     }
 }

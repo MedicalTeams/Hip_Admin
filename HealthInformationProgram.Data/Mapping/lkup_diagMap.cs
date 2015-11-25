@@ -9,12 +9,9 @@ namespace HealthInformationProgram.Data.Mapping
         public lkup_diagMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.diag_id, t.diag_descn, t.diag_stat, t.diag_strt_eff_dt, t.diag_end_eff_dt, t.rec_creat_dt, t.rec_creat_user_id_cd, t.rec_updt_dt, t.rec_updt_user_id_cd });
+            this.HasKey(t => t.diag_id);
 
             // Properties
-            this.Property(t => t.diag_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
             this.Property(t => t.diag_descn)
                 .IsRequired()
                 .HasMaxLength(100);

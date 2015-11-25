@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthInformationProgram.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthInformationProgram.Data", "HealthInformationProgram.Data\HealthInformationProgram.Data.csproj", "{13372C48-9121-4432-8C17-5E72C3FF3C57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDatabaseToEF", "TestDatabaseToEF\TestDatabaseToEF.csproj", "{D457E10C-76CE-4368-965F-99501D408F7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFMappingProject", "EFMappingProject\EFMappingProject.csproj", "{F977247E-B44F-4577-B4AC-AE8C48A21466}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +27,10 @@ Global
 		{13372C48-9121-4432-8C17-5E72C3FF3C57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13372C48-9121-4432-8C17-5E72C3FF3C57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13372C48-9121-4432-8C17-5E72C3FF3C57}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D457E10C-76CE-4368-965F-99501D408F7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D457E10C-76CE-4368-965F-99501D408F7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D457E10C-76CE-4368-965F-99501D408F7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D457E10C-76CE-4368-965F-99501D408F7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F977247E-B44F-4577-B4AC-AE8C48A21466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F977247E-B44F-4577-B4AC-AE8C48A21466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F977247E-B44F-4577-B4AC-AE8C48A21466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F977247E-B44F-4577-B4AC-AE8C48A21466}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

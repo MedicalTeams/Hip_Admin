@@ -9,12 +9,9 @@ namespace HealthInformationProgram.Data.Mapping
         public lkup_orgznMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.orgzn_id, t.orgzn, t.orgzn_stat, t.orgzn_strt_eff_dt, t.orgzn_end_eff_dt, t.rec_creat_dt, t.rec_creat_user_id_cd, t.rec_updt_dt, t.rec_updt_user_id_cd });
+            this.HasKey(t => t.orgzn_id);
 
             // Properties
-            this.Property(t => t.orgzn_id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
             this.Property(t => t.orgzn)
                 .IsRequired()
                 .HasMaxLength(50);

@@ -22,10 +22,11 @@ namespace HealthInformationProgram.Data.Tables
         public string oth_diag_descn { get; set; }
         public string oth_splmtl_diag_descn { get; set; }
         public string proc_stat { get; set; }
-        public string err_cd { get; set; }
+        public Nullable<int> err_cd { get; set; }
         public System.DateTime rec_creat_dt { get; set; }
         public string rec_creat_user_id_cd { get; set; }
         public System.DateTime rec_updt_dt { get; set; }
         public string rec_updt_user_id_cd { get; set; }
+        public decimal visit_to_proc_id { get; set; }
     }
 }

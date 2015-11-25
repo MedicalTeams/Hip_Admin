@@ -6,7 +6,7 @@
 
 
 
-
+<header>
     <style class="cp-pen-styles">
         .disabled_input {
             background-color: #e0e0e0;
@@ -71,11 +71,11 @@ margin-right:10px;
             border-bottom: 1px solid #ccc;
         }
     </style>
-    </head>
+    <//header>
     <body>
 
-        <button id="btn" type="button" value="">Revisit</button>
-        <button id="btn" type="button" value="AccountModels">AccountModels</button>
+        <button id="btn" type="button"  value="RevisitModel">Revisit</button>
+        <button id="btn" type="button" value="DiagnosisModel">DiagnosisModel</button>
 
         <hr />
 
@@ -90,7 +90,7 @@ margin-right:10px;
 
    </td>         
             </tr></table>
-
+        </body>
         <script>
             var matrix = [];
 
@@ -218,8 +218,10 @@ margin-right:10px;
             type: 'POST',
             dataType: 'json',
             success: function (mydata) {
-                alert("success");
+               // alert("success");
                 console.log(mydata)
+                matrix = eval("(" + mydata + ')');
+                populate();
             },
             error: function (mydata) { alert("error"); alert(mydata); },
         });

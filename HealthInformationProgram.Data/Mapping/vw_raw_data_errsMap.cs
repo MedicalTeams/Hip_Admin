@@ -4,12 +4,12 @@ using HealthInformationProgram.Data.Tables;
 
 namespace HealthInformationProgram.Data.Mapping
 {
-    public class raw_visitMap : EntityTypeConfiguration<raw_visit>
+    public class vw_raw_data_errsMap : EntityTypeConfiguration<vw_raw_data_errs>
     {
-        public raw_visitMap()
+        public vw_raw_data_errsMap()
         {
             // Primary Key
-            this.HasKey(t => t.visit_uuid);
+            this.HasKey(t => new { t.visit_uuid, t.visit_json, t.rec_creat_dt, t.visit_stat });
 
             // Properties
             this.Property(t => t.visit_uuid)
@@ -19,28 +19,22 @@ namespace HealthInformationProgram.Data.Mapping
             this.Property(t => t.visit_json)
                 .IsRequired();
 
-            this.Property(t => t.rec_creat_user_id_cd)
-                .IsRequired()
-                .HasMaxLength(20);
-
-            this.Property(t => t.rec_updt_user_id_cd)
-                .IsRequired()
-                .HasMaxLength(20);
-
             this.Property(t => t.visit_stat)
                 .IsRequired()
                 .HasMaxLength(1);
 
+            this.Property(t => t.exception_descn)
+                .HasMaxLength(25);
+
             // Table & Column Mappings
-            this.ToTable("raw_visit");
+            this.ToTable("vw_raw_data_errs");
             this.Property(t => t.visit_uuid).HasColumnName("visit_uuid");
             this.Property(t => t.visit_json).HasColumnName("visit_json");
+            this.Property(t => t.opd_id).HasColumnName("opd_id");
             this.Property(t => t.rec_creat_dt).HasColumnName("rec_creat_dt");
-            this.Property(t => t.rec_creat_user_id_cd).HasColumnName("rec_creat_user_id_cd");
-            this.Property(t => t.rec_updt_dt).HasColumnName("rec_updt_dt");
-            this.Property(t => t.rec_updt_user_id_cd).HasColumnName("rec_updt_user_id_cd");
             this.Property(t => t.visit_stat).HasColumnName("visit_stat");
             this.Property(t => t.err_cd).HasColumnName("err_cd");
+            this.Property(t => t.exception_descn).HasColumnName("exception_descn");
         }
     }
 }
