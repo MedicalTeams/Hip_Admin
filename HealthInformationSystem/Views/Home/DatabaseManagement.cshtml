@@ -74,8 +74,8 @@ margin-right:10px;
     <//header>
     <body>
 
-        <button id="btn" type="button"  value="RevisitModel">Revisit</button>
-        <button id="btn" type="button" value="DiagnosisModel">DiagnosisModel</button>
+        <button id="btn"class="menuOption" type="button"  value="RevisitModel">Revisit</button>
+        <button id="btn" class="menuOption" type="button" value="DiagnosisModel">DiagnosisModel</button>
 
         <hr />
 
@@ -229,7 +229,7 @@ margin-right:10px;
 
     $(document).ready(function () {
 
-        $('#btn').click(function(){
+        $('.menuOption').click(function(){
             var entityName = $(this).val()
             getTable(entityName);
         })
