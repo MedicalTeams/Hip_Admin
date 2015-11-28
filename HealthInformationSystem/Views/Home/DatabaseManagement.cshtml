@@ -76,7 +76,7 @@ margin-right:10px;
 
         <button class="menuOption" type="button"  value="RevisitModel">Revisit</button>
         <button class="menuOption" type="button" value="DiagnosisModel">DiagnosisModel</button>
-        <select>
+        <select id="selectEntity">
             <option class="menuOption" value="RevisitModel">Revisit</option>
             <option class="menuOption" value="DiagnosisModel">Diagnosis</option>
         </select>
@@ -235,7 +235,7 @@ margin-right:10px;
 
     $(document).ready(function () {
 
-        $('.menuOption').change(function () {
+        $('#selectEntity').on('change',function () {
             var entityName = $(this).val()
             getTable(entityName);
         });
