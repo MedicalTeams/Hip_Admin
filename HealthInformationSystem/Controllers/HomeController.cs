@@ -98,7 +98,7 @@ namespace HealthInformationProgram.Controllers
                     UpdateRevisit(jsonObject);
                     break;
                 case "DiagnosisModel":
-                    UpdateRevisit(jsonObject);
+                    UpdateDiagnosis(jsonObject);
                     break;
 
             }
@@ -128,15 +128,17 @@ namespace HealthInformationProgram.Controllers
             var model = new HealthInformationProgram.Models.DiagnosisModel();
             var repo = new HealthInformationProgram.Data.DiagnosisData();
 
-            model.DiagnosisStatus = (string) jsonObject["DiagnosisStatus"];
             model.DiagnosisId = (string) jsonObject["DiagnosisId"];
+            model.DiagnosisDescription = (string) jsonObject["DiagnosisDescription"];
             model.DiagnosisAbbreviation = (string) jsonObject["DiagnosisAbbreviation"];
+            model.DiagnosisStatus = (string) jsonObject["DiagnosisStatus"];
+            model.IcdCode = (string) jsonObject["IcdCode"];
             model.SortOrder = (string) jsonObject["SortOrder"];
             model.UpdateDate = DateTime.Now.ToString();
             model.UpdatedBy = "current user";
 
 
-            //repo.UpdateDiagnosis(model);
+            repo.Update(model);
 
         }
         private string GenerateValidationModel(string entityName)

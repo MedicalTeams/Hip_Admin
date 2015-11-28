@@ -74,9 +74,12 @@ margin-right:10px;
     <//header>
     <body>
 
-        <button id="btn"class="menuOption" type="button"  value="RevisitModel">Revisit</button>
-        <button id="btn" class="menuOption" type="button" value="DiagnosisModel">DiagnosisModel</button>
-
+        <button class="menuOption" type="button"  value="RevisitModel">Revisit</button>
+        <button class="menuOption" type="button" value="DiagnosisModel">DiagnosisModel</button>
+        <select>
+            <option class="menuOption" value="RevisitModel">Revisit</option>
+            <option class="menuOption" value="DiagnosisModel">Diagnosis</option>
+        </select>
         <hr />
 
 
@@ -159,12 +162,13 @@ margin-right:10px;
                 document.getElementById("the_editor").innerHTML = editor;
             }
 
-    function doSubmit() {
+            function doSubmit() {
+                console.log("Current entity(do Submit function = " + currentEntity);
         var results = {};
         for (var key in matrix[0]) {
             results[key] = document.getElementById(key).value;
         }
-        update(results, "RevisitModel");
+        update(results, currentEntity);
     }
      var lastClickedRow = undefined;
      var lastCssClass = undefined;
@@ -187,7 +191,7 @@ margin-right:10px;
 </script>
 <script src="~/Scripts/jquery-1.8.2.min.js"></script>
 <script>
-
+    var currentEntity = null;
     function getTable(entityName) {
         $.ajax({
             url: "/Home/GetEntity",
@@ -204,6 +208,8 @@ margin-right:10px;
                     }
                 }*/
                 populate();
+                currentEntity = entityName;
+                console.log("Current entity = "+ currentEntity);
             },
             error: function (mydata) { alert("error"); alert(mydata); },
         });
@@ -229,7 +235,12 @@ margin-right:10px;
 
     $(document).ready(function () {
 
-        $('.menuOption').click(function(){
+        $('.menuOption').change(function () {
+            var entityName = $(this).val()
+            getTable(entityName);
+        });
+
+        $('.menuOption').click(function () {
             var entityName = $(this).val()
             getTable(entityName);
         })

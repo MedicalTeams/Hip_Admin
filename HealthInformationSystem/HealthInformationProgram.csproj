@@ -191,6 +191,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Data\BaseHipData.cs" />
     <Compile Include="Data\DiagnosisData.cs" />
     <Compile Include="Data\FacilityData.cs" />
     <Compile Include="Data\FacilityHardwareData.cs" />
