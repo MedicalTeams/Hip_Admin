@@ -9,6 +9,8 @@ namespace HealthInformationProgram.Data
 {
     public class DiagnosisData : BaseHipData
     {
+        #region Diagnosis
+
         public List<DiagnosisModel> GetAllDiagnosis()
         {
             var diagnosisList = new List<DiagnosisModel>();
@@ -21,9 +23,9 @@ namespace HealthInformationProgram.Data
                     var diagView = new DiagnosisModel();
                     diagView.DiagnosisId = GetDataValue(item.diag_id);
                     diagView.DiagnosisDescription = GetDataValue(item.diag_descn);
-                    diagView.DiagnosisStatus = GetDataValue( item.diag_stat);
+                    diagView.DiagnosisStatus = GetDataValue(item.diag_stat);
                     diagView.DiagnosisAbbreviation = GetDataValue(item.diag_abrvn);
-                    diagView.IcdCode =GetDataValue( item.icd_cd);
+                    diagView.IcdCode = GetDataValue(item.icd_cd);
                     diagView.SortOrder = GetDataValue(item.user_intrfc_sort_ord);
                     diagView.DiagnosisEffectiveStartDate = item.diag_strt_eff_dt.ToString();
                     diagView.DiagnosisEffectiveEndDate = item.diag_end_eff_dt.ToString();
@@ -65,7 +67,7 @@ namespace HealthInformationProgram.Data
             return diagView;
 
         }
-        public int Create(DiagnosisModel model)
+        public int CreateDiagnosis(DiagnosisModel model)
         {
 
             var repo = new DiagnosisRepository();
@@ -79,9 +81,10 @@ namespace HealthInformationProgram.Data
             dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
             dataModel.diag_strt_eff_dt = Convert.ToDateTime(model.DiagnosisEffectiveStartDate);
             dataModel.diag_end_eff_dt = Convert.ToDateTime(model.DiagnosisEffectiveEndDate);
-
+            dataModel.rec_creat_dt = DateTime.Now;
+            dataModel.rec_creat_user_id_cd = model.CreatedBy;
             dataModel.rec_updt_dt = DateTime.Now;
-            dataModel.rec_updt_user_id_cd = "dbadmin"; //TODO: change to use AD when wired up
+            dataModel.rec_updt_user_id_cd = model.UpdatedBy; 
 
             try
             {
@@ -95,7 +98,7 @@ namespace HealthInformationProgram.Data
             }
 
         }
-        public int Update(DiagnosisModel model)
+        public int UpdateDiagnosis(DiagnosisModel model)
         {
 
             var repo = new DiagnosisRepository();
@@ -112,7 +115,7 @@ namespace HealthInformationProgram.Data
             dataModel.diag_end_eff_dt = Convert.ToDateTime(model.DiagnosisEffectiveEndDate);
             dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
             dataModel.rec_updt_dt = DateTime.Now;
-            dataModel.rec_updt_user_id_cd = "dbadmin"; //TODO: change to use AD when wired up
+            dataModel.rec_updt_user_id_cd = model.UpdatedBy;
 
             try
             {
@@ -127,6 +130,285 @@ namespace HealthInformationProgram.Data
 
         }
 
-        
+        #endregion
+
+        #region Diagnosis Supplemental Category
+
+        public List<SupplementalDiagnosisCategoryModel> GetAllSupplementalCategories()
+        {
+            var categories = new List<SupplementalDiagnosisCategoryModel>();
+            var repo = new HealthInformationProgram.Data.Repositories.SupplementalDiagnosisCategoryRepository();
+
+            var dataList = repo.GetAll();
+            foreach ( var item in dataList )
+            {
+                var cat = new SupplementalDiagnosisCategoryModel();
+
+                cat.SupplementalDiagnosisCategoryId = GetDataValue(item.splmtl_diag_cat_id);
+                cat.SupplementalDiagnosisCategoryType = GetDataValue(item.splmtl_diag_cat);
+                cat.SortOrder = GetDataValue(item.user_intrfc_sort_ord);
+                cat.Status = GetDataValue(item.splmtl_diag_cat_stat);
+                cat.SupplementalDiagnosisCategoryEffectiveStartDate = GetDataValue(item.splmtl_diag_cat_strt_eff_dt);
+                cat.SupplementalDiagnosisCategoryEffectiveEndDate = GetDataValue(item.splmtl_diag_cat_end_eff_dt);
+                cat.UpdatedBy = GetDataValue(item.rec_updt_user_id_cd);
+                cat.UpdateDate = GetDataValue(item.rec_updt_dt);
+                cat.CreatedBy = GetDataValue(item.rec_creat_user_id_cd);
+                cat.CreateDate = GetDataValue(item.rec_creat_dt);
+
+
+
+                categories.Add(cat);
+            }
+            return categories;
+        }
+        public SupplementalDiagnosisCategoryModel GetSupplementalCategory(string id)
+        {
+
+            var repo = new HealthInformationProgram.Data.Repositories.SupplementalDiagnosisCategoryRepository();
+            var cat = new SupplementalDiagnosisCategoryModel();
+            var dataItem = repo.GetSupplementalDiagnosisCat(Convert.ToDecimal(id));
+
+
+
+            cat.SupplementalDiagnosisCategoryId = GetDataValue(dataItem.splmtl_diag_cat_id);
+            cat.SupplementalDiagnosisCategoryType = GetDataValue(dataItem.splmtl_diag_cat);
+            cat.SortOrder = GetDataValue(dataItem.user_intrfc_sort_ord);
+            cat.Status = GetDataValue(dataItem.splmtl_diag_cat_stat);
+            cat.SupplementalDiagnosisCategoryEffectiveStartDate = GetDataValue(dataItem.splmtl_diag_cat_strt_eff_dt);
+            cat.SupplementalDiagnosisCategoryEffectiveEndDate = GetDataValue(dataItem.splmtl_diag_cat_end_eff_dt);
+            cat.UpdatedBy = GetDataValue(dataItem.rec_updt_user_id_cd);
+            cat.UpdateDate = GetDataValue(dataItem.rec_updt_dt);
+            cat.CreatedBy = GetDataValue(dataItem.rec_creat_user_id_cd);
+            cat.CreateDate = GetDataValue(dataItem.rec_creat_dt);
+
+
+
+            return cat;
+        }
+        public SupplementalDiagnosisCategoryModel GetSupplementalCategoryByCategory(string category)
+        {
+
+            var repo = new HealthInformationProgram.Data.Repositories.SupplementalDiagnosisCategoryRepository();
+            var cat = new SupplementalDiagnosisCategoryModel();
+            var dataItem = repo.GetSupplementalDiagnosisCat(category);
+
+
+
+            cat.SupplementalDiagnosisCategoryId = GetDataValue(dataItem.splmtl_diag_cat_id);
+            cat.SupplementalDiagnosisCategoryType = GetDataValue(dataItem.splmtl_diag_cat);
+            cat.SortOrder = GetDataValue(dataItem.user_intrfc_sort_ord);
+            cat.Status = GetDataValue(dataItem.splmtl_diag_cat_stat);
+            cat.SupplementalDiagnosisCategoryEffectiveStartDate = GetDataValue(dataItem.splmtl_diag_cat_strt_eff_dt);
+            cat.SupplementalDiagnosisCategoryEffectiveEndDate = GetDataValue(dataItem.splmtl_diag_cat_end_eff_dt);
+            cat.UpdatedBy = GetDataValue(dataItem.rec_updt_user_id_cd);
+            cat.UpdateDate = GetDataValue(dataItem.rec_updt_dt);
+            cat.CreatedBy = GetDataValue(dataItem.rec_creat_user_id_cd);
+            cat.CreateDate = GetDataValue(dataItem.rec_creat_dt);
+
+
+
+            return cat;
+        }
+        public int CreateDiagnosisCategory(SupplementalDiagnosisCategoryModel model)
+        {
+
+            var repo = new SupplementalDiagnosisCategoryRepository();
+            var dataModel = new HealthInformationProgram.Data.Tables.lkup_splmtl_diag_cat();
+
+           dataModel.splmtl_diag_cat_id = Convert.ToDecimal(model.SupplementalDiagnosisCategoryId);
+            dataModel.splmtl_diag_cat_stat = model.Status;
+            dataModel.splmtl_diag_cat = model.SupplementalDiagnosisCategoryType;
+            dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
+            dataModel.splmtl_diag_cat_strt_eff_dt = Convert.ToDateTime(model.SupplementalDiagnosisCategoryEffectiveStartDate);
+            dataModel.splmtl_diag_cat_end_eff_dt = Convert.ToDateTime(model.SupplementalDiagnosisCategoryEffectiveEndDate);
+            dataModel.rec_creat_dt = DateTime.Now;
+            dataModel.rec_creat_user_id_cd = model.CreatedBy;
+            dataModel.rec_updt_dt = DateTime.Now;
+            dataModel.rec_updt_user_id_cd = model.UpdatedBy;
+
+            try
+            {
+
+                var returnCode = repo.CreateSupplementalDiagnosisCat(dataModel);
+                return returnCode;
+            }
+            catch ( Exception ex )
+            {
+                throw ex;
+            }
+
+        }
+        public int UpdateSupplementalDiagnosisCategory(SupplementalDiagnosisCategoryModel model)
+        {
+
+            var repo = new SupplementalDiagnosisCategoryRepository();
+            var dataModel = new HealthInformationProgram.Data.Tables.lkup_splmtl_diag_cat();
+
+
+
+            dataModel.splmtl_diag_cat_id = Convert.ToDecimal(model.SupplementalDiagnosisCategoryId);
+            dataModel.splmtl_diag_cat_stat = model.Status;
+            dataModel.splmtl_diag_cat = model.SupplementalDiagnosisCategoryType;
+            dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
+            dataModel.splmtl_diag_cat_strt_eff_dt = Convert.ToDateTime(model.SupplementalDiagnosisCategoryEffectiveStartDate);
+            dataModel.splmtl_diag_cat_end_eff_dt = Convert.ToDateTime(model.SupplementalDiagnosisCategoryEffectiveEndDate);
+
+            dataModel.rec_updt_dt = DateTime.Now;
+            dataModel.rec_updt_user_id_cd = model.UpdatedBy;
+
+            try
+            {
+
+                var returnCode = repo.Update(dataModel);
+                return returnCode;
+            }
+            catch ( Exception ex )
+            {
+                throw ex;
+            }
+
+        }
+        #endregion
+
+
+        #region  Supplemental Diagnosis
+
+        public List<SupplementalDiagnosisModel> GetAllSupplementalDiagnosis()
+        {
+            var categories = new List<SupplementalDiagnosisModel>();
+            var repo = new HealthInformationProgram.Data.Repositories.SupplementalDiagnosisRepository();
+
+            var dataList = repo.GetAll();
+            foreach ( var item in dataList )
+            {
+                var cat = new SupplementalDiagnosisModel();
+
+                cat.SupplementalDiagnosisId = GetDataValue(item.splmtl_diag_id);
+                cat.SupplementalDiagnosisDescription = GetDataValue(item.splmtl_diag_descn);
+                cat.DiagnosisId = GetDataValue(item.diag_id);
+                cat.SortOrder = GetDataValue(item.user_intrfc_sort_ord);
+                cat.Status = GetDataValue(item.splmtl_diag_stat);
+                cat.SupplementalDiagnosisEffectiveStartDate = GetDataValue(item.splmtl_diag_strt_eff_dt);
+                cat.SupplementalDiagnosisEffectiveEndDate = GetDataValue(item.splmtl_diag_end_eff_dt);
+                cat.UpdatedBy = GetDataValue(item.rec_updt_user_id_cd);
+                cat.UpdateDate = GetDataValue(item.rec_updt_dt);
+                cat.CreatedBy = GetDataValue(item.rec_creat_user_id_cd);
+                cat.CreateDate = GetDataValue(item.rec_creat_dt);
+
+
+
+                categories.Add(cat);
+            }
+            return categories;
+        }
+        public SupplementalDiagnosisModel GetSupplementalDiagnosis(string id)
+        {
+
+            var repo = new HealthInformationProgram.Data.Repositories.SupplementalDiagnosisRepository();
+       
+            var dataItem = repo.GetSupplementalDiagnosis(Convert.ToDecimal(id));
+
+
+
+            var cat = new SupplementalDiagnosisModel();
+
+            cat.SupplementalDiagnosisId = GetDataValue(dataItem.splmtl_diag_id);
+            cat.SupplementalDiagnosisDescription = GetDataValue(dataItem.splmtl_diag_descn);
+            cat.SortOrder = GetDataValue(dataItem.user_intrfc_sort_ord);
+            cat.Status = GetDataValue(dataItem.splmtl_diag_stat);
+            cat.SupplementalDiagnosisEffectiveStartDate = GetDataValue(dataItem.splmtl_diag_strt_eff_dt);
+            cat.SupplementalDiagnosisEffectiveEndDate = GetDataValue(dataItem.splmtl_diag_end_eff_dt);
+            cat.UpdatedBy = GetDataValue(dataItem.rec_updt_user_id_cd);
+            cat.UpdateDate = GetDataValue(dataItem.rec_updt_dt);
+            cat.CreatedBy = GetDataValue(dataItem.rec_creat_user_id_cd);
+            cat.CreateDate = GetDataValue(dataItem.rec_creat_dt);
+
+
+            return cat;
+        }
+        public SupplementalDiagnosisModel GetSupplementalDiagnosisByDescription(string description)
+        {
+
+            var repo = new HealthInformationProgram.Data.Repositories.SupplementalDiagnosisRepository();
+            var dataItem = repo.GetSupplementalDiagnosis(description);
+
+
+
+            var cat = new SupplementalDiagnosisModel();
+
+            cat.SupplementalDiagnosisId = GetDataValue(dataItem.splmtl_diag_id);
+            cat.SupplementalDiagnosisDescription = GetDataValue(dataItem.splmtl_diag_descn);
+            cat.SortOrder = GetDataValue(dataItem.user_intrfc_sort_ord);
+            cat.Status = GetDataValue(dataItem.splmtl_diag_stat);
+            cat.SupplementalDiagnosisEffectiveStartDate = GetDataValue(dataItem.splmtl_diag_strt_eff_dt);
+            cat.SupplementalDiagnosisEffectiveEndDate = GetDataValue(dataItem.splmtl_diag_end_eff_dt);
+            cat.UpdatedBy = GetDataValue(dataItem.rec_updt_user_id_cd);
+            cat.UpdateDate = GetDataValue(dataItem.rec_updt_dt);
+            cat.CreatedBy = GetDataValue(dataItem.rec_creat_user_id_cd);
+            cat.CreateDate = GetDataValue(dataItem.rec_creat_dt);
+
+
+
+            return cat;
+        }
+        public int CreateSupplementalDiagnosis(SupplementalDiagnosisModel model)
+        {
+
+            var repo = new SupplementalDiagnosisRepository();
+            var dataModel = new HealthInformationProgram.Data.Tables.lkup_splmtl_diag();
+
+            dataModel.splmtl_diag_id = Convert.ToDecimal(model.SupplementalDiagnosisId);
+            dataModel.splmtl_diag_stat = model.Status;
+            dataModel.splmtl_diag_descn = model.SupplementalDiagnosisDescription;
+            dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
+            dataModel.splmtl_diag_strt_eff_dt = Convert.ToDateTime(model.SupplementalDiagnosisEffectiveStartDate);
+            dataModel.splmtl_diag_end_eff_dt = Convert.ToDateTime(model.SupplementalDiagnosisEffectiveEndDate);
+            dataModel.rec_creat_dt = DateTime.Now;
+            dataModel.rec_creat_user_id_cd = model.CreatedBy;
+            dataModel.rec_updt_dt = DateTime.Now;
+            dataModel.rec_updt_user_id_cd = model.UpdatedBy;
+
+            try
+            {
+
+                var returnCode = repo.Update(dataModel);
+                return returnCode;
+            }
+            catch ( Exception ex )
+            {
+                throw ex;
+            }
+
+        }
+        public int UpdateSupplementalDiagnosis(SupplementalDiagnosisModel model)
+        {
+
+            var repo = new SupplementalDiagnosisRepository();
+            var dataModel = new HealthInformationProgram.Data.Tables.lkup_splmtl_diag();
+
+
+            dataModel.diag_id = Convert.ToDecimal(model.DiagnosisId);
+            dataModel.splmtl_diag_id = Convert.ToDecimal(model.SupplementalDiagnosisId);
+            dataModel.splmtl_diag_stat = model.Status;
+            dataModel.splmtl_diag_descn = model.SupplementalDiagnosisDescription;
+            dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
+            dataModel.splmtl_diag_strt_eff_dt = Convert.ToDateTime(model.SupplementalDiagnosisEffectiveStartDate);
+            dataModel.splmtl_diag_end_eff_dt = Convert.ToDateTime(model.SupplementalDiagnosisEffectiveEndDate);
+            dataModel.rec_updt_dt = DateTime.Now;
+            dataModel.rec_updt_user_id_cd = model.UpdatedBy;
+
+            try
+            {
+
+                var returnCode = repo.Update(dataModel);
+                return returnCode;
+            }
+            catch ( Exception ex )
+            {
+                throw ex;
+            }
+
+        }
+        #endregion
     }
 }

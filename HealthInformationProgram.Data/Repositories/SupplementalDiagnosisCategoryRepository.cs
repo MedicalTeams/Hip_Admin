@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using HealthInformationProgram.Data.DataContext;
@@ -41,6 +43,22 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
+        public lkup_splmtl_diag_cat GetSupplementalDiagnosisCat(string  category)
+        {
+
+            try
+            {
+                using ( var ctx = new ClinicDataContext(connString) )
+                {
+
+                    return ctx.lkup_splmtl_diag_cat.Where(v => v.splmtl_diag_cat == category).FirstOrDefault();
+                }
+            }
+            catch ( Exception ex )
+            {
+                throw ex;
+            }
+        }
         public int CreateSupplementalDiagnosisCat(lkup_splmtl_diag_cat entity)
         {
             try
@@ -72,13 +90,13 @@ namespace HealthInformationProgram.Data.Repositories
                         throw new Exception("Record doesn't exist and cannot be updated");
                     }
                     supplementalDiagnosisCategories.splmtl_diag_cat_id = entity.splmtl_diag_cat_id;
-                    //supplementalDiagnosisCategories.diag_descn = entity. diag_descn;
                     supplementalDiagnosisCategories.splmtl_diag_cat = entity.splmtl_diag_cat;
-                    supplementalDiagnosisCategories.rec_updt_user_id_cd = entity.rec_updt_user_id_cd;
-                    supplementalDiagnosisCategories.rec_updt_dt = entity.rec_updt_dt;
                     supplementalDiagnosisCategories.user_intrfc_sort_ord = entity.user_intrfc_sort_ord;
                     supplementalDiagnosisCategories.splmtl_diag_cat_stat = entity.splmtl_diag_cat_stat;
 
+
+                    supplementalDiagnosisCategories.rec_updt_user_id_cd = entity.rec_updt_user_id_cd;
+                    supplementalDiagnosisCategories.rec_updt_dt = entity.rec_updt_dt;
 
                     ctx.Entry(supplementalDiagnosisCategories).State = System.Data.Entity.EntityState.Modified;
 
@@ -86,6 +104,14 @@ namespace HealthInformationProgram.Data.Repositories
 
                     return result;
                 }
+            }
+            catch ( DbEntityValidationException ex )
+            {
+                throw ex;
+            }
+            catch ( EntityException ex )
+            {
+                throw ex;
             }
             catch ( Exception ex )
             {

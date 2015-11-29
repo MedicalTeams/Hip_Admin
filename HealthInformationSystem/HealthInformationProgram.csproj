@@ -214,7 +214,7 @@
     <Compile Include="Models\RawVisitModel.cs" />
     <Compile Include="Models\RevisitModel.cs" />
     <Compile Include="Models\SupplementalDiagnosisModel.cs" />
-    <Compile Include="Models\SupplementleDiagnosisCategoryModel.cs" />
+    <Compile Include="Models\SupplementalDiagnosisCategoryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

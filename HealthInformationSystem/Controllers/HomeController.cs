@@ -59,7 +59,7 @@ namespace HealthInformationProgram.Controllers
         private static string GetEntityDefinition(string entityName)
         {
             string jsonString = string.Empty;
-
+            var diagnosisData = new Data.DiagnosisData();
             switch ( entityName )
             {
                 case "RevisitModel":
@@ -70,9 +70,23 @@ namespace HealthInformationProgram.Controllers
                     break;
                 case "DiagnosisModel":
                     var diagnosisModel = new List<DiagnosisModel>();
-                    var diagnosisData = new Data.DiagnosisData();
+                    
                     diagnosisModel = diagnosisData.GetAllDiagnosis();
                     jsonString = GetJsonString(diagnosisModel);
+                    break;
+                case "SupplementalDiagnosisCategoryModel":
+                    var categoryModel = new List<SupplementalDiagnosisCategoryModel>();
+                    categoryModel = diagnosisData.GetAllSupplementalCategories();
+                    jsonString = GetJsonString(categoryModel);
+
+                    break;
+                case "SupplementalDiagnosisModel":
+                    var supplementalDiagnosis = new List<SupplementalDiagnosisModel>();
+
+                    supplementalDiagnosis = diagnosisData.GetAllSupplementalDiagnosis();
+                    jsonString = GetJsonString(supplementalDiagnosis);
+
+
                     break;
             }
             return jsonString;
@@ -99,6 +113,12 @@ namespace HealthInformationProgram.Controllers
                     break;
                 case "DiagnosisModel":
                     UpdateDiagnosis(jsonObject);
+                    break;
+                case "SupplementalDiagnosisModel":
+                    UpdateSupplementalDiagnosis(jsonObject);
+                    break;
+                case "SupplementalDiagnosisCategoryModel":
+                    UpdateSupplementalDiagnosisCategory(jsonObject);
                     break;
 
             }
@@ -134,13 +154,60 @@ namespace HealthInformationProgram.Controllers
             model.DiagnosisStatus = (string) jsonObject["DiagnosisStatus"];
             model.IcdCode = (string) jsonObject["IcdCode"];
             model.SortOrder = (string) jsonObject["SortOrder"];
+            model.DiagnosisEffectiveStartDate = (string) jsonObject["DiagnosisEffectiveStartDate"];
+            model.DiagnosisEffectiveEndDate = (string) jsonObject["DiagnosisEffectiveEndDate"];
             model.UpdateDate = DateTime.Now.ToString();
             model.UpdatedBy = "current user";
 
 
-            repo.Update(model);
+            repo.UpdateDiagnosis(model);
 
         }
+        private void UpdateSupplementalDiagnosis(JObject jsonObject)
+        {
+            var model = new HealthInformationProgram.Models.SupplementalDiagnosisModel();
+            var repo = new HealthInformationProgram.Data.DiagnosisData();
+
+            model.SupplementalDiagnosisId = (string) jsonObject["SupplementalDiagnosisId"];
+            model.SupplementalDiagnosisDescription = (string) jsonObject["SupplementalDiagnosisDescription"];
+            model.Status = (string) jsonObject["Status"];
+            model.DiagnosisId = (string) jsonObject["DiagnosisId"];
+            model.SupplementalDiagnosisEffectiveStartDate = (string) jsonObject["SupplementalDiagnosisEffectiveStartDate"];
+            model.SupplementalDiagnosisEffectiveEndDate = (string) jsonObject["SupplementalDiagnosisEffectiveEndDate"];
+            model.SortOrder = (string) jsonObject["SortOrder"];
+            model.UpdateDate = DateTime.Now.ToString();
+            model.UpdatedBy = "current user";
+
+
+            repo.UpdateSupplementalDiagnosis(model);
+
+        }
+        private void UpdateSupplementalDiagnosisCategory(JObject jsonObject)
+        {
+            var model = new HealthInformationProgram.Models.SupplementalDiagnosisCategoryModel();
+            var repo = new HealthInformationProgram.Data.DiagnosisData();
+
+            model.SupplementalDiagnosisCategoryId = (string) jsonObject["SupplementalDiagnosisCategoryId"];
+            model.SupplementalDiagnosisCategoryType = (string) jsonObject["SupplementalDiagnosisCategoryType"];
+            model.Status = (string) jsonObject["Status"];
+            model.SortOrder = (string) jsonObject["SortOrder"];
+            model.SupplementalDiagnosisCategoryEffectiveStartDate = (string) jsonObject["SupplementalDiagnosisCategoryEffectiveStartDate"];
+            model.SupplementalDiagnosisCategoryEffectiveEndDate = (string) jsonObject["SupplementalDiagnosisCategoryEffectiveEndDate"];
+            model.UpdateDate = DateTime.Now.ToString();
+            model.UpdatedBy = "current user";
+
+
+            repo.UpdateSupplementalDiagnosisCategory(model);
+
+        }
+    
+        
+        
+        
+        
+        
+        
+        //not currently being used 11-28-15
         private string GenerateValidationModel(string entityName)
         {
             Type type = Type.GetType("HealthInformationProgram.Models." + entityName);
