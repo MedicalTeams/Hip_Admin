@@ -55,6 +55,12 @@ namespace HealthInformationProgram.Controllers
             var jsonString = GetEntityDefinition(entityName);
             return Json(jsonString);
         }
+        [HttpPost]
+        public ActionResult Create(string modelName)
+        {
+            var model = new HealthInformationProgram.Models.DiagnosisModel(); //TODO: make dynamic using string parm
+            return PartialView("~/Views/Home/_Create.cshtml",model);
+        }
 
         private static string GetEntityDefinition(string entityName)
         {

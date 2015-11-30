@@ -1,4 +1,4 @@
-@model List<HealthInformationProgram.Models.RevisitModel>
+
 @{
     ViewBag.Title = "Database Management";
 }
@@ -92,9 +92,13 @@
 </header>
 <body>
 
-    <button class="menuOption" type="button" value="RevisitModel">Revisit</button>
+    <div id="createWrapper">
+      
+    </div>
+     <button id="create" type="button" >Create</button>
+    @*<button class="menuOption" type="button" value="RevisitModel">Revisit</button>
     <button class="menuOption" type="button" value="DiagnosisModel">DiagnosisModel</button>
-    <select id="selectEntity">
+    *@<select id="selectEntity">
         <option class="menuOption" value="RevisitModel">Revisit</option>
         <option class="menuOption" value="DiagnosisModel">Diagnosis</option>
         <option class="menuOption" value="SupplementalDiagnosisCategoryModel">Supplemental Diagnosis Categories</option>
@@ -256,6 +260,28 @@
             error: function (mydata) { alert("error"); alert(mydata); },
         });
     }
+    function create(entityName) {
+
+        $.ajax({
+
+            url: "/Home/Create",
+            data: { modelName: entityName },//{ keyValues: JSON.stringify(keyValue), entityName: entityName },
+            type: 'POST',
+            //dataType: 'json',
+            async:false,
+            success: function (mydata) {
+                $('#createWrapper').append(mydata);
+                // alert("success");
+                //console.log(mydata)
+                //matrix = eval("(" + mydata + ')');
+                //populate();
+            },
+            error: function (mydata) {
+                console.log(mydata);
+                alert("error"); alert(mydata);
+            },
+        });
+    }
 
     $(document).ready(function () {
 
@@ -268,5 +294,10 @@
             var entityName = $(this).val()
             getTable(entityName);
         })
+        $('#create').click(function () {
+            var entity = $('#selectEntity').val();
+            create(entity);
+
+        });
     });
 </script>
