@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using HealthInformationProgram.Data.DataContext;
@@ -48,11 +50,21 @@ namespace HealthInformationProgram.Data.Repositories
 
                 using ( var ctx = new ClinicDataContext(connString) )
                 {
-                    ctx.lkup_diag.Add(entity);
+
+                    IdentityInsertOn<lkup_diag>(ctx, entity);
+                    ctx.Entry(entity).State = System.Data.Entity.EntityState.Added;
                     int result = ctx.SaveChanges();
 
-                    return result;
+                    return  result;
                 }
+            }
+            catch ( DbEntityValidationException ex )
+            {
+                throw ex;
+            }
+            catch ( EntityException ex )
+            {
+                throw ex;
             }
             catch ( Exception ex )
             {

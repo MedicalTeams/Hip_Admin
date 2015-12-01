@@ -107,7 +107,7 @@ namespace HealthInformationProgram.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateEntity(string keyValues, string entityName)
+        public ActionResult SaveEntity(string keyValues, string entityName, bool isNew)
         {
             var jsonObject = JObject.Parse(keyValues);
             string jsonString = string.Empty;
@@ -118,7 +118,7 @@ namespace HealthInformationProgram.Controllers
                     UpdateRevisit(jsonObject);
                     break;
                 case "DiagnosisModel":
-                    UpdateDiagnosis(jsonObject);
+                    SaveDiagnosis(jsonObject,isNew);
                     break;
                 case "SupplementalDiagnosisModel":
                     UpdateSupplementalDiagnosis(jsonObject);
@@ -149,7 +149,7 @@ namespace HealthInformationProgram.Controllers
             repo.UpdateRevisit(model);
 
         }
-        private void UpdateDiagnosis(JObject jsonObject)
+        private void SaveDiagnosis(JObject jsonObject, bool isNew)
         {
             var model = new HealthInformationProgram.Models.DiagnosisModel();
             var repo = new HealthInformationProgram.Data.DiagnosisData();
@@ -165,9 +165,14 @@ namespace HealthInformationProgram.Controllers
             model.UpdateDate = DateTime.Now.ToString();
             model.UpdatedBy = "current user";
 
-
-            repo.UpdateDiagnosis(model);
-
+            if ( isNew )
+            {
+                repo.CreateDiagnosis(model);
+            }
+            else
+            {
+                repo.UpdateDiagnosis(model);
+            }
         }
         private void UpdateSupplementalDiagnosis(JObject jsonObject)
         {

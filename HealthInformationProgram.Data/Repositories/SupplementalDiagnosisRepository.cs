@@ -67,11 +67,21 @@ namespace HealthInformationProgram.Data.Repositories
 
                 using ( var ctx = new ClinicDataContext(connString) )
                 {
-                    ctx.lkup_splmtl_diag.Add(entity);
+                    IdentityInsertOn<lkup_splmtl_diag>(ctx, entity);
+                    ctx.Entry(entity).State = System.Data.Entity.EntityState.Added;
                     int result = ctx.SaveChanges();
+                   
 
                     return result;
                 }
+            }
+            catch ( DbEntityValidationException ex )
+            {
+                throw ex;
+            }
+            catch ( EntityException ex )
+            {
+                throw ex;
             }
             catch ( Exception ex )
             {

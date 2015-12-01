@@ -247,8 +247,8 @@
 
         $.ajax({
 
-            url: "/Home/UpdateEntity",
-            data: { keyValues: JSON.stringify(keyValue), entityName: entityName },
+            url: "/Home/SaveEntity",
+            data: { keyValues: JSON.stringify(keyValue), entityName: entityName,isNew:false },
             type: 'POST',
             dataType: 'json',
             success: function (mydata) {

@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace HealthInformationProgram.Data.Tables
 {
@@ -10,8 +13,8 @@ namespace HealthInformationProgram.Data.Tables
             this.lkup_splmtl_diag = new List<lkup_splmtl_diag>();
             this.ov_diag = new List<ov_diag>();
         }
-
-        public decimal diag_id { get; set; }
+       [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        public Nullable<decimal> diag_id { get; set; }
         public string diag_descn { get; set; }
         public string icd_cd { get; set; }
         public string diag_abrvn { get; set; }

@@ -2,6 +2,27 @@
     
     <h1>Create</h1>
 
-    @Html.EditorForModel();
+    @Html.EditorForModel()
    
+    <button id="save" value="save" onclick="save()">Save</button>
 </div>
+<script>
+
+    function save(keyValue, entityName) {
+
+        $.ajax({
+
+            url: "/Home/SaveEntity",
+            data: { keyValues: JSON.stringify(keyValue), entityName: entityName, isNew:true },
+            type: 'POST',
+            dataType: 'json',
+            success: function (mydata) {
+                // alert("success");
+                console.log(mydata)
+                matrix = eval("(" + mydata + ')');
+                populate();
+            },
+            error: function (mydata) { alert("error"); alert(mydata); },
+        });
+    }
+</script>

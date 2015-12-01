@@ -89,7 +89,7 @@ namespace HealthInformationProgram.Data
             try
             {
 
-                var returnCode = repo.Update(dataModel);
+                var returnCode = repo.CreateDiagnosis(dataModel);
                 return returnCode;
             }
             catch ( Exception ex )
