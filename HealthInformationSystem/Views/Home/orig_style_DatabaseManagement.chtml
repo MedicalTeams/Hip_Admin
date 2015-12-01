@@ -1,197 +1,229 @@
 
-@model List<HealthInformationProgram.Models.RevisitModel>
-    @{
-        ViewBag.Title = "Database Management";
-    }
+@{
+    ViewBag.Title = "Database Management";
+}
 
 
 
-
+<header>
     <style class="cp-pen-styles">
-        .disabled_input {
+        .disabled_input
+        {
             background-color: #e0e0e0;
         }
 
-        #the_editor {
-margin-right:10px;
-             border-right-style: solid;
-    border-right-width: 1px;
+        #the_editor
+        {
+            margin-right: 10px;
+            border-right-style: solid;
+            border-right-width: 1px;
         }
-        .highlight { background-color: red; }
-        .odd {
+
+        .highlight
+        {
+            background-color: red;
+        }
+
+        .odd
+        {
             background: #fff;
         }
-        .entry {
+
+        .entry
+        {
             margin-bottom: 10px;
         }
 
-        .even {
+        .even
+        {
             background: #eee;
         }
 
-        .table-header-rotated {
+        .table-header-rotated
+        {
             border-collapse: collapse;
             height: 400px;
             overflow: scroll;
         }
 
-        .csstransforms .table-header-rotated td {
+        .csstransforms .table-header-rotated td
+        {
             width: 30px;
         }
 
-        .no-csstransforms .table-header-rotated th {
+        .no-csstransforms .table-header-rotated th
+        {
             padding: 5px 10px;
         }
 
-        .table-header-rotated td {
+        .table-header-rotated td
+        {
             text-align: center;
             padding: 10px 5px;
             border: 1px solid #ccc;
         }
 
-        .csstransforms .table-header-rotated th.rotate {
+        .csstransforms .table-header-rotated th.rotate
+        {
             height: 140px;
             white-space: nowrap;
         }
 
-            .csstransforms .table-header-rotated th.rotate > div {
+            .csstransforms .table-header-rotated th.rotate > div
+            {
                 -webkit-transform: translate(25px, 51px) rotate(315deg);
                 -ms-transform: translate(25px, 51px) rotate(315deg);
                 transform: translate(25px, 51px) rotate(315deg);
                 width: 30px;
             }
 
-                .csstransforms .table-header-rotated th.rotate > div > span {
+                .csstransforms .table-header-rotated th.rotate > div > span
+                {
                     border-bottom: 1px solid #ccc;
                     padding: 5px 10px;
                 }
 
-        .table-header-rotated th.row-header {
+        .table-header-rotated th.row-header
+        {
             padding: 0 10px;
             border-bottom: 1px solid #ccc;
         }
     </style>
-    </head>
-    <body>
+</header>
+<body>
 
-        <button id="btn" type="button" value="">Revisit</button>
-        <button id="btn" type="button" value="AccountModels">AccountModels</button>
+    <div id="createWrapper">
+      
+    </div>
+     <button id="create" type="button" >Create</button>
+    @*<button class="menuOption" type="button" value="RevisitModel">Revisit</button>
+    <button class="menuOption" type="button" value="DiagnosisModel">DiagnosisModel</button>
+    *@<select id="selectEntity">
+        <option class="menuOption" value="RevisitModel">Revisit</option>
+        <option class="menuOption" value="DiagnosisModel">Diagnosis</option>
+        <option class="menuOption" value="SupplementalDiagnosisCategoryModel">Supplemental Diagnosis Categories</option>
+        <option class="menuOption" value="SupplementalDiagnosisModel">Supplemental Diagnosis</option>
 
-        <hr />
+    </select>
+    <hr />
 
 
-        <table><tr><td valign="top">
-                    <div id="the_editor"></div>
-       
+    <table>
+        <tr>
+            <td valign="top">
+                <div id="the_editor"></div>
+
             </td>
             <td valign="top">
-            <div id="the_table">
-        </div>
+                <div id="the_table">
+                </div>
 
-   </td>         
-            </tr></table>
+            </td>
+        </tr>
+    </table>
+</body>
+<script>
+    var matrix = [];
 
-        <script>
-            var matrix = [];
+    function populate() {
 
-            function populate() {
+        var editor = "";
+        var html = "";
 
-                var editor = "";
-                var html = "";
+        editor = "<ul>";
 
-                editor = "<ul>";
+        html += "<table class='table table-header-rotated'><thead><tr>";
 
-                html += "<table class='table table-header-rotated'><thead><tr>";
-            
 
         //value does not matter. Just treating this assoc array as a Set.
-                var do_not_edit = {};
-                do_not_edit["RevisitId"]="";
-                do_not_edit["CreateDate"]="";
-                do_not_edit["CreatedBy"] = "";
-                do_not_edit["UpdateDate"] = "";
-                do_not_edit["curr_sys_id"] = "";
-                do_not_edit["diag_alert_thrshld_id"]="";
-                do_not_edit["faclty_hw_invtry_id"]="";
-                do_not_edit["bnfcry_id"]="";
-                do_not_edit["diag_id"]="";
-                do_not_edit["faclty_id"]="";
-                do_not_edit["gndr_id"]="";
-                do_not_edit["orgzn_id"]="";
-                do_not_edit["rvisit_id"]="";
-                do_not_edit["splmtl_diag_id"]="";
-                do_not_edit["splmtl_diag_cat_id"]="";
-                do_not_edit["faclty_id"]="";
-                do_not_edit["ov_diag_id"]="";
-                do_not_edit["visit_uuid"]="";
-                do_not_edit["element_id"]="";
+        var do_not_edit = {};
+        do_not_edit["RevisitId"] = "";
+        do_not_edit["CreateDate"] = "";
+        do_not_edit["CreatedBy"] = "";
+        do_not_edit["UpdateDate"] = "";
+        do_not_edit["curr_sys_id"] = "";
+        do_not_edit["diag_alert_thrshld_id"] = "";
+        do_not_edit["faclty_hw_invtry_id"] = "";
+        do_not_edit["bnfcry_id"] = "";
+        do_not_edit["diag_id"] = "";
+        do_not_edit["faclty_id"] = "";
+        do_not_edit["gndr_id"] = "";
+        do_not_edit["orgzn_id"] = "";
+        do_not_edit["rvisit_id"] = "";
+        do_not_edit["splmtl_diag_id"] = "";
+        do_not_edit["splmtl_diag_cat_id"] = "";
+        do_not_edit["faclty_id"] = "";
+        do_not_edit["ov_diag_id"] = "";
+        do_not_edit["visit_uuid"] = "";
+        do_not_edit["element_id"] = "";
 
 
-                var disabled = ""; 
-                for (var key in matrix[0]) {
-                    html += "<th class='rotate'><div><span>" + key + "</span></div></th>";
-                    if ( do_not_edit.hasOwnProperty( key )) {
-                        disabled += key + "<div class='entry'><br><input type='text' class='disabled_input' id='" + key + "' size='30' value='' disabled></input></div>";
+        var disabled = "";
+        for (var key in matrix[0]) {
+            html += "<th class='rotate'><div><span>" + key + "</span></div></th>";
+            if (do_not_edit.hasOwnProperty(key)) {
+                disabled += key + "<div class='entry'><br><input type='text' class='disabled_input' id='" + key + "' size='30' value='' disabled></input></div>";
 
-                    } else {
-                        editor += key + "<div class='entry' <br><input type='text' id='" + key + "' size='30' value=''></input></div>";
-                    }
-                    
-                }
-                editor += disabled;
-        
-                for (var row = 0; row < matrix.length; row++) {
-                    var css_class = "odd";
-                    if (row % 2 == 0) {
-                        css_class = "even";
-                    }
-                    html += "<tr class='" + css_class + "' id='" + row + "' onclick='clickRow(this);'>";
-
-                    for (var key in matrix[row]) {
-                        value = matrix[row][key];
-                        html += "<td>" + value + "</td>";
-                    }
-                    html += "</tr>";
-                }
-
-                document.getElementById("the_table").innerHTML = html;
-                editor += "<br><button id='edit' onclick='doSubmit();'>update</button><hr>";
-                document.getElementById("the_editor").innerHTML = editor;
+            } else {
+                editor += key + "<div class='entry' <br><input type='text' id='" + key + "' size='30' value=''></input></div>";
             }
 
+        }
+        editor += disabled;
+
+        for (var row = 0; row < matrix.length; row++) {
+            var css_class = "odd";
+            if (row % 2 == 0) {
+                css_class = "even";
+            }
+            html += "<tr class='" + css_class + "' id='" + row + "' onclick='clickRow(this);'>";
+
+            for (var key in matrix[row]) {
+                value = matrix[row][key];
+                html += "<td>" + value + "</td>";
+            }
+            html += "</tr>";
+        }
+
+        document.getElementById("the_table").innerHTML = html;
+        editor += "<br><button id='edit' onclick='doSubmit();'>update</button><hr>";
+        document.getElementById("the_editor").innerHTML = editor;
+    }
+
     function doSubmit() {
+        console.log("Current entity(do Submit function = " + currentEntity);
         var results = {};
         for (var key in matrix[0]) {
             results[key] = document.getElementById(key).value;
         }
-        update(results, "RevisitModel");
+        update(results, currentEntity);
     }
-     var lastClickedRow = undefined;
-     var lastCssClass = undefined;
+    var lastClickedRow = undefined;
+    var lastCssClass = undefined;
     function clickRow(obj) {
         lastCssClass = document.getElementById(obj.id).className;
         document.getElementById(obj.id).className = "highlight";
 
-        if (  document.getElementById(lastClickedRow) != undefined ) {
+        if (document.getElementById(lastClickedRow) != undefined) {
             document.getElementById(lastClickedRow).className = lastCssClass;
             console.log("YEP for " + lastClickedRow + "   and " + lastCssClass);
         } else {
-            console.log("NOPE for " + lastClickedRow + "   and " + lastCssClass); 
+            console.log("NOPE for " + lastClickedRow + "   and " + lastCssClass);
         }
         lastClickedRow = obj.id;
         lastCssClass = document.getElementById(obj.id).className;
         for (var key in matrix[obj.id]) {
             document.getElementById(key).value = matrix[obj.id][key];
         }
-}
+    }
 </script>
 <script src="~/Scripts/jquery-1.8.2.min.js"></script>
 <script>
-
+    var currentEntity = null;
     function getTable(entityName) {
         $.ajax({
             url: "/Home/GetEntity",
-            data: { entityName: entityName  },
+            data: { entityName: entityName },
             type: 'POST',
             dataType: 'json',
             success: function (mydata) {
@@ -204,6 +236,8 @@ margin-right:10px;
                     }
                 }*/
                 populate();
+                currentEntity = entityName;
+                console.log("Current entity = " + currentEntity);
             },
             error: function (mydata) { alert("error"); alert(mydata); },
         });
@@ -218,18 +252,52 @@ margin-right:10px;
             type: 'POST',
             dataType: 'json',
             success: function (mydata) {
-                alert("success");
+                // alert("success");
                 console.log(mydata)
+                matrix = eval("(" + mydata + ')');
+                populate();
             },
             error: function (mydata) { alert("error"); alert(mydata); },
+        });
+    }
+    function create(entityName) {
+
+        $.ajax({
+
+            url: "/Home/Create",
+            data: { modelName: entityName },//{ keyValues: JSON.stringify(keyValue), entityName: entityName },
+            type: 'POST',
+            //dataType: 'json',
+            async:false,
+            success: function (mydata) {
+                $('#createWrapper').append(mydata);
+                // alert("success");
+                //console.log(mydata)
+                //matrix = eval("(" + mydata + ')');
+                //populate();
+            },
+            error: function (mydata) {
+                console.log(mydata);
+                alert("error"); alert(mydata);
+            },
         });
     }
 
     $(document).ready(function () {
 
-        $('#btn').click(function(){
+        $('#selectEntity').on('change', function () {
+            var entityName = $(this).val()
+            getTable(entityName);
+        });
+
+        $('.menuOption').click(function () {
             var entityName = $(this).val()
             getTable(entityName);
         })
+        $('#create').click(function () {
+            var entity = $('#selectEntity').val();
+            create(entity);
+
+        });
     });
 </script>
