@@ -1,0 +1,119 @@
+﻿@model HealthInformationProgram.Models.DiagnosisModel
+
+@Styles.Render("~/Content/css")
+@{
+    var statusList = new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "A" }, new SelectListItem { Text = "Inactive", Value = "I" } };
+ 
+}
+<div style="background-color: white; padding:5px 10px 10px 10px">
+    <div id="createHeader">
+        <h1>Create Diagnosis</h1>
+    </div>
+    <div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.DiagnosisDescription)
+            @Html.TextBoxFor(m => m.DiagnosisDescription)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.DiagnosisAbbreviation)
+            @Html.TextBoxFor(m => m.DiagnosisAbbreviation)
+        </div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.SortOrder)
+            @Html.TextBoxFor(m => m.SortOrder)
+
+        </div>
+        @Html.LabelFor(m => m.IcdCode)
+        @Html.TextBoxFor(m => m.IcdCode)
+    </div>
+    <div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.DiagnosisEffectiveStartDate)
+            @Html.TextBoxFor(m => m.DiagnosisEffectiveStartDate)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.DiagnosisEffectiveEndDate)
+            @Html.TextBoxFor(m => m.DiagnosisEffectiveEndDate)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.DiagnosisStatus)
+            @Html.DropDownListFor(m => m.DiagnosisStatus, statusList)
+
+        </div>
+    </div>
+    <div>
+    </div>
+
+    <div class="createFooter">
+        <div id="buttonWrapper">
+            <button id="save" value="SaveDiagnosis" onclick="save()">Save</button>
+            <button id="close">Close</button>
+        </div>
+    </div>
+</div>
+<script>
+
+
+    DiagnosisObject = {
+        objectModel: function () {
+            return result = {
+                DiagnosisDescription: $("#DiagnosisDescription").val(),
+                DiagnosisAbbreviation: $("#DiagnosisAbbreviation").val(),
+                DiagnosisEffectiveStartDate: $("#DiagnosisEffectiveStartDate").val(),
+                DiagnosisEffectiveEndDate: $("#DiagnosisEffectiveEndDate").val(),
+                DiagnosisStatus: $("#DiagnosisStatus").val(),
+                IcdCode: $("#IcdCode").val(),
+            };
+        },
+        create: function (inputData) {
+            console.log("model data" + inputData);
+
+            $.ajax({
+
+                url: "/Home/SaveDiagnosis",
+                data: JSON.stringify(inputData),
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (mydata) {
+                    window.parent.getTable(window.parent.currentEntity);
+                },
+                error: function (mydata) {
+                    console.log(myData);
+                    alert("error"); alert(mydata);
+                },
+            });
+
+            return false;
+        }
+
+    }
+
+
+
+    function save() {
+
+        var model = DiagnosisObject.objectModel();
+        DiagnosisObject.create(model);
+
+    }
+
+
+    $('#DiagnosisEffectiveStartDate').datepicker();
+    $('#DiagnosisEffectiveEndDate').datepicker();
+
+
+
+
+    $(document).ready(function () {
+
+        $('#close').on('click', function close() {
+
+            window.parent.dialog.dialog("close")
+            window.parent.getTable(window.parent.currentEntity);
+
+            return false;
+        });
+    });
+</script>
