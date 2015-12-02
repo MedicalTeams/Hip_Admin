@@ -1,27 +1,29 @@
-
 @{
     ViewBag.Title = "Database Management";
 }
-
-
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/themes/base/css")
 
 <header>
     <style class="cp-pen-styles">
+        .ok_edit
+        {
+            background: #eee;
+            border: 1px solid #000;
+            min-width: 50px;
+        }
 
-         .ok_edit {
-                        background: #eee;
-                        border: 1px solid #000;
-                        min-width: 50px;
-                    }
-                    
-                    .no_edit {
-                        background: #e0e0e0;
-                        border: 1px solid #000;
-                        min-width: 50px;
-                    }
-                    .txtfld {
-                        width:100px;
-                    }
+        .no_edit
+        {
+            background: #e0e0e0;
+            border: 1px solid #000;
+            min-width: 50px;
+        }
+
+        .txtfld
+        {
+            width: 100px;
+        }
 
         .disabled_input
         {
@@ -105,26 +107,32 @@
             border-bottom: 1px solid #ccc;
         }
     </style>
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
 </header>
 <body>
-    <div id="createWrapper">
-      
+    <div id="createWrapper" >
+        <div id="newItem"></div>
     </div>
-     <button id="create" type="button" >Create</button>
-    @*<button class="menuOption" type="button" value="RevisitModel">Revisit</button>
-    <button class="menuOption" type="button" value="DiagnosisModel">DiagnosisModel</button>
-    *@<select id="selectEntity">
-          <option class="menuOption" value="">Choose a database</option>
-       <option class="menuOption" value="RevisitModel">Revisit</option>
-        <option class="menuOption" value="DiagnosisModel">Diagnosis</option>
-        <option class="menuOption" value="SupplementalDiagnosisCategoryModel">Supplemental Diagnosis Categories</option>
-        <option class="menuOption" value="SupplementalDiagnosisModel">Supplemental Diagnosis</option>
+    <div>
 
-    </select>
+        <div>
+            <select id="selectEntity">
+                <option class="menuOption" value="">Choose a database</option>
+                <option class="menuOption" value="RevisitModel">Revisit</option>
+                <option class="menuOption" value="DiagnosisModel">Diagnosis</option>
+                <option class="menuOption" value="SupplementalDiagnosisCategoryModel">Supplemental Diagnosis Categories</option>
+                <option class="menuOption" value="SupplementalDiagnosisModel">Supplemental Diagnosis</option>
+
+            </select>
+        </div>
+    </div>
     <hr />
+    <div>
+        <button id="create" type="button">Create</button>
+    </div>
 
-
-    <table>
+    <table id="tableWrapper">
         <tr>
             <td valign="top">
                 <div id="the_editor"></div>
@@ -182,7 +190,7 @@
             document.getElementById(obj.id).innerHTML = "Update";
         } else if (currentState == "Update") {
             document.getElementById(obj.id).innerHTML = "Edit";
-            doSubmit( obj.id );
+            doSubmit(obj.id);
         } else {
             alert("error in btnstate(); for row " + row);
         }
@@ -190,7 +198,7 @@
 
 
 
-    var do_not_edit = {}; 
+    var do_not_edit = {};
     function populate() {
         do_not_edit = getDoNotEdit();
 
@@ -214,7 +222,7 @@
             html += createButtons(row);
             for (var key in matrix[row]) {
 
-                var id = row + "_" + key; 
+                var id = row + "_" + key;
 
                 if (do_not_edit.hasOwnProperty(key)) {
                     html += "<td class='no_edit' align='right' id='" + id + "'  >" + matrix[row][key] + "</td>";
@@ -232,29 +240,29 @@
 
 
     //////////// 
-    function doSubmit( row ) {
+    function doSubmit(row) {
         console.log("Current entity(do Submit function = " + currentEntity);
         var results = {};
         var out = "";
 
         row = row.replace("b", "");
         for (var key in matrix[0]) {
-          //  results[key] = document.getElementById(key).value;
+            //  results[key] = document.getElementById(key).value;
             var id = row + "_" + key;
             var val = "";
 
-                if (do_not_edit.hasOwnProperty(key)) {
-                    val = document.getElementById(id).innerHTML;
-                } else {
-                    val = document.getElementById(id).value;
-                }
+            if (do_not_edit.hasOwnProperty(key)) {
+                val = document.getElementById(id).innerHTML;
+            } else {
+                val = document.getElementById(id).value;
+            }
 
-            
-                results[key] = val;
+
+            results[key] = val;
 
         }
 
-            update(results, currentEntity);
+        update(results, currentEntity);
     }
     /*
     var lastClickedRow = undefined;
@@ -277,9 +285,10 @@
     }
     */
 </script>
-<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+
 <script>
     var currentEntity = null;
+    var dialog = null;
     function getTable(entityName) {
         $.ajax({
             url: "/Home/GetEntity",
@@ -297,7 +306,8 @@
                 }*/
                 populate();
                 currentEntity = entityName;
-                console.log("getTable() Current entity = " + currentEntity);
+                $('#create').show();
+               
             },
             error: function (mydata) { alert("error"); alert(mydata); },
         });
@@ -308,7 +318,7 @@
         $.ajax({
 
             url: "/Home/SaveEntity",
-            data: { keyValues: JSON.stringify(keyValue), entityName: entityName,isNew:false },
+            data: { keyValues: JSON.stringify(keyValue), entityName: entityName, isNew: false },
             type: 'POST',
             dataType: 'json',
             success: function (mydata) {
@@ -327,9 +337,11 @@
             data: { modelName: entityName },//{ keyValues: JSON.stringify(keyValue), entityName: entityName },
             type: 'POST',
             //dataType: 'json',
-            async:false,
+            async: false,
             success: function (mydata) {
-                $('#createWrapper').append(mydata);
+                dialog.dialog("open");
+                $(".ui-dialog-titlebar").hide();
+                $('#newItem').html(mydata);
                 // alert("success");
                 //console.log(mydata)
                 //matrix = eval("(" + mydata + ')');
@@ -342,7 +354,20 @@
         });
     }
 
+    dialog = $('#createWrapper').dialog({
+        
+        autoOpen: false,
+        
+        width: 800,
+        modal: true,
+        
+
+        
+    });
+   
     $(document).ready(function () {
+        
+        $('#create').hide();
 
         $('#selectEntity').on('change', function () {
             var entityName = $(this).val()
@@ -360,3 +385,4 @@
         });
     });
 </script>
+

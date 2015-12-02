@@ -10,6 +10,7 @@ namespace HealthInformationProgram.Models
         public string SupplementalDiagnosisId { get; set; }
         public string SupplementalDiagnosisDescription { get; set; }
         public string DiagnosisId { get; set; }
+        public string Diagnosis { get; set; }
         public string SortOrder { get; set; }
         public string Status { get; set; }
         public string SupplementalDiagnosisEffectiveStartDate { get; set; }

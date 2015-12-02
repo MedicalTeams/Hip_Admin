@@ -67,6 +67,28 @@ namespace HealthInformationProgram.Data
             return diagView;
 
         }
+        public DiagnosisModel GetDiagnosis(decimal id)
+        {
+
+            var repo = new DiagnosisRepository();
+            var item = repo.GetDiagnosis(id);
+
+            var diagView = new DiagnosisModel();
+            diagView.DiagnosisId = item.diag_id.ToString();
+            diagView.DiagnosisStatus = item.diag_stat.ToString();
+            diagView.DiagnosisAbbreviation = item.diag_abrvn.ToString();
+            diagView.SortOrder = item.user_intrfc_sort_ord.ToString();
+            diagView.IcdCode = item.icd_cd.ToString();
+            diagView.DiagnosisEffectiveStartDate = item.diag_strt_eff_dt.ToString();
+            diagView.DiagnosisEffectiveEndDate = item.diag_end_eff_dt.ToString();
+            diagView.CreateDate = item.rec_creat_dt.ToString();
+            diagView.CreatedBy = item.rec_creat_user_id_cd.ToString();
+            diagView.UpdateDate = item.rec_updt_dt.ToString();
+            diagView.UpdatedBy = item.rec_updt_user_id_cd.ToString();
+
+            return diagView;
+
+        }
         public int CreateDiagnosis(DiagnosisModel model)
         {
 
@@ -75,6 +97,7 @@ namespace HealthInformationProgram.Data
 
             var diagView = new DiagnosisModel();
             dataModel.diag_id = Convert.ToDecimal(model.DiagnosisId);
+            dataModel.diag_descn = model.DiagnosisDescription;
             dataModel.diag_stat = model.DiagnosisStatus;
             dataModel.diag_abrvn = model.DiagnosisAbbreviation;
             dataModel.icd_cd = model.IcdCode;
@@ -286,6 +309,7 @@ namespace HealthInformationProgram.Data
                 cat.SupplementalDiagnosisId = GetDataValue(item.splmtl_diag_id);
                 cat.SupplementalDiagnosisDescription = GetDataValue(item.splmtl_diag_descn);
                 cat.DiagnosisId = GetDataValue(item.diag_id);
+                cat.Diagnosis = GetDiagnosis(item.diag_id).DiagnosisDescription;
                 cat.SortOrder = GetDataValue(item.user_intrfc_sort_ord);
                 cat.Status = GetDataValue(item.splmtl_diag_stat);
                 cat.SupplementalDiagnosisEffectiveStartDate = GetDataValue(item.splmtl_diag_strt_eff_dt);
@@ -314,6 +338,8 @@ namespace HealthInformationProgram.Data
 
             cat.SupplementalDiagnosisId = GetDataValue(dataItem.splmtl_diag_id);
             cat.SupplementalDiagnosisDescription = GetDataValue(dataItem.splmtl_diag_descn);
+            cat.DiagnosisId = GetDataValue(dataItem.diag_id);
+            cat.Diagnosis = GetDiagnosis(dataItem.diag_id).DiagnosisDescription;
             cat.SortOrder = GetDataValue(dataItem.user_intrfc_sort_ord);
             cat.Status = GetDataValue(dataItem.splmtl_diag_stat);
             cat.SupplementalDiagnosisEffectiveStartDate = GetDataValue(dataItem.splmtl_diag_strt_eff_dt);

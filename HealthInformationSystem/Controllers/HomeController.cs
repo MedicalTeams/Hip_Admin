@@ -58,8 +58,24 @@ namespace HealthInformationProgram.Controllers
         [HttpPost]
         public ActionResult Create(string modelName)
         {
-            var model = new HealthInformationProgram.Models.DiagnosisModel(); //TODO: make dynamic using string parm
-            return PartialView("~/Views/Home/_Create.cshtml",model);
+            Type type =GetModelType(modelName);
+            var model = Activator.CreateInstance(type);
+            var view = GetPartialViewPath(modelName,model);
+            return view;
+        }
+
+        private PartialViewResult GetPartialViewPath(string modelName, object model)
+        {
+            PartialViewResult viewResult = null;
+
+            switch ( modelName )
+            { 
+                case "DiagnosisModel":
+                    viewResult =PartialView("~/Views/Home/CreateDiagnosis/_CreateDiagnosis.cshtml", model);
+                    break;
+
+            }
+            return viewResult; 
         }
 
         private static string GetEntityDefinition(string entityName)
@@ -106,6 +122,21 @@ namespace HealthInformationProgram.Controllers
             return jsonString;
         }
 
+
+
+        [HttpPost]
+        public ActionResult SaveDiagnosis(DiagnosisModel model)//string keyValues, string entityName, bool isNew)
+        {
+
+           model.CreatedBy= "current user";
+            model.UpdatedBy = "current user";
+            var repo = new HealthInformationProgram.Data.DiagnosisData();
+            var result = repo.CreateDiagnosis(model);
+
+
+            return Json(new { rowsEffected = result });
+        }
+        
         [HttpPost]
         public ActionResult SaveEntity(string keyValues, string entityName, bool isNew)
         {
@@ -221,7 +252,7 @@ namespace HealthInformationProgram.Controllers
         //not currently being used 11-28-15
         private string GenerateValidationModel(string entityName)
         {
-            Type type = Type.GetType("HealthInformationProgram.Models." + entityName);
+            Type type = GetModelType(entityName);
 
 
 
@@ -265,9 +296,17 @@ namespace HealthInformationProgram.Controllers
             return validationModel;// +"};";
         }
 
+        private static Type GetModelType(string entityName)
+        {
+            Type type = Type.GetType("HealthInformationProgram.Models." + entityName);
+            return type;
+        }
+
         public class Generic<T>
         {
             public Generic() { }
         }
     }
+    public class MyGenericClass<T>
+    { }
 }
