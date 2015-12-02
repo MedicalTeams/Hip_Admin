@@ -6,6 +6,9 @@
 
 <header>
     <style class="cp-pen-styles">
+        .activeRow {    
+            background: #ff0000;
+        }
         .ok_edit
         {
             background: #eee;
@@ -95,12 +98,11 @@
                 width: 30px;
             }
 
-                .csstransforms .table-header-rotated th.rotate > div > span
-                {
-                    border-bottom: 1px solid #ccc;
-                    padding: 5px 10px;
-                }
-
+       .csstransforms .table-header-rotated th.rotate > div > span
+       {
+            border-bottom: 1px solid #ccc;
+            padding: 5px 10px;
+       }
         .table-header-rotated th.row-header
         {
             padding: 0 10px;
@@ -132,6 +134,9 @@
         <button id="create" type="button">Create</button>
     </div>
 
+
+    <div id="the_table"></div>
+    <!--
     <table id="tableWrapper">
         <tr>
             <td valign="top">
@@ -145,6 +150,7 @@
             </td>
         </tr>
     </table>
+        -->
 </body>
 <script>
     var matrix = [];
@@ -187,12 +193,12 @@
     function btnstate(obj) {
         var currentState = document.getElementById(obj.id).innerHTML;
         if (currentState == "Edit") {
+            document.getElementById(obj.id).className = "activeRow";
             document.getElementById(obj.id).innerHTML = "Update";
         } else if (currentState == "Update") {
             document.getElementById(obj.id).innerHTML = "Edit";
+            document.getElementById(obj.id).className = "";
             doSubmit(obj.id);
-        } else {
-            alert("error in btnstate(); for row " + row);
         }
     }
 
@@ -224,7 +230,7 @@
 
         for (var row = 0; row < matrix.length; row++) {
 
-            html += "<tr id='row_" + row + "'>";
+            html += "<tr id='row_" + row + "' >";
             html += createButtons(row);
             for (var key in matrix[row]) {
 
@@ -285,26 +291,6 @@
 
         update(results, currentEntity);
     }
-    /*
-    var lastClickedRow = undefined;
-    var lastCssClass = undefined;
-    function clickRow(obj) {
-        lastCssClass = document.getElementById(obj.id).className;
-        document.getElementById(obj.id).className = "highlight";
-
-        if (document.getElementById(lastClickedRow) != undefined) {
-            document.getElementById(lastClickedRow).className = lastCssClass;
-            console.log("YEP for " + lastClickedRow + "   and " + lastCssClass);
-        } else {
-            console.log("NOPE for " + lastClickedRow + "   and " + lastCssClass);
-        }
-        lastClickedRow = obj.id;
-        lastCssClass = document.getElementById(obj.id).className;
-        for (var key in matrix[obj.id]) {
-            document.getElementById(key).value = matrix[obj.id][key];
-        }
-    }
-    */
 </script>
 
 <script>
@@ -319,16 +305,9 @@
             success: function (mydata) {
                 // Need to eval mydata into an object. Before the eval mydata is just a complicated string
                 matrix = eval("(" + mydata + ')');
-                /*console.log("length " + matrix.length + " and it is " + matrix);
-                for (var i = 0 ; i < matrix.length ; i++) {
-                    for (var key in matrix[0]) {
-                        console.log(i + "   key " + key + "   ?? " + matrix[0][key]);
-                    }
-                }*/
                 populate();
                 currentEntity = entityName;
-                $('#create').show();
-               
+                $('#create').show();            
             },
             error: function (mydata) { alert("error"); alert(mydata); },
         });
@@ -343,7 +322,6 @@
             type: 'POST',
             dataType: 'json',
             success: function (mydata) {
-                //console.log(mydata)
                 matrix = eval("(" + mydata + ')');
                 populate();
             },
@@ -357,16 +335,11 @@
             url: "/Home/Create",
             data: { modelName: entityName },//{ keyValues: JSON.stringify(keyValue), entityName: entityName },
             type: 'POST',
-            //dataType: 'json',
             async: false,
             success: function (mydata) {
                 dialog.dialog("open");
                 $(".ui-dialog-titlebar").hide();
                 $('#newItem').html(mydata);
-                // alert("success");
-                //console.log(mydata)
-                //matrix = eval("(" + mydata + ')');
-                //populate();
             },
             error: function (mydata) {
                 console.log(mydata);
@@ -376,20 +349,13 @@
     }
 
     dialog = $('#createWrapper').dialog({
-        
         autoOpen: false,
-        
         width: 800,
         modal: true,
-        
-
-        
     });
    
     $(document).ready(function () {
-        
         $('#create').hide();
-
         $('#selectEntity').on('change', function () {
             var entityName = $(this).val()
             getTable(entityName);
@@ -402,7 +368,6 @@
         $('#create').click(function () {
             var entity = $('#selectEntity').val();
             create(entity);
-
         });
     });
 </script>
