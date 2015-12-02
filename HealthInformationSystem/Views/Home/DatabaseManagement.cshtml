@@ -196,39 +196,60 @@
         }
     }
 
+    function shortenColumnName(candidate) {
+        candidate = candidate.replace("Supplemental", "Sup");
+        candidate = candidate.replace("Diagnosis", "Diag");
+        candidate = candidate.replace("Effective", "");
+        candidate = candidate.replace("Description", "Desc");
+        candidate = candidate.replace("Category", "Cat");
 
+        return candidate;
+    }
+
+    function endsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
 
     var do_not_edit = {};
     function populate() {
         do_not_edit = getDoNotEdit();
 
-        var update_rows_placeholder = "<th class='rotate'><div><span> </span></div></th>";
-        //value does not matter. Just treating this assoc array as a Set.
-        //var html = "<table id='main_table' border='1'><tr>" + update_rows_placeholder;
-
+        var update_rows_placeholder = "<th class='rotate'><div><span>Controls</span></div></th>";
         var html = "<table class='table table-header-rotated'><thead><tr>" + update_rows_placeholder;
 
         for (var key in matrix[0]) {
-            //html += "<th  class='no_edit'>" + key + "</th>";
-            html += "<th class='rotate'><div><span>" + key + "</span></div></th>";
+            html += "<th class='rotate'><div><span>" + shortenColumnName(key) + "</span></div></th>";
         }
         html += "</tr>";
 
         for (var row = 0; row < matrix.length; row++) {
 
-
-
-            html += "<tr>";
+            html += "<tr id='row_" + row + "'>";
             html += createButtons(row);
             for (var key in matrix[row]) {
 
                 var id = row + "_" + key;
 
-                if (do_not_edit.hasOwnProperty(key)) {
-                    html += "<td class='no_edit' align='right' id='" + id + "'  >" + matrix[row][key] + "</td>";
+                if (endsWith(key, "Date")) {
+
+                    var value = matrix[row][key].split(" ")[0];
+                    if (value == undefined) {
+                        value = matrix[row][key];
+                    }
+
+                    if (do_not_edit.hasOwnProperty(key)) {
+                        html += "<td class='no_edit' align='right' id='" + id + "'  >" + value + "</td>";
+                    } else {
+                        html += "<td class='ok_edit'>";
+                        html += "<input type='text' id='" + id + "' class='txtfld' value='" + value + "'     /></center></td>";
+                    }
                 } else {
-                    html += "<td class='ok_edit'>";
-                    html += "<input type='text' id='" + id + "' class='txtfld' value='" + matrix[row][key] + "'     /></center></td>";
+                    if (do_not_edit.hasOwnProperty(key)) {
+                        html += "<td class='no_edit' align='right' id='" + id + "'  >" + matrix[row][key] + "</td>";
+                    } else {
+                        html += "<td class='ok_edit'>";
+                        html += "<input type='text' id='" + id + "' class='txtfld' value='" + matrix[row][key] + "'     /></center></td>";
+                    }
                 }
             }
             html += "</tr>";
