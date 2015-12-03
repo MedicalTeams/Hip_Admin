@@ -3,116 +3,116 @@
 }
 @Styles.Render("~/Content/css")
 @Styles.Render("~/Content/themes/base/css")
-
 <header>
     <style class="cp-pen-styles">
-        .activeRow {    
+
+        .longInput {
+            width:200px;
+        }
+        .middlingInput {
+            width:100px;
+        }
+
+        .shortInput {
+            width:60px;
+        }
+
+
+
+
+        .activeRow {
             background: #ff0000;
         }
-        .ok_edit
-        {
+
+        .ok_edit {
             background: #eee;
             border: 1px solid #000;
             min-width: 50px;
         }
 
-        .no_edit
-        {
+        .no_edit {
             background: #e0e0e0;
             border: 1px solid #000;
             min-width: 50px;
         }
 
-        .disabled_input
-        {
+        .disabled_input {
             background-color: #e0e0e0;
         }
 
-        #the_editor
-        {
+        #the_editor {
             margin-right: 10px;
             border-right-style: solid;
             border-right-width: 1px;
         }
 
-        .highlight
-        {
+        .highlight {
             background-color: red;
         }
 
-        .odd
-        {
+        .odd {
             background: #fff;
         }
 
-        .entry
-        {
+        .entry {
             margin-bottom: 10px;
         }
 
-        .even
-        {
+        .even {
             background: #eee;
         }
-
-        .table-header-rotated
-        {
+        /*
+        .table-header-rotated {
             border-collapse: collapse;
             height: 400px;
             overflow: scroll;
         }
 
-        .csstransforms .table-header-rotated td
-        {
+        .csstransforms .table-header-rotated  {
             width: 30px;
         }
 
-        .no-csstransforms .table-header-rotated th
-        {
+        .no-csstransforms .table-header-rotated th {
             padding: 5px 10px;
         }
 
-        .table-header-rotated td
-        {
+        .table-header-rotated td {
             text-align: center;
             padding: 10px 5px;
             border: 1px solid #ccc;
         }
 
-        .csstransforms .table-header-rotated th.rotate
-        {
+        .csstransforms .table-header-rotated th.rotate {
             height: 140px;
             white-space: nowrap;
         }
 
-            .csstransforms .table-header-rotated th.rotate > div
-            {
+            .csstransforms .table-header-rotated th.rotate > div {
                 -webkit-transform: translate(25px, 51px) rotate(315deg);
                 -ms-transform: translate(25px, 51px) rotate(315deg);
                 transform: translate(25px, 51px) rotate(315deg);
                 width: 30px;
             }
 
-       .csstransforms .table-header-rotated th.rotate > div > span
-       {
-            border-bottom: 1px solid #ccc;
-            padding: 5px 10px;
-       }
-        .table-header-rotated th.row-header
-        {
+                .csstransforms .table-header-rotated th.rotate > div > span {
+                    border-bottom: 1px solid #ccc;
+                    padding: 5px 10px;
+                }
+
+        .table-header-rotated th.row-header {
             padding: 0 10px;
             border-bottom: 1px solid #ccc;
         }
+            */
     </style>
     <script src="~/Scripts/jquery-1.8.2.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
 </header>
 <body>
-    <div id="createWrapper" >
+    <div id="createWrapper">
         <div id="newItem"></div>
     </div>
     <div>
-
         <div>
             <select id="selectEntity">
                 <option class="menuOption" value="">Choose a database</option>
@@ -120,7 +120,6 @@
                 <option class="menuOption" value="DiagnosisModel">Diagnosis</option>
                 <option class="menuOption" value="SupplementalDiagnosisCategoryModel">Supplemental Diagnosis Categories</option>
                 <option class="menuOption" value="SupplementalDiagnosisModel">Supplemental Diagnosis</option>
-
             </select>
         </div>
     </div>
@@ -129,23 +128,8 @@
         <button id="create" type="button">Create</button>
     </div>
 
-
     <div id="the_table"></div>
-    <!--
-    <table id="tableWrapper">
-        <tr>
-            <td valign="top">
-                <div id="the_editor"></div>
 
-            </td>
-            <td valign="top">
-                <div id="the_table">
-                </div>
-
-            </td>
-        </tr>
-    </table>
-        -->
 </body>
 <script>
     var matrix = [];
@@ -216,8 +200,13 @@
     }
 
     function getInputTD(id, value) {
-        return "<input  type='text' disabled  id='" + id + "' class='txtfld' value='" + value + "'  />";
+        return "<input  type='text' disabled  id='" + id + "' class='middlingInput' value='" + value + "'  />";
     }
+
+    function getInputNumberTD(id, value) {
+        return "<input  type='number' disabled  id='" + id + "'  class='shortInput' value='" + value + "'  />";
+    }
+
 
     function getSelectTD(row, key, id) {
 
@@ -273,9 +262,14 @@
                         html += getInputTD(id, value);
                         html += "</td>";
                     }
-                } else if (endsWith(key, "Status")) {                
+                } else if (endsWith(key, "Status")) {
                     html += "<td class='ok_edit'>";
                     html += getSelectTD(row, key, id);
+                    html += "</td>";
+                } else if (key == "SortOrder") {
+                    console.log("SO! " + value); 
+                    html += "<td class='ok_edit'>";
+                    html += getInputNumberTD(id, value);
                     html += "</td>";
                 } else {
                     if (do_not_edit.hasOwnProperty(key)) {
@@ -292,9 +286,9 @@
         document.getElementById("the_table").innerHTML = html;
     }
 
-    
 
-    //////////// 
+
+    ////////////
     function doSubmit(row) {
         console.log("Current entity(do Submit function = " + currentEntity);
         var results = {};
@@ -314,7 +308,6 @@
         update(results, currentEntity);
     }
 </script>
-
 <script>
     var currentEntity = null;
     var dialog = null;
@@ -329,7 +322,7 @@
                 matrix = eval("(" + mydata + ')');
                 populate();
                 currentEntity = entityName;
-                $('#create').show();            
+                $('#create').show();
             },
             error: function (mydata) { alert("error"); alert(mydata); },
         });
@@ -375,7 +368,7 @@
         width: 800,
         modal: true,
     });
-   
+
     $(document).ready(function () {
         $('#create').hide();
         $('#selectEntity').on('change', function () {
@@ -393,4 +386,3 @@
         });
     });
 </script>
-
