@@ -7,14 +7,14 @@
     <style class="cp-pen-styles">
 
         .longInput {
-            width:200px;
+            width:250px;
         }
         .middlingInput {
-            width:100px;
+            width:80px;
         }
 
         .shortInput {
-            width:60px;
+            width:50px;
         }
 
 
@@ -200,12 +200,19 @@
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
     }
 
-    function getInputTD(id, value) {
-        return "<input  type='text' disabled  id='" + id + "' class='middlingInput' value='" + value + "'  />";
+    function getInputTD(id, value, key) {
+        //        return "<input  type='text' disabled  id='" + id + "' class='middlingInput' value='" + value + "'  />";
+        var css = "class='" + inputLengthsMap[key] + "'";
+        return "<input  type='text' disabled  id='" + id + "' " + css + " value='" + value + "'  />";
+
+
     }
 
-    function getInputNumberTD(id, value) {
-        return "<input  type='number' disabled  id='" + id + "'  class='shortInput' value='" + value + "'  />";
+    function getInputNumberTD(id, value, key) {
+        var css = "class='" + inputLengthsMap[key] + "'";
+
+//        return "<input  type='number' disabled  id='" + id + "'  class='shortInput' value='" + value + "'  />";
+        return "<input  type='number' disabled  id='" + id + "'  " + css + " value='" + value + "'  />";
     }
 
 
@@ -230,8 +237,45 @@
         return select;
     }
 
+    var inputLengthsMap = {}; 
+    function setInputLengthsMap() {
+        /* determine what css class different inputs ought to recieve */   
+        var sizes = {};
+        for (var row in matrix) {
+            for (var key in matrix[row]) {
+                try {
+                    var size = matrix[row][key].length;
+                    if (sizes.hasOwnProperty(key)) {
+                        if (size > sizes[key]) {
+                            sizes[key] = size;
+                        }
+                    } else {
+                        sizes[key] = size; 
+                    }
+                } catch (feild_might_be_empty) {
+                    console.log("Skipping setInputLengthsMap for " + key);
+                }
+            }
+        }
+        inputLengthsMap = {}; 
+        for (var key in sizes) {
+            var size = sizes[key];
+            if ( size < 6 ) {
+                inputLengthsMap[key] = "shortInput"; 
+             } else if  (size < 20 ) {
+                 inputLengthsMap[key] = "middlingInput"; 
+            } else {
+                 inputLengthsMap[key] = "longInput"; 
+            }
+        }
+    }
+
+
     var do_not_edit = {};
     function populate() {
+
+        setInputLengthsMap(); 
+
         do_not_edit = getDoNotEdit();
 
         var update_rows_placeholder = "<th class='rotate'><div><span>Controls</span></div></th>";
@@ -260,7 +304,7 @@
                         html += "<td class='no_edit' align='right' id='" + id + "'  >" + value + "</td>";
                     } else {
                         html += "<td class='ok_edit'>";
-                        html += getInputTD(id, value);
+                        html += getInputTD(id, value,key);
                         html += "</td>";
                     }
                 } else if (endsWith(key, "Status")) {
@@ -270,14 +314,14 @@
                 } else if (key == "SortOrder") {
                     console.log("SO! " + value); 
                     html += "<td class='ok_edit'>";
-                    html += getInputNumberTD(id, value);
+                    html += getInputNumberTD(id, value, key);
                     html += "</td>";
                 } else {
                     if (do_not_edit.hasOwnProperty(key)) {
                         html += "<td class='no_edit' align='right' id='" + id + "'  >" + value + "</td>";
                     } else {
                         html += "<td class='ok_edit'>";
-                        html += getInputTD(id, value);
+                        html += getInputTD(id, value,key);
                         html += "</td>";
                     }
                 }
