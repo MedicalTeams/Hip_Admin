@@ -137,7 +137,7 @@
     function getDoNotEdit() {
 
         var do_not_edit = {};
-
+        do_not_edit["UpdatedBy"] = "";
         do_not_edit["RevisitId"] = "";
         do_not_edit["CreateDate"] = "";
         do_not_edit["CreatedBy"] = "";
@@ -191,6 +191,7 @@
         candidate = candidate.replace("Effective", "");
         candidate = candidate.replace("Description", "Desc");
         candidate = candidate.replace("Category", "Cat");
+        candidate = candidate.replace("SortOrder", "Sort");
 
         return candidate;
     }
