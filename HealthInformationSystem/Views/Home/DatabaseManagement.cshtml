@@ -5,6 +5,7 @@
 @Styles.Render("~/Content/themes/base/css")
 
 <header>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <style class="cp-pen-styles">
         .activeRow {    
             background: #ff0000;
@@ -219,6 +220,11 @@
     function endsWith(str, suffix) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
     }
+
+    function getInputTD(id, value) {
+        return "<input  type='text' disabled  id='" + id + "' class='txtfld' value='" + value + "'  />";
+    }
+
     function getSelectTD(row, key, id) {
 
 
@@ -259,6 +265,7 @@
             for (var key in matrix[row]) {
 
                 var id = row + "_" + key;
+                var value = matrix[row][key];
 
                 if (endsWith(key, "Date")) {
                     var value = matrix[row][key].split(" ")[0];
@@ -269,40 +276,20 @@
                         html += "<td class='no_edit' align='right' id='" + id + "'  >" + value + "</td>";
                     } else {
                         html += "<td class='ok_edit'>";
-                        html += "<input  type='text'  id='" + id + "' class='txtfld' value='" + value + "' onBlur='vetInput(this);'    /></center></td>";
+                        html += getInputTD(id, value);
+                        html += "</td>";
                     }
-                } else if (endsWith(key, "Status")) {
-                
+                } else if (endsWith(key, "Status")) {                
                     html += "<td class='ok_edit'>";
                     html += getSelectTD(row, key, id);
                     html += "</td>";
-
-                    /*
-                    html += "<td class='ok_edit'>";
-
-                    var select = "<select id='" + id + "'>";
-                    var fromDatabase = matrix[row][key];
-                    if (fromDatabase == "A") {
-                        select += "<option value='A' selected>A</option>";
-                    } else {
-                        select += "<option value='A'>A</option>";
-                    }
-
-                    if (fromDatabase == "I") {
-                        select += "<option value='I' selected>I</option>";
-                    } else {
-                        select += "<option value='I'>I</option>";
-                    }
-                    select += "</select>";
-
-                    html += select + "</td>";
-*/
                 } else {
                     if (do_not_edit.hasOwnProperty(key)) {
-                        html += "<td class='no_edit' align='right' id='" + id + "'  >" + matrix[row][key] + "</td>";
+                        html += "<td class='no_edit' align='right' id='" + id + "'  >" + value + "</td>";
                     } else {
                         html += "<td class='ok_edit'>";
-                        html += "<input  type='text' disabled  id='" + id + "' class='txtfld' value='" + matrix[row][key] + "'     /></center></td>";
+                        html += getInputTD(id, value);
+                        html += "</td>";
                     }
                 }
             }
@@ -311,15 +298,7 @@
         document.getElementById("the_table").innerHTML = html;
     }
 
-    function vetInput(inputField) {
-        inputField.value = inputField.value.trim();
-        if (inputField.value.indexOf(" ") > -1) {
-            alert("The input field " + inputField.id + " contained spaces.\nThey have been removed.");
-            inputField.value = inputField.replace(" ", "");
-
-        }
-    }
-
+    
 
     //////////// 
     function doSubmit(row) {
@@ -331,7 +310,6 @@
         for (var key in matrix[0]) {
             var id = row + "_" + key;
             var val = "";
-            
             if (do_not_edit.hasOwnProperty(key)) {
                 val = document.getElementById(id).innerHTML;
             } else {
