@@ -191,10 +191,14 @@
     }
 
     function btnstate(obj) {
+
+        var rowId = obj.id.replace("b", "row_");
+
         var currentState = document.getElementById(obj.id).innerHTML;
         if (currentState == "Edit") {
             document.getElementById(obj.id).className = "activeRow";
             document.getElementById(obj.id).innerHTML = "Update";
+            $('#' + rowId + ' :input').prop('disabled', false);
         } else if (currentState == "Update") {
             document.getElementById(obj.id).innerHTML = "Edit";
             document.getElementById(obj.id).className = "";
@@ -214,6 +218,26 @@
 
     function endsWith(str, suffix) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+    function getSelectTD(row, key, id) {
+
+
+        var select = "<select id='" + id + "' disabled>";
+        var fromDatabase = matrix[row][key];
+        if (fromDatabase == "A") {
+            select += "<option value='A' selected >A</option>";
+        } else {
+            select += "<option value='A'>A</option>";
+        }
+
+        if (fromDatabase == "I") {
+            select += "<option value='I' selected>I</option>";
+        } else {
+            select += "<option value='I'>I</option>";
+        }
+        select += "</select>";
+
+        return select;
     }
 
     var do_not_edit = {};
@@ -237,24 +261,48 @@
                 var id = row + "_" + key;
 
                 if (endsWith(key, "Date")) {
-
                     var value = matrix[row][key].split(" ")[0];
                     if (value == undefined) {
                         value = matrix[row][key];
                     }
-
                     if (do_not_edit.hasOwnProperty(key)) {
                         html += "<td class='no_edit' align='right' id='" + id + "'  >" + value + "</td>";
                     } else {
                         html += "<td class='ok_edit'>";
-                        html += "<input type='text' id='" + id + "' class='txtfld' value='" + value + "'     /></center></td>";
+                        html += "<input  type='text'  id='" + id + "' class='txtfld' value='" + value + "' onBlur='vetInput(this);'    /></center></td>";
                     }
+                } else if (endsWith(key, "Status")) {
+                
+                    html += "<td class='ok_edit'>";
+                    html += getSelectTD(row, key, id);
+                    html += "</td>";
+
+                    /*
+                    html += "<td class='ok_edit'>";
+
+                    var select = "<select id='" + id + "'>";
+                    var fromDatabase = matrix[row][key];
+                    if (fromDatabase == "A") {
+                        select += "<option value='A' selected>A</option>";
+                    } else {
+                        select += "<option value='A'>A</option>";
+                    }
+
+                    if (fromDatabase == "I") {
+                        select += "<option value='I' selected>I</option>";
+                    } else {
+                        select += "<option value='I'>I</option>";
+                    }
+                    select += "</select>";
+
+                    html += select + "</td>";
+*/
                 } else {
                     if (do_not_edit.hasOwnProperty(key)) {
                         html += "<td class='no_edit' align='right' id='" + id + "'  >" + matrix[row][key] + "</td>";
                     } else {
                         html += "<td class='ok_edit'>";
-                        html += "<input type='text' id='" + id + "' class='txtfld' value='" + matrix[row][key] + "'     /></center></td>";
+                        html += "<input  type='text' disabled  id='" + id + "' class='txtfld' value='" + matrix[row][key] + "'     /></center></td>";
                     }
                 }
             }
@@ -263,7 +311,14 @@
         document.getElementById("the_table").innerHTML = html;
     }
 
+    function vetInput(inputField) {
+        inputField.value = inputField.value.trim();
+        if (inputField.value.indexOf(" ") > -1) {
+            alert("The input field " + inputField.id + " contained spaces.\nThey have been removed.");
+            inputField.value = inputField.replace(" ", "");
 
+        }
+    }
 
 
     //////////// 
@@ -274,21 +329,16 @@
 
         row = row.replace("b", "");
         for (var key in matrix[0]) {
-            //  results[key] = document.getElementById(key).value;
             var id = row + "_" + key;
             var val = "";
-
+            
             if (do_not_edit.hasOwnProperty(key)) {
                 val = document.getElementById(id).innerHTML;
             } else {
                 val = document.getElementById(id).value;
             }
-
-
             results[key] = val;
-
         }
-
         update(results, currentEntity);
     }
 </script>
