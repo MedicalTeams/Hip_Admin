@@ -109,5 +109,41 @@ namespace HealthInformationProgram.Data
 
             return facilityView;
         }
+
+        public int CreateFacility(FacilityModel model)
+        {
+            
+            var repo = new FacilityRepository();
+            var dataModel = new HealthInformationProgram.Data.Tables.lkup_faclty();
+
+            try
+            {
+                dataModel.hlth_care_faclty = model.HealthCareFacility;
+                dataModel.hlth_care_faclty_lvl = model.HealthCareFacilityLevel;
+                dataModel.hlth_coordtr = model.HealthCoordinator;
+                dataModel.setlmt = model.Settlement;
+                dataModel.cntry = model.Country;
+                dataModel.rgn = model.Region;                
+                dataModel.orgzn_id = Convert.ToDecimal(model.OrganizationId);
+                dataModel.faclty_stat = model.FacilityStatus;
+                dataModel.faclty_strt_eff_dt = Convert.ToDateTime(model.FacilityStartEffectiveDate);
+                dataModel.faclty_end_eff_dt = Convert.ToDateTime(model.FacilityEndEffectiveDate);
+                dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
+                dataModel.lattd = Convert.ToDecimal(model.Latitude);
+                dataModel.longtd = Convert.ToDecimal(model.Longitude);
+
+                dataModel.rec_creat_dt = DateTime.Now;
+                dataModel.rec_creat_user_id_cd = model.CreatedBy;
+                dataModel.rec_updt_dt = DateTime.Now;
+                dataModel.rec_updt_user_id_cd = model.UpdatedBy;
+
+                var returnCode = repo.CreateFacility(dataModel);
+                return returnCode;
+            }
+            catch ( Exception ex )
+            {
+                throw ex;
+            }
+        }
     }
 }

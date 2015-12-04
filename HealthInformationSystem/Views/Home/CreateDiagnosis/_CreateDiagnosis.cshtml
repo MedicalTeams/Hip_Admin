@@ -5,7 +5,7 @@
     var statusList = new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "A" }, new SelectListItem { Text = "Inactive", Value = "I" } };
  
 }
-<form id="createForm" action="#">
+
 <div id="createFormDialog" class="createFormDialog">
     <div id="createHeader">
         <h1>Create Diagnosis</h1>
@@ -58,7 +58,7 @@
         </div>
     </div>
 </div>
-    </form>
+    
 <script>
 
 
@@ -86,8 +86,11 @@
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (mydata) {
-                    if (mydata.result === 1) {
+                    if (mydata.rowsEffected === 1) {
+                        window.parent.dialog.dialog("close");
                         window.parent.getTable(window.parent.currentEntity);
+                        
+                        
                     } else {
                         console.log(mydata.errors);
                     }

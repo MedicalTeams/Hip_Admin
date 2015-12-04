@@ -96,7 +96,7 @@ namespace HealthInformationProgram.Data
             var repo = new DiagnosisRepository();
             var dataModel = new HealthInformationProgram.Data.Tables.lkup_diag();
 
-            var diagView = new DiagnosisModel();
+           
             dataModel.diag_id = Convert.ToDecimal(model.DiagnosisId);
             dataModel.diag_descn = model.DiagnosisDescription;
             dataModel.diag_stat = model.DiagnosisStatus;

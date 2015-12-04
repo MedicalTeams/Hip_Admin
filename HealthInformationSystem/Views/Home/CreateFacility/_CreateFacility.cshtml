@@ -1,7 +1,209 @@
 ﻿@model HealthInformationProgram.Models.FacilityModel
 
 <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
+@Styles.Render("~/Content/css")
+@{
+    var statusList = new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "A" }, new SelectListItem { Text = "Inactive", Value = "I" } };
+ 
+}
 
+
+<div id="createFormDialog" class="createFormDialog">
+    <div id="createHeader">
+        <h1>Create Supplemental Diagnosis Category</h1>
+    </div>
+    <div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.HealthCareFacility)
+            @Html.TextBoxFor(m => m.HealthCareFacility)
+            @Html.ValidationMessageFor(m => m.HealthCareFacility)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.HealthCareFacilityLevel)
+            @Html.TextBoxFor(m => m.HealthCareFacilityLevel, new { @type = "number" })
+            @Html.ValidationMessageFor(m => m.HealthCareFacilityLevel)
+        </div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.HealthCoordinator)
+            @Html.TextBoxFor(m => m.HealthCoordinator)
+            @Html.ValidationMessageFor(m => m.HealthCoordinator)
+        </div>
+    </div>
+     <div style="clear:both">
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.FacilityStartEffectiveDate)
+            @Html.TextBoxFor(m => m.FacilityStartEffectiveDate)
+            @Html.ValidationMessageFor(m => m.FacilityStartEffectiveDate)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.FacilityEndEffectiveDate)
+            @Html.TextBoxFor(m => m.FacilityEndEffectiveDate)
+            @Html.ValidationMessageFor(m => m.FacilityEndEffectiveDate)
+        </div>
+    </div>
+    <div>
+
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.SortOrder)
+            @Html.TextBoxFor(m => m.SortOrder, new { @type = "number" })
+            @Html.ValidationMessageFor(m => m.SortOrder)
+
+        </div>
+        <div>
+            @Html.LabelFor(m => m.FacilityStatus)
+            @Html.DropDownListFor(m => m.FacilityStatus, statusList)
+
+        </div>
+
+    </div>
+    <div id="facilityLocation" style="clear: both; border:.1em inset grey; padding:1em" title="Location Information">
+      
+          <h3 style="margin-top:0px;padding-bottom:.5em;text-decoration:underline">Location Information</h3>
+        <div class="createForm column left">
+            <label>Organization</label>
+            <select id="organizationList"></select>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Settlement)
+            @Html.TextBoxFor(m => m.Settlement)
+            @Html.ValidationMessageFor(m => m.Settlement)
+        </div>
+
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.Country)
+            @Html.TextBoxFor(m => m.Country)
+            @Html.ValidationMessageFor(m => m.Country)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Region)
+            @Html.TextBoxFor(m => m.Region)
+            @Html.ValidationMessageFor(m => m.Region)
+        </div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.Latitude)
+            @Html.TextBoxFor(m => m.Latitude)
+            @Html.ValidationMessageFor(m => m.Latitude)
+
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Longitude)
+            @Html.TextBoxFor(m => m.Longitude)
+            @Html.ValidationMessageFor(m => m.Longitude)
+
+        </div>
+    </div>
+   
+    <div>
+    </div>
+
+    <div class="createFooter">
+        <div id="buttonWrapper">
+            <button id="save" value="SaveDiagnosis" onclick="save()">Save</button>
+            <button id="close">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    FacilityObject = {
+        objectModel: function () {
+            return result = {
+                HealthCareFacility: $("#HealthCareFacility").val(),
+                HealthCareFacilityLevel: $("#HealthCareFacilityLevel").val(),
+                HealthCoordinator: $("#HealthCoordinator").val(),
+                OrganizationId: $('#organizationList').val(),
+                Settlement: $("#Settlement").val(),
+                Country: $('#Country').val(),
+                Region: $('#Region').val(),
+                FacilityStartEffectiveDate: $('#FacilityStartEffectiveDate').val(),
+                FacilityEndEffectiveDate: $('#FacilityEndEffectiveDate').val(),
+                Latitude: $('#Latitude').val(),
+                Longitude: $('#Longitude').val(),
+                SortOrder: $("#SortOrder").val(),
+                FacilityStatus: $("#FacilityStatus").val(),
+
+            };
+        },
+        create: function (inputData) {
+
+            debugger;
+
+            $.ajax({
+
+                url: "/Home/SaveFacility",
+                data: JSON.stringify(inputData),
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (mydata) {
+                    if (mydata.rowsEffected === 1) {
+                        window.parent.dialog.dialog("close");
+                        window.parent.getTable(window.parent.currentEntity);
+                    } else {
+                        console.log(mydata.errors);
+                    }
+
+                },
+                error: function (mydata) {
+                    console.log(myData);
+                    alert("error"); alert(mydata);
+                },
+            });
+
+            return false;
+        }
+
+    }
+
+    function getOrganizationsValues() {
+
+        $.ajax({
+            type: 'GET',
+            url: "/Home/GetOrganizationList",
+
+            dataType: 'json',
+            success: function (result) {
+                var ddl = $('#organizationList');
+                var list = result.list;
+                $.each(list, function (index, value) {
+                    console.log(value);
+                    ddl.append('<option value=' + value.Value + '>' + value.Text + '</option>')
+                });
+            },
+            error: function (e) {
+                alert("Error:Unable to load data from server");
+            }
+        });
+    }
+    function save() {
+
+        var model = FacilityObject.objectModel();
+        FacilityObject.create(model);
+
+    }
+
+
+    $('#FacilityStartEffectiveDate').datepicker();
+    $('#FacilityEndEffectiveDate').datepicker();
+
+
+
+
+    $(document).ready(function () {
+
+        getOrganizationsValues();
+
+        $('#close').on('click', function close() {
+
+            window.parent.dialog.dialog("close")
+            window.parent.getTable(window.parent.currentEntity);
+
+            return false;
+        });
+    });
+</script>

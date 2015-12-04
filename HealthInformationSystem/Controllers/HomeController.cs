@@ -318,7 +318,7 @@ namespace HealthInformationProgram.Controllers
         }
         #endregion
 
-        #region Supplemental Diagnosis Methods
+        #region Supplemental Diagnosis Category Methods
         [HttpPost]
         public ActionResult SaveSupplementalCategory(SupplementalDiagnosisCategoryModel model)
         {
@@ -354,6 +354,40 @@ namespace HealthInformationProgram.Controllers
 
         }
         #endregion
+
+        #region Facility Methods
+        [HttpGet]
+        public ActionResult GetOrganizationList()
+        {
+            var selectList = new List<SelectListItem>();
+            var repo = new HealthInformationProgram.Data.OrganizationData();
+            foreach ( var org in repo.GetAll() )
+            {
+                selectList.Add(new SelectListItem() { Value = org.OrganizationId, Text = org.Organization});
+
+            }
+
+            return Json(new { list = selectList }, JsonRequestBehavior.AllowGet);
+           
+        }
+
+        [HttpPost]
+        public ActionResult SaveFacility(FacilityModel model)
+        {
+            int result = 0;
+
+            if ( ModelState.IsValid )
+            {
+                model.CreatedBy = "current user";
+                model.UpdatedBy = "current user";
+
+                var data = new HealthInformationProgram.Data.FacilityData();
+                result = data.CreateFacility(model);
+            }
+            return Json(new { rowsEffected = result });
+        }
+        #endregion
+
 
         //not currently being used 11-28-15
         private string GenerateValidationModel(string entityName)
