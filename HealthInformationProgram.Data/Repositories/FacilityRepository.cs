@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using HealthInformationProgram.Data.DataContext;
@@ -65,11 +67,20 @@ namespace HealthInformationProgram.Data.Repositories
 
                 using ( var ctx = new ClinicDataContext(connString) )
                 {
-                    ctx.lkup_faclty.Add(entity);
+                    IdentityInsertOn<lkup_faclty>(ctx, entity);
+                    ctx.Entry(entity).State = System.Data.Entity.EntityState.Added;
                     int result = ctx.SaveChanges();
 
                     return result;
                 }
+            }
+            catch ( DbEntityValidationException ex )
+            {
+                throw ex;
+            }
+            catch ( EntityException ex )
+            {
+                throw ex;
             }
             catch ( Exception ex )
             {
@@ -83,35 +94,43 @@ namespace HealthInformationProgram.Data.Repositories
             {
                 using ( var ctx = new ClinicDataContext(connString) )
                 {
-                    var currentSystem = ctx.lkup_faclty.FirstOrDefault(x => x.faclty_id == entity.faclty_id);
-                    if ( currentSystem == null )
+                    var currentFacility = ctx.lkup_faclty.FirstOrDefault(x => x.faclty_id == entity.faclty_id);
+                    if ( currentFacility == null )
                     {
                         throw new Exception("Record doesn't exist and cannot be updated");
                     }
-                    currentSystem.faclty_id = entity.faclty_id;
-                    currentSystem.faclty_stat = entity.faclty_stat;
-                    currentSystem.hlth_care_faclty = entity.hlth_care_faclty;
-                    currentSystem.cntry = entity.cntry;
-                    currentSystem.faclty_strt_eff_dt = entity.faclty_strt_eff_dt;
-                    currentSystem.faclty_end_eff_dt = entity.faclty_end_eff_dt;
-                    currentSystem.hlth_care_faclty_lvl = entity.hlth_care_faclty_lvl;
-                    currentSystem.hlth_coordtr = entity.hlth_coordtr;
-                    currentSystem.lattd = entity.lattd;
-                    currentSystem.longtd = entity.longtd;
-                    currentSystem.orgzn_id = entity.orgzn_id;
-                    currentSystem.rec_updt_dt = entity.rec_updt_dt;
-                    currentSystem.rec_updt_user_id_cd = entity.rec_updt_user_id_cd;
-                    currentSystem.rgn = entity.rgn;
-                    currentSystem.setlmt = entity.setlmt;
-                    currentSystem.user_intrfc_sort_ord = entity.user_intrfc_sort_ord;
+                    currentFacility.faclty_id = entity.faclty_id;
+                    currentFacility.faclty_stat = entity.faclty_stat;
+                    currentFacility.hlth_care_faclty = entity.hlth_care_faclty;
+                    currentFacility.cntry = entity.cntry;
+                    currentFacility.faclty_strt_eff_dt = entity.faclty_strt_eff_dt;
+                    currentFacility.faclty_end_eff_dt = entity.faclty_end_eff_dt;
+                    currentFacility.hlth_care_faclty_lvl = entity.hlth_care_faclty_lvl;
+                    currentFacility.hlth_coordtr = entity.hlth_coordtr;
+                    currentFacility.lattd = entity.lattd;
+                    currentFacility.longtd = entity.longtd;
+                    currentFacility.orgzn_id = entity.orgzn_id;
+                    currentFacility.rec_updt_dt = entity.rec_updt_dt;
+                    currentFacility.rec_updt_user_id_cd = entity.rec_updt_user_id_cd;
+                    currentFacility.rgn = entity.rgn;
+                    currentFacility.setlmt = entity.setlmt;
+                    currentFacility.user_intrfc_sort_ord = entity.user_intrfc_sort_ord;
 
 
-                    ctx.Entry(currentSystem).State = System.Data.Entity.EntityState.Modified;
+                    ctx.Entry(currentFacility).State = System.Data.Entity.EntityState.Modified;
 
                     int result = ctx.SaveChanges();
 
                     return result;
                 }
+            }
+            catch ( DbEntityValidationException ex )
+            {
+                throw ex;
+            }
+            catch ( EntityException ex )
+            {
+                throw ex;
             }
             catch ( Exception ex )
             {

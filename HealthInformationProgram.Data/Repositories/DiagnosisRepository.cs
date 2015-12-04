@@ -90,7 +90,8 @@ namespace HealthInformationProgram.Data.Repositories
                     lookupDiagnosis.rec_updt_dt = entity.rec_updt_dt;
                     lookupDiagnosis.user_intrfc_sort_ord = entity.user_intrfc_sort_ord;
                     lookupDiagnosis.diag_stat = entity.diag_stat;
-                    
+                    lookupDiagnosis.diag_strt_eff_dt = entity.diag_strt_eff_dt;
+                    lookupDiagnosis.diag_end_eff_dt = entity.diag_end_eff_dt;
 
                     ctx.Entry(lookupDiagnosis).State = System.Data.Entity.EntityState.Modified;
 

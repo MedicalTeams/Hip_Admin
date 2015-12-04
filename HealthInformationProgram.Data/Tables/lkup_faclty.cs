@@ -12,7 +12,7 @@ namespace HealthInformationProgram.Data.Tables
             this.ovs = new List<ov>();
         }
          [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
-        public decimal faclty_id { get; set; }
+        public Nullable<decimal> faclty_id { get; set; }
         public string hlth_care_faclty { get; set; }
         public string hlth_care_faclty_lvl { get; set; }
         public string hlth_coordtr { get; set; }

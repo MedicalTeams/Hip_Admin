@@ -102,7 +102,8 @@ namespace HealthInformationProgram.Data.Repositories
                     supplementalDiagnosisCategories.splmtl_diag_cat = entity.splmtl_diag_cat;
                     supplementalDiagnosisCategories.user_intrfc_sort_ord = entity.user_intrfc_sort_ord;
                     supplementalDiagnosisCategories.splmtl_diag_cat_stat = entity.splmtl_diag_cat_stat;
-
+                    supplementalDiagnosisCategories.splmtl_diag_cat_strt_eff_dt = entity.splmtl_diag_cat_strt_eff_dt;
+                    supplementalDiagnosisCategories.splmtl_diag_cat_end_eff_dt = entity.splmtl_diag_cat_end_eff_dt;
 
                     supplementalDiagnosisCategories.rec_updt_user_id_cd = entity.rec_updt_user_id_cd;
                     supplementalDiagnosisCategories.rec_updt_dt = entity.rec_updt_dt;

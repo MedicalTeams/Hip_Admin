@@ -179,12 +179,20 @@ namespace HealthInformationProgram.Controllers
                 case "SupplementalDiagnosisCategoryModel":
                     UpdateSupplementalDiagnosisCategory(jsonObject);
                     break;
+                case "FacilityModel":
+                    UpdateFacility(jsonObject);
+                    break;
+                case "FacilityHardwareInventoryModel":
+                    UpdateFacilityHardwareInventory(jsonObject);
+                    break;
 
             }
 
             jsonString = GetEntityDefinition(entityName);
             return Json(jsonString);
         }
+
+
 
         private void UpdateRevisit(JObject jsonObject)
         {
@@ -363,12 +371,12 @@ namespace HealthInformationProgram.Controllers
             var repo = new HealthInformationProgram.Data.OrganizationData();
             foreach ( var org in repo.GetAll() )
             {
-                selectList.Add(new SelectListItem() { Value = org.OrganizationId, Text = org.Organization});
+                selectList.Add(new SelectListItem() { Value = org.OrganizationId, Text = org.Organization });
 
             }
 
             return Json(new { list = selectList }, JsonRequestBehavior.AllowGet);
-           
+
         }
 
         [HttpPost]
@@ -386,8 +394,77 @@ namespace HealthInformationProgram.Controllers
             }
             return Json(new { rowsEffected = result });
         }
+
+        private void UpdateFacility(JObject jsonObject)
+        {
+            var model = new HealthInformationProgram.Models.FacilityModel();
+            var repo = new HealthInformationProgram.Data.FacilityData();
+            model.FacilityId = (string) jsonObject["FacilityId"];
+            model.HealthCareFacility = (string) jsonObject["HealthCareFacility"];
+            model.HealthCareFacilityLevel = (string) jsonObject["HealthCareFacilityLevel"];
+            model.HealthCoordinator = (string) jsonObject["HealthCoordinator"];
+            model.OrganizationId = (string) jsonObject["OrganizationId"];
+            model.Settlement = (string) jsonObject["Settlement"];
+            model.Country = (string) jsonObject["Country"];
+            model.Region = (string) jsonObject["Region"];
+            model.Latitude = (string) jsonObject["Latitude"];
+            model.Longitude = (string) jsonObject["Longitude"];
+            model.FacilityStatus = (string) jsonObject["FacilityStatus"];
+            model.SortOrder = (string) jsonObject["SortOrder"];
+            model.FacilityStartEffectiveDate = (string) jsonObject["FacilityStartEffectiveDate"];
+            model.FacilityEndEffectiveDate = (string) jsonObject["FacilityEndEffectiveDate"];
+            model.UpdateDate = DateTime.Now.ToString();
+            model.UpdatedBy = "current user";
+
+
+            repo.UpdateFacility(model);
+
+        }
         #endregion
 
+        #region Facility Hardware Inventory
+
+        [HttpPost]
+        public ActionResult SaveFacilityHardwareInventory(FacilityHardwareInventoryModel model)
+        {
+            int result = 0;
+
+            if ( ModelState.IsValid )
+            {
+                model.CreatedBy = "current user";
+                model.UpdatedBy = "current user";
+
+                var data = new HealthInformationProgram.Data.FacilityData();
+                result = data.CreateFacilityHardwareInventory(model);
+            }
+            return Json(new { rowsEffected = result });
+        }
+
+        private void UpdateFacilityHardwareInventory(JObject jsonObject)
+        {
+            var model = new HealthInformationProgram.Models.FacilityModel();
+            var repo = new HealthInformationProgram.Data.FacilityData();
+
+            model.HealthCareFacility = (string) jsonObject["HealthCareFacility"];
+            model.HealthCareFacilityLevel = (string) jsonObject["HealthCareFacilityLevel"];
+            model.HealthCoordinator = (string) jsonObject["HealthCoordinator"];
+            model.OrganizationId = (string) jsonObject["OrganizationId"];
+            model.Settlement = (string) jsonObject["Settlement"];
+            model.Country = (string) jsonObject["Country"];
+            model.Region = (string) jsonObject["Region"];
+            model.Latitude = (string) jsonObject["Latitude"];
+            model.Longitude = (string) jsonObject["Longitude"];
+            model.FacilityStatus = (string) jsonObject["FacilityStatus"];
+            model.SortOrder = (string) jsonObject["SortOrder"];
+            model.FacilityStartEffectiveDate = (string) jsonObject["FacilityStartEffectiveDate"];
+            model.FacilityEndEffectiveDate = (string) jsonObject["FacilityEndEffectiveDate"];
+            model.UpdateDate = DateTime.Now.ToString();
+            model.UpdatedBy = "current user";
+
+
+            repo.UpdateFacilityHardwareInventory(model);
+        }
+        #endregion
 
         //not currently being used 11-28-15
         private string GenerateValidationModel(string entityName)

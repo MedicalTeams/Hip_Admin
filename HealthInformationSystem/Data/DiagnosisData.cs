@@ -129,7 +129,7 @@ namespace HealthInformationProgram.Data
             var dataModel = new HealthInformationProgram.Data.Tables.lkup_diag();
 
 
-            var diagView = new DiagnosisModel();
+           
             dataModel.diag_id = Convert.ToDecimal(model.DiagnosisId);
             dataModel.diag_stat = model.DiagnosisStatus;
             dataModel.diag_descn = model.DiagnosisDescription;
