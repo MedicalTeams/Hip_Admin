@@ -1,0 +1,186 @@
+﻿@model HealthInformationProgram.Models.OrganizationModel
+
+
+@Styles.Render("~/Content/css")
+@{
+    var statusList = new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "A" }, new SelectListItem { Text = "Inactive", Value = "I" } };
+ 
+}
+
+<div id="createFormDialog" class="createFormDialog">
+    <div id="createHeader">
+        <h1>Create Organization</h1>
+    </div>
+    <div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.Organization)
+            @Html.TextBoxFor(m => m.Organization)
+            @Html.ValidationMessageFor(m=> m.Organization)
+        </div>
+         <div>
+            @Html.LabelFor(m => m.OrganizationStatus)
+            @Html.DropDownListFor(m => m.OrganizationStatus, statusList)
+
+        </div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.SortOrder)
+            @Html.TextBoxFor(m => m.SortOrder)
+            @Html.ValidationMessageFor(m=> m.SortOrder)
+
+        </div>
+       
+    </div>
+    <div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.StartEffectiveDate)
+            @Html.TextBoxFor(m => m.StartEffectiveDate)
+            @Html.ValidationMessageFor(m=> m.StartEffectiveDate)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.EndEffectiveDate)
+            @Html.TextBoxFor(m => m.EndEffectiveDate)
+            @Html.ValidationMessageFor(m=> m.EndEffectiveDate)
+        </div>
+
+      
+       
+    </div>
+    <div>
+    </div>
+
+    <div class="createFooter">
+        <div id="buttonWrapper">
+            <button id="save" onclick="save()" >Save</button>
+            <button id="close">Close</button>
+        </div>
+    </div>
+</div>
+    
+<script>
+
+
+    OrganizationObject = {
+        objectModel: function () {
+            return result = {
+                Organization: $("#Organization").val(),
+                OrganizationStatus: $("#OrganizationStatus").val(),
+                StartEffectiveDate: $("#StartEffectiveDate").val(),
+                EndEffectiveDate: $("#EndEffectiveDate").val(),
+                SortOrder: $("#SortOrder").val(),
+               
+            };
+        },
+        create: function (inputData) {
+           
+            debugger;
+
+            $.ajax({
+
+                url: "/Home/SaveOrganization",
+                data: JSON.stringify(inputData),
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (mydata) {
+                    if (mydata.rowsEffected === 1) {
+                        window.parent.dialog.dialog("close");
+                        window.parent.getTable(window.parent.currentEntity);
+                        
+                        
+                    } else {
+                        console.log(mydata.errors);
+                    }
+
+                },
+                error: function (mydata) {
+                    console.log(myData);
+                    alert("error"); alert(mydata);
+                },
+            });
+
+            return false;
+        }
+
+    }
+
+    //function setValidation() {
+
+    //    var validator=   $('#createForm').validate({
+
+    //        rules:{
+    //            DiagnosisDescription: {
+    //                required: true
+    //            },
+                
+    //            DiagnosisEffectiveStartDate: {
+    //                requierd:true
+    //            },
+    //            DiagnosisEffectiveEndDate: {
+    //                requierd: true
+    //            },
+    //            DiagnosisStatus: {
+    //                required: function (element) {
+    //                    return $('#DiagnosisStatus').val() === '';
+    //                }
+    //            }
+    //        },
+    //        messages: {
+    //            DiagnosisDescription: {
+    //                required: "Description Required"
+    //            },
+               
+    //            DiagnosisEffectiveStartDate: {
+    //                requierd: "Start Date Required"
+    //            },
+    //            DiagnosisEffectiveEndDate: {
+    //                requierd: "End Date Required"
+    //            },
+    //            DiagnosisStatus: {
+    //                required: "Status Required"
+    //            }
+    //        },
+    //        errorPlacement:function(error,element){
+    //            $(element)
+    //                       .closest("form")
+    //                           .find("label[for='" + element.attr("id") + "']")
+    //                               .append(error);
+    //        },
+    //        errorElement: "span",
+    //        //submitHandler: function (form) {
+    //        //    if (validator.form()) {
+    //        //        var model = DiagnosisObject.objectModel();
+    //        //        DiagnosisObject.create(model);
+    //        //        return false;
+    //        //    }
+    //        //}
+    //    })
+
+    //}
+
+    function save() {
+        
+        var model = OrganizationObject.objectModel();
+        OrganizationObject.create(model);
+
+    }
+
+
+    $('#StartEffectiveDate').datepicker();
+    $('#EndEffectiveDate').datepicker();
+
+
+
+
+    $(document).ready(function () {
+
+      
+
+        $('#close').on('click', function close() {
+
+            window.parent.dialog.dialog("close")
+            window.parent.getTable(window.parent.currentEntity);
+
+            return false;
+        });
+    });
+</script>

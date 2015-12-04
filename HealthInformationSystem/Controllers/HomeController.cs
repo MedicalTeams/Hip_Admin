@@ -86,6 +86,10 @@ namespace HealthInformationProgram.Controllers
                 case "FacilityHarwareInventoryModel":
                     viewResult = PartialView("~/Views/Home/CreateFacility/_CreateFacilityHardware.cshtml", model);
                     break;
+                case "OrganizationModel":
+                    viewResult = PartialView("~/Views/Home/CreateOrganization/_CreateOrganization.cshtml", model);
+                    break;
+
 
             }
             return viewResult;
@@ -184,6 +188,9 @@ namespace HealthInformationProgram.Controllers
                     break;
                 case "FacilityHardwareInventoryModel":
                     UpdateFacilityHardwareInventory(jsonObject);
+                    break;
+                case "OrganizationModel":
+                    UpdateOrganization(jsonObject);
                     break;
 
             }
@@ -364,21 +371,7 @@ namespace HealthInformationProgram.Controllers
         #endregion
 
         #region Facility Methods
-        [HttpGet]
-        public ActionResult GetOrganizationList()
-        {
-            var selectList = new List<SelectListItem>();
-            var repo = new HealthInformationProgram.Data.OrganizationData();
-            foreach ( var org in repo.GetAll() )
-            {
-                selectList.Add(new SelectListItem() { Value = org.OrganizationId, Text = org.Organization });
-
-            }
-
-            return Json(new { list = selectList }, JsonRequestBehavior.AllowGet);
-
-        }
-
+      
         [HttpPost]
         public ActionResult SaveFacility(FacilityModel model)
         {
@@ -466,6 +459,57 @@ namespace HealthInformationProgram.Controllers
         }
         #endregion
 
+      
+        #region Organization Methods
+        [HttpGet]
+        public ActionResult GetOrganizationList()
+        {
+            var selectList = new List<SelectListItem>();
+            var repo = new HealthInformationProgram.Data.OrganizationData();
+            foreach ( var org in repo.GetAll() )
+            {
+                selectList.Add(new SelectListItem() { Value = org.OrganizationId, Text = org.Organization });
+
+            }
+
+            return Json(new { list = selectList }, JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpPost]
+        public ActionResult SaveOrganization(OrganizationModel model)
+        {
+            int result = 0;
+
+            if ( ModelState.IsValid )
+            {
+                model.CreatedBy = "current user";
+                model.UpdatedBy = "current user";
+
+                var data = new HealthInformationProgram.Data.OrganizationData();
+                result = data.CreateOrganization(model);
+            }
+            return Json(new { rowsEffected = result });
+        }
+
+        private void UpdateOrganization(JObject jsonObject)
+        {
+            var model = new HealthInformationProgram.Models.OrganizationModel();
+            var repo = new HealthInformationProgram.Data.OrganizationData();
+            model.OrganizationId = (string) jsonObject["OrganizationId"];
+            model.Organization = (string) jsonObject["Organization"];
+            model.OrganizationStatus = (string) jsonObject["OrganizationStatus"];
+            model.StartEffectiveDate = (string) jsonObject["StartEffectiveDate"];
+            model.EndEffectiveDate = (string) jsonObject["EndEffectiveDate"];
+            model.SortOrder = (string) jsonObject["SortOrder"];
+            model.UpdateDate = DateTime.Now.ToString();
+            model.UpdatedBy = "current user";
+
+
+            repo.UpdateOrganization(model);
+
+        }
+
+        #endregion
         //not currently being used 11-28-15
         private string GenerateValidationModel(string entityName)
         {

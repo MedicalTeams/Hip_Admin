@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthInformationProgram.Data.Tables
 {
@@ -9,8 +10,8 @@ namespace HealthInformationProgram.Data.Tables
         {
             this.lkup_faclty = new List<lkup_faclty>();
         }
-
-        public decimal orgzn_id { get; set; }
+         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        public Nullable<decimal> orgzn_id { get; set; }
         public string orgzn { get; set; }
         public Nullable<decimal> user_intrfc_sort_ord { get; set; }
         public string orgzn_stat { get; set; }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using HealthInformationProgram.Data.DataContext;
@@ -48,11 +50,20 @@ namespace HealthInformationProgram.Data.Repositories
 
                 using ( var ctx = new ClinicDataContext(connString) )
                 {
-                    ctx.lkup_orgzn.Add(entity);
+                    IdentityInsertOn<lkup_orgzn>(ctx, entity);
+                    ctx.Entry(entity).State = System.Data.Entity.EntityState.Added;
                     int result = ctx.SaveChanges();
 
                     return result;
                 }
+            }
+            catch ( DbEntityValidationException ex )
+            {
+                throw ex;
+            }
+            catch ( EntityException ex )
+            {
+                throw ex;
             }
             catch ( Exception ex )
             {
@@ -77,7 +88,7 @@ namespace HealthInformationProgram.Data.Repositories
                     lookupOrganization.rec_updt_user_id_cd = entity.rec_updt_user_id_cd;
                     lookupOrganization.rec_updt_dt = entity.rec_updt_dt;
                     lookupOrganization.orgzn_strt_eff_dt = entity.orgzn_strt_eff_dt;
-                    lookupOrganization.orgzn_end_eff_dt = entity.orgzn_strt_eff_dt;
+                    lookupOrganization.orgzn_end_eff_dt = entity.orgzn_end_eff_dt;
                     
 
                     ctx.Entry(lookupOrganization).State = System.Data.Entity.EntityState.Modified;
@@ -86,6 +97,14 @@ namespace HealthInformationProgram.Data.Repositories
 
                     return result;
                 }
+            }
+            catch ( DbEntityValidationException ex )
+            {
+                throw ex;
+            }
+            catch ( EntityException ex )
+            {
+                throw ex;
             }
             catch ( Exception ex )
             {

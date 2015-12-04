@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using HealthInformationProgram.Data.Repositories;
 using HealthInformationProgram.Models;
 
 namespace HealthInformationProgram.Data
@@ -16,7 +17,7 @@ namespace HealthInformationProgram.Data
             foreach ( var item in dataList )
             {
                 var viewModel = new OrganizationModel();
-                viewModel.Organization= item.orgzn.ToString();
+                viewModel.Organization = item.orgzn.ToString();
                 viewModel.OrganizationId = item.orgzn_id.ToString();
                 viewModel.OrganizationStatus = item.orgzn_stat.ToString();
                 viewModel.SortOrder = item.user_intrfc_sort_ord.ToString();
@@ -34,7 +35,7 @@ namespace HealthInformationProgram.Data
         }
         public OrganizationModel GetOrganization(string id)
         {
-          
+
             var repo = new Data.Repositories.OrganizationRepository();
             var dataModel = repo.GetOrganization(Convert.ToDecimal(id));
             var viewModel = new OrganizationModel();
@@ -73,6 +74,49 @@ namespace HealthInformationProgram.Data
 
 
             return viewModel;
+        }
+
+        public int CreateOrganization(OrganizationModel model)
+        {
+            var repo = new OrganizationRepository();
+            var dataModel = new HealthInformationProgram.Data.Tables.lkup_orgzn();
+
+
+            dataModel.orgzn_id = Convert.ToDecimal(model.OrganizationId);
+            dataModel.orgzn = model.Organization;
+            dataModel.orgzn_stat = model.OrganizationStatus;
+            dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
+            dataModel.orgzn_strt_eff_dt = Convert.ToDateTime(model.StartEffectiveDate);
+            dataModel.orgzn_end_eff_dt = Convert.ToDateTime(model.EndEffectiveDate);
+            dataModel.rec_creat_dt = DateTime.Now;
+            dataModel.rec_creat_user_id_cd = model.CreatedBy;
+            dataModel.rec_updt_dt = DateTime.Now;
+            dataModel.rec_updt_user_id_cd = model.UpdatedBy;
+
+            var result = repo.CreateOragization(dataModel);
+
+            return result;
+        }
+        public int UpdateOrganization(OrganizationModel model)
+        {
+            var repo = new OrganizationRepository();
+            var dataModel = new HealthInformationProgram.Data.Tables.lkup_orgzn();
+
+
+            dataModel.orgzn_id = Convert.ToDecimal(model.OrganizationId);
+            dataModel.orgzn = model.Organization;
+            dataModel.orgzn_stat = model.OrganizationStatus;
+            dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
+            dataModel.orgzn_strt_eff_dt = Convert.ToDateTime(model.StartEffectiveDate);
+            dataModel.orgzn_end_eff_dt = Convert.ToDateTime(model.EndEffectiveDate);
+            dataModel.rec_creat_dt = Convert.ToDateTime(model.CreateDate);
+            dataModel.rec_creat_user_id_cd = model.CreatedBy;
+            dataModel.rec_updt_dt = Convert.ToDateTime(model.UpdateDate);
+            dataModel.rec_updt_user_id_cd = model.UpdatedBy;
+
+            var result = repo.Update(dataModel);
+
+            return result;
         }
     }
 }
