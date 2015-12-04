@@ -10,7 +10,7 @@
             width:250px;
         }
         .middlingInput {
-            width:80px;
+            width:100px;
         }
 
         .shortInput {
@@ -123,11 +123,10 @@
             </select>
         </div>
     </div>
-    <hr />
+    
     <div>
         <button id="create" type="button">Create</button>
     </div>
-
     <div id="the_table"></div>
 
 </body>
@@ -201,24 +200,16 @@
     }
 
     function getInputTD(id, value, key) {
-        //        return "<input  type='text' disabled  id='" + id + "' class='middlingInput' value='" + value + "'  />";
         var css = "class='" + inputLengthsMap[key] + "'";
-        return "<input  type='text' disabled  id='" + id + "' " + css + " value='" + value + "'  />";
-
-
+        return "<center><input  type='text' disabled  id='" + id + "' " + css + " value='" + value + "'  /></center>";
     }
 
     function getInputNumberTD(id, value, key) {
         var css = "class='" + inputLengthsMap[key] + "'";
-
-//        return "<input  type='number' disabled  id='" + id + "'  class='shortInput' value='" + value + "'  />";
-        return "<input  type='number' disabled  id='" + id + "'  " + css + " value='" + value + "'  />";
+        return "<center><input  type='number' disabled  id='" + id + "'  " + css + " value='" + value + "'  /></center>";
     }
 
-
     function getSelectTD(row, key, id) {
-
-
         var select = "<select id='" + id + "' disabled>";
         var fromDatabase = matrix[row][key];
         if (fromDatabase == "A") {
@@ -244,7 +235,17 @@
         for (var row in matrix) {
             for (var key in matrix[row]) {
                 try {
-                    var size = matrix[row][key].length;
+
+                    var value = matrix[row][key];
+
+                    if (endsWith(key, "Date")) {
+                        var value = matrix[row][key].split(" ")[0];
+                        if (value == undefined) {
+                            value = matrix[row][key];
+                        }
+                    }
+
+                    var size = value.length;
                     if (sizes.hasOwnProperty(key)) {
                         if (size > sizes[key]) {
                             sizes[key] = size;
@@ -269,7 +270,6 @@
             }
         }
     }
-
 
     var do_not_edit = {};
     function populate() {
@@ -382,7 +382,11 @@
             type: 'POST',
             dataType: 'json',
             success: function (mydata) {
-                matrix = eval("(" + mydata + ')');
+                try {
+                    matrix = eval("(" + mydata + ')');
+                } catch (it_might_be_empty) {
+                    console.log("The matrix is empty ( and that is ok )");
+                }
                 populate();
             },
             error: function (mydata) { alert("error"); alert(mydata); },
