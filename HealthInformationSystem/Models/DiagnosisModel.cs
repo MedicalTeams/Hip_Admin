@@ -11,22 +11,29 @@ namespace HealthInformationProgram.Models
         [Display(Name = "Diagnosis Id")]
         [ScaffoldColumn(false)]
         public string DiagnosisId { get; set; }
+        
         [Display(Name = "Diagnosis")]
-        [Required]
+        [Required(ErrorMessage = "Diagnosis Description Required")]
         public string DiagnosisDescription { get; set; }
+        
         [Display(Name = "Diagnosis Abbreviation")]
         public string DiagnosisAbbreviation { get; set; }
+        
         [Display(Name = "Status")]
-        [Required]
+        [Required(ErrorMessage="Status is Required")]
         public string DiagnosisStatus { get; set; }
+
         [Display(Name = "Start Date")]
-        [Required]
+        [Required(ErrorMessage="Effective Start Required")]
         public string DiagnosisEffectiveStartDate { get; set; }
+        
         [Display(Name = "End Date")]
-        [Required]
+        [Required(ErrorMessage = "Effective End Required")]
         public string DiagnosisEffectiveEndDate { get; set; }
+        
         [Display(Name = "Icd")]
         public string IcdCode { get; set; }
+        
         [Display(Name = "Display order")]
         public string SortOrder { get; set; }
 

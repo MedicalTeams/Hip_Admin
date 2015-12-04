@@ -15,6 +15,7 @@ namespace HealthInformationProgram.Models
         public string Country { get; set; }
         public string Region { get; set; }
         public string OrganizationId { get; set; }
+        public string OrganizationName { get; set; }
         public string FacilityStatus { get; set; }
         public string FacilityStartEffectiveDate { get; set; }
         public string FacilityEndEffectiveDate { get; set; }

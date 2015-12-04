@@ -74,17 +74,18 @@ namespace HealthInformationProgram.Data
             var item = repo.GetDiagnosis(id);
 
             var diagView = new DiagnosisModel();
-            diagView.DiagnosisId = item.diag_id.ToString();
-            diagView.DiagnosisStatus = item.diag_stat.ToString();
-            diagView.DiagnosisAbbreviation = item.diag_abrvn.ToString();
-            diagView.SortOrder = item.user_intrfc_sort_ord.ToString();
-            diagView.IcdCode = item.icd_cd.ToString();
-            diagView.DiagnosisEffectiveStartDate = item.diag_strt_eff_dt.ToString();
-            diagView.DiagnosisEffectiveEndDate = item.diag_end_eff_dt.ToString();
-            diagView.CreateDate = item.rec_creat_dt.ToString();
-            diagView.CreatedBy = item.rec_creat_user_id_cd.ToString();
-            diagView.UpdateDate = item.rec_updt_dt.ToString();
-            diagView.UpdatedBy = item.rec_updt_user_id_cd.ToString();
+            diagView.DiagnosisId = GetDataValue(item.diag_id);
+            diagView.DiagnosisStatus = GetDataValue(item.diag_stat);
+            diagView.DiagnosisAbbreviation = GetDataValue(item.diag_abrvn);
+            diagView.DiagnosisDescription = GetDataValue(item.diag_descn);
+            diagView.SortOrder = GetDataValue(item.user_intrfc_sort_ord);
+            diagView.IcdCode = GetDataValue(item.icd_cd);
+            diagView.DiagnosisEffectiveStartDate = GetDataValue(item.diag_strt_eff_dt);
+            diagView.DiagnosisEffectiveEndDate = GetDataValue(item.diag_end_eff_dt);
+            diagView.CreateDate = GetDataValue(item.rec_creat_dt);
+            diagView.CreatedBy = GetDataValue(item.rec_creat_user_id_cd);
+            diagView.UpdateDate = GetDataValue(item.rec_updt_dt);
+            diagView.UpdatedBy = GetDataValue(item.rec_updt_user_id_cd);
 
             return diagView;
 
@@ -382,8 +383,8 @@ namespace HealthInformationProgram.Data
 
             var repo = new SupplementalDiagnosisRepository();
             var dataModel = new HealthInformationProgram.Data.Tables.lkup_splmtl_diag();
-
-            dataModel.splmtl_diag_id = Convert.ToDecimal(model.SupplementalDiagnosisId);
+            //dataModel.splmtl_diag_id = null;// Convert.ToDecimal(model.SupplementalDiagnosisId);
+            dataModel.diag_id = Convert.ToDecimal(model.DiagnosisId);
             dataModel.splmtl_diag_stat = model.Status;
             dataModel.splmtl_diag_descn = model.SupplementalDiagnosisDescription;
             dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
@@ -397,7 +398,7 @@ namespace HealthInformationProgram.Data
             try
             {
 
-                var returnCode = repo.Update(dataModel);
+                var returnCode = repo.CreateSupplementalDiagnosis(dataModel);
                 return returnCode;
             }
             catch ( Exception ex )

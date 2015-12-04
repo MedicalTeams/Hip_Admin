@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using HealthInformationProgram.Data;
 using HealthInformationProgram.Models;
 using Newtonsoft.Json.Linq;
 
@@ -51,16 +52,16 @@ namespace HealthInformationProgram.Controllers
         public ActionResult GetEntity(string entityName)
         {
 
-           
+
             var jsonString = GetEntityDefinition(entityName);
             return Json(jsonString);
         }
         [HttpPost]
         public ActionResult Create(string modelName)
         {
-            Type type =GetModelType(modelName);
+            Type type = GetModelType(modelName);
             var model = Activator.CreateInstance(type);
-            var view = GetPartialViewPath(modelName,model);
+            var view = GetPartialViewPath(modelName, model);
             return view;
         }
 
@@ -69,13 +70,16 @@ namespace HealthInformationProgram.Controllers
             PartialViewResult viewResult = null;
 
             switch ( modelName )
-            { 
+            {
                 case "DiagnosisModel":
-                    viewResult =PartialView("~/Views/Home/CreateDiagnosis/_CreateDiagnosis.cshtml", model);
+                    viewResult = PartialView("~/Views/Home/CreateDiagnosis/_CreateDiagnosis.cshtml", model);
+                    break;
+                case "SupplementalDiagnosisModel":
+                    viewResult = PartialView("~/Views/Home/CreateDiagnosis/_CreateSupplementalDiagnosis.cshtml", model);
                     break;
 
             }
-            return viewResult; 
+            return viewResult;
         }
 
         private static string GetEntityDefinition(string entityName)
@@ -88,11 +92,11 @@ namespace HealthInformationProgram.Controllers
                     var model = new List<RevisitModel>();
                     var data = new Data.RevisitData();
                     model = data.GetAllRevisits();
-                    jsonString= GetJsonString( model);
+                    jsonString = GetJsonString(model);
                     break;
                 case "DiagnosisModel":
                     var diagnosisModel = new List<DiagnosisModel>();
-                    
+
                     diagnosisModel = diagnosisData.GetAllDiagnosis();
                     jsonString = GetJsonString(diagnosisModel);
                     break;
@@ -107,14 +111,36 @@ namespace HealthInformationProgram.Controllers
 
                     supplementalDiagnosis = diagnosisData.GetAllSupplementalDiagnosis();
                     jsonString = GetJsonString(supplementalDiagnosis);
+                    break;
 
+                case "OrganizationModel":
+                    var orgList = new List<OrganizationModel>();
+                    var orgData = new OrganizationData();
+
+                    orgList = orgData.GetAll();
+                    jsonString = GetJsonString(orgList);
 
                     break;
+                case "FacilityModel":
+                    var facilityList = new List<FacilityModel>();
+                    var facilityData = new FacilityData();
+
+                    facilityList = facilityData.GetFacilityList();
+                    jsonString = GetJsonString(facilityList);
+                    break;
+                case "FacilityHardwareInventoryModel":
+                    var facilityHardwareList = new List<FacilityHardwareInventoryModel>();
+                    var facilityHardwareData = new FacilityHardwareData();
+
+                    facilityHardwareList = facilityHardwareData.GetAllFacilityHardware();
+                    jsonString = GetJsonString(facilityHardwareList);
+                    break;
+
             }
             return jsonString;
         }
 
-        private static string GetJsonString<T>( List<T> model)
+        private static string GetJsonString<T>(List<T> model)
         {
             System.Web.Script.Serialization.JavaScriptSerializer jSearializer =
                    new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -124,19 +150,6 @@ namespace HealthInformationProgram.Controllers
 
 
 
-        [HttpPost]
-        public ActionResult SaveDiagnosis(DiagnosisModel model)//string keyValues, string entityName, bool isNew)
-        {
-
-           model.CreatedBy= "current user";
-            model.UpdatedBy = "current user";
-            var repo = new HealthInformationProgram.Data.DiagnosisData();
-            var result = repo.CreateDiagnosis(model);
-
-
-            return Json(new { rowsEffected = result });
-        }
-        
         [HttpPost]
         public ActionResult SaveEntity(string keyValues, string entityName, bool isNew)
         {
@@ -149,7 +162,7 @@ namespace HealthInformationProgram.Controllers
                     UpdateRevisit(jsonObject);
                     break;
                 case "DiagnosisModel":
-                    SaveDiagnosis(jsonObject,isNew);
+                    SaveDiagnosis(jsonObject, isNew);
                     break;
                 case "SupplementalDiagnosisModel":
                     UpdateSupplementalDiagnosis(jsonObject);
@@ -180,6 +193,56 @@ namespace HealthInformationProgram.Controllers
             repo.UpdateRevisit(model);
 
         }
+
+
+   
+
+        #region Diagnosis Methods
+
+        [HttpGet]
+        public ActionResult GetDiagnosisList()
+        {
+            // var diagDict = new Dictionary<string, string>();
+            var selectList = new List<SelectListItem>();
+            var repo = new HealthInformationProgram.Data.DiagnosisData();
+            foreach ( var diag in repo.GetAllDiagnosis() )
+            {
+                selectList.Add(new SelectListItem() { Value = diag.DiagnosisId, Text = diag.DiagnosisDescription });
+
+                //    diagDict.Add(diag.DiagnosisId, diag.DiagnosisDescription);
+            }
+
+            return Json(new { list = selectList }, JsonRequestBehavior.AllowGet);
+            //  return Json(new { list = diagDict }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SaveDiagnosis(DiagnosisModel model)
+        {
+
+            var errorList = new Dictionary<string, string>();
+            int result = 0;
+            if ( ModelState.IsValid )
+            {
+                model.CreatedBy = "current user";
+                model.UpdatedBy = "current user";
+                var repo = new HealthInformationProgram.Data.DiagnosisData();
+                result = repo.CreateDiagnosis(model);
+
+            }
+            //else
+            //{
+            //    foreach ( var error in ModelState )
+            //    {
+            //       var mess= ModelState[error.Key].Errors[0].ErrorMessage;
+
+            //        errorList.Add(error.Key, mess);
+            //    }
+            //}
+            return Json(new { rowsEffected = result });
+            //return Json(new { rowsEffected = result, errors = errorList });
+        }
+
         private void SaveDiagnosis(JObject jsonObject, bool isNew)
         {
             var model = new HealthInformationProgram.Models.DiagnosisModel();
@@ -205,6 +268,26 @@ namespace HealthInformationProgram.Controllers
                 repo.UpdateDiagnosis(model);
             }
         }
+
+        #endregion
+
+        #region Supplemental Diagnosis Methods
+
+        [HttpPost]
+        public ActionResult SaveSupplementalDiagnosis(SupplementalDiagnosisModel model)
+        {
+            int result = 0;
+
+            if ( ModelState.IsValid )
+            {
+                model.CreatedBy = "current user";
+                model.UpdatedBy= "current user";
+
+                var data = new HealthInformationProgram.Data.DiagnosisData();
+                result = data.CreateSupplementalDiagnosis(model);
+            }
+            return Json(new { rowsEffected = result });
+        }
         private void UpdateSupplementalDiagnosis(JObject jsonObject)
         {
             var model = new HealthInformationProgram.Models.SupplementalDiagnosisModel();
@@ -224,6 +307,11 @@ namespace HealthInformationProgram.Controllers
             repo.UpdateSupplementalDiagnosis(model);
 
         }
+        #endregion
+
+        #region Supplemental Diagnosis Methods
+      
+        
         private void UpdateSupplementalDiagnosisCategory(JObject jsonObject)
         {
             var model = new HealthInformationProgram.Models.SupplementalDiagnosisCategoryModel();
@@ -242,13 +330,8 @@ namespace HealthInformationProgram.Controllers
             repo.UpdateSupplementalDiagnosisCategory(model);
 
         }
-    
-        
-        
-        
-        
-        
-        
+        #endregion
+
         //not currently being used 11-28-15
         private string GenerateValidationModel(string entityName)
         {

@@ -121,9 +121,11 @@
                 <option class="menuOption" value="">Choose a database</option>
                 <option class="menuOption" value="RevisitModel">Revisit</option>
                 <option class="menuOption" value="DiagnosisModel">Diagnosis</option>
-                <option class="menuOption" value="SupplementalDiagnosisCategoryModel">Supplemental Diagnosis Categories</option>
+                <option class="menuOption" value="SupplementalDiagnosisCategoryModel"> Supplemental Diagnosis Categories</option>
                 <option class="menuOption" value="SupplementalDiagnosisModel">Supplemental Diagnosis</option>
-
+                 <option class="menuOption" value="FacilityModel">Facility</option>
+                 <option class="menuOption" value="FacilityHardwareInventoryModel">Facility Hardware</option>
+                 <option class="menuOption" value="OrganizationModel">Organization</option>
             </select>
         </div>
     </div>
@@ -366,7 +368,7 @@
     });
    
     $(document).ready(function () {
-        
+       
         $('#create').hide();
 
         $('#selectEntity').on('change', function () {
@@ -385,4 +387,5 @@
         });
     });
 </script>
+
 

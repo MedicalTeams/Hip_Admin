@@ -5,7 +5,7 @@
     var statusList = new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "A" }, new SelectListItem { Text = "Inactive", Value = "I" } };
  
 }
-<div style="background-color: white; padding:5px 10px 10px 10px">
+<div class="createFormDialog">
     <div id="createHeader">
         <h1>Create Diagnosis</h1>
     </div>
@@ -13,6 +13,7 @@
         <div class="createForm column left">
             @Html.LabelFor(m => m.DiagnosisDescription)
             @Html.TextBoxFor(m => m.DiagnosisDescription)
+            @Html.ValidationMessageFor(m=> m.DiagnosisDescription)
         </div>
         <div>
             @Html.LabelFor(m => m.DiagnosisAbbreviation)
@@ -21,6 +22,7 @@
         <div class="createForm column left">
             @Html.LabelFor(m => m.SortOrder)
             @Html.TextBoxFor(m => m.SortOrder)
+            @Html.ValidationMessageFor(m=> m.SortOrder)
 
         </div>
         @Html.LabelFor(m => m.IcdCode)
@@ -30,10 +32,12 @@
         <div class="createForm column left">
             @Html.LabelFor(m => m.DiagnosisEffectiveStartDate)
             @Html.TextBoxFor(m => m.DiagnosisEffectiveStartDate)
+            @Html.ValidationMessageFor(m=> m.DiagnosisEffectiveStartDate)
         </div>
         <div>
             @Html.LabelFor(m => m.DiagnosisEffectiveEndDate)
             @Html.TextBoxFor(m => m.DiagnosisEffectiveEndDate)
+            @Html.ValidationMessageFor(m=> m.DiagnosisEffectiveEndDate)
         </div>
 
         <div>
@@ -41,6 +45,7 @@
             @Html.DropDownListFor(m => m.DiagnosisStatus, statusList)
 
         </div>
+       
     </div>
     <div>
     </div>
@@ -63,11 +68,13 @@
                 DiagnosisEffectiveStartDate: $("#DiagnosisEffectiveStartDate").val(),
                 DiagnosisEffectiveEndDate: $("#DiagnosisEffectiveEndDate").val(),
                 DiagnosisStatus: $("#DiagnosisStatus").val(),
+                SortOrder: $("#SortOrder").val(),
                 IcdCode: $("#IcdCode").val(),
             };
         },
         create: function (inputData) {
-            console.log("model data" + inputData);
+           
+            debugger;
 
             $.ajax({
 
@@ -77,7 +84,12 @@
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (mydata) {
-                    window.parent.getTable(window.parent.currentEntity);
+                    if (mydata.result === 1) {
+                        window.parent.getTable(window.parent.currentEntity);
+                    } else {
+                        console.log(mydata.errors);
+                    }
+
                 },
                 error: function (mydata) {
                     console.log(myData);

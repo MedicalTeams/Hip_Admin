@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthInformationProgram.Data.Tables
 {
@@ -9,8 +10,8 @@ namespace HealthInformationProgram.Data.Tables
         {
             this.ov_diag = new List<ov_diag>();
         }
-
-        public decimal splmtl_diag_id { get; set; }
+         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        public Nullable<decimal> splmtl_diag_id { get; set; }
         public string splmtl_diag_descn { get; set; }
         public decimal diag_id { get; set; }
         public Nullable<decimal> user_intrfc_sort_ord { get; set; }

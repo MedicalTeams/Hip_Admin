@@ -1,0 +1,155 @@
+﻿@model HealthInformationProgram.Models.SupplementalDiagnosisModel
+
+@Styles.Render("~/Content/css")
+@{
+    var statusList = new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "A" }, new SelectListItem { Text = "Inactive", Value = "I" } };
+ 
+}
+<div class="createFormDialog">
+    <div id="createHeader">
+        <h1>Create Supplemental Diagnosis</h1>
+    </div>
+    <div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.SupplementalDiagnosisDescription)
+            @Html.TextBoxFor(m => m.SupplementalDiagnosisDescription)
+            @Html.ValidationMessageFor(m=> m.SupplementalDiagnosisDescription)
+        </div>
+        <div>
+            <label>Diagnosis</label>
+           <select id="diagnosisList"></select>
+        </div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.SortOrder)
+            @Html.TextBoxFor(m => m.SortOrder)
+            @Html.ValidationMessageFor(m=> m.SortOrder)
+
+        </div>
+      
+    </div>
+    <div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.SupplementalDiagnosisEffectiveStartDate)
+            @Html.TextBoxFor(m => m.SupplementalDiagnosisEffectiveStartDate)
+            @Html.ValidationMessageFor(m=> m.SupplementalDiagnosisEffectiveStartDate)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SupplementalDiagnosisEffectiveEndDate)
+            @Html.TextBoxFor(m => m.SupplementalDiagnosisEffectiveEndDate)
+            @Html.ValidationMessageFor(m=> m.SupplementalDiagnosisEffectiveEndDate)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.Status)
+            @Html.DropDownListFor(m => m.Status, statusList)
+
+        </div>
+     
+    </div>
+    <div>
+    </div>
+
+    <div class="createFooter">
+        <div id="buttonWrapper">
+            <button id="save"  onclick="save()">Save</button>
+            <button id="close">Close</button>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    var diagList = null;
+
+    function getDiagnosisValues() {
+
+        $.ajax({
+            type: 'GET',
+            url: "/Home/GetDiagnosisList",
+           
+            dataType: 'json',
+            success: function (result) {
+                var ddl = $('#diagnosisList');
+                var list = result.list;
+                $.each(list, function (index, value) {
+                    console.log(value);
+                    ddl.append('<option value='+value.Value+'>'+value.Text+'</option>')
+                });
+            },
+            error: function (e) {
+                alert("Error:Unable to load data from server");
+            }
+        });
+
+    }
+
+    SupplementalDiagnosis = { 
+
+        objectModel: function () {
+
+            return result = {
+
+                SupplementalDiagnosisDescription: $("#SupplementalDiagnosisDescription").val(),
+                DiagnosisId: $("#diagnosisList").val(),
+                SupplementalDiagnosisEffectiveStartDate: $("#SupplementalDiagnosisEffectiveStartDate").val(),
+                SupplementalDiagnosisEffectiveEndDate: $("#SupplementalDiagnosisEffectiveEndDate").val(),
+                Status: $("#Status").val(),
+                SortOrder: $("#SortOrder").val(),
+               
+            };
+        },
+            create: function (inputData){
+
+                $.ajax({
+
+                    url: "/Home/SaveSupplementalDiagnosis",
+                    data: JSON.stringify(inputData),
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: "application/json",
+                    success: function (mydata) {
+                        if (mydata.result === 1) {
+                            window.parent.getTable(window.parent.currentEntity);
+                        } else {
+                            console.log(mydata.errors);
+                        }
+
+                    },
+                    error: function (mydata) {
+                        console.log(myData);
+                        alert("error"); alert(mydata);
+                    },
+                });
+
+                return false;
+            }
+
+        }
+
+
+
+    function save() {
+
+        var model = SupplementalDiagnosis.objectModel();
+        SupplementalDiagnosis.create(model);
+
+    }
+    
+
+    $(document).ready(function () {
+
+        $('#close').on('click', function close() {
+
+            window.parent.dialog.dialog("close")
+            window.parent.getTable(window.parent.currentEntity);
+
+            return false;
+        });
+
+        getDiagnosisValues();
+
+        $('#SupplementalDiagnosisEffectiveStartDate').datepicker();
+        $('#SupplementalDiagnosisEffectiveEndDate').datepicker();
+    });
+</script>
