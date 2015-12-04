@@ -1,0 +1,131 @@
+﻿@model HealthInformationProgram.Models.SupplementalDiagnosisCategoryModel
+
+@Styles.Render("~/Content/css")
+@{
+    var statusList = new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "A" }, new SelectListItem { Text = "Inactive", Value = "I" } };
+ 
+}
+
+
+<div id="createFormDialog" class="createFormDialog">
+    <div id="createHeader">
+        <h1>Create Supplemental Diagnosis Category</h1>
+    </div>
+    <div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.SupplementalDiagnosisCategoryType)
+            @Html.TextBoxFor(m => m.SupplementalDiagnosisCategoryType)
+            @Html.ValidationMessageFor(m=> m.SupplementalDiagnosisCategoryType)
+        </div>
+      
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.SortOrder)
+            @Html.TextBoxFor(m => m.SortOrder, new { @type = "number" })
+            @Html.ValidationMessageFor(m=> m.SortOrder)
+
+        </div>
+      
+    </div>
+    <div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.SupplementalDiagnosisCategoryEffectiveStartDate)
+            @Html.TextBoxFor(m => m.SupplementalDiagnosisCategoryEffectiveStartDate, new { @value = DateTime.Now.Date })
+            @Html.ValidationMessageFor(m=> m.SupplementalDiagnosisCategoryEffectiveStartDate)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.SupplementalDiagnosisCategoryEffectiveEndDate)
+            @Html.TextBoxFor(m => m.SupplementalDiagnosisCategoryEffectiveEndDate)
+            @Html.ValidationMessageFor(m=> m.SupplementalDiagnosisCategoryEffectiveEndDate)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.Status)
+            @Html.DropDownListFor(m => m.Status, statusList)
+
+        </div>
+       
+    </div>
+    <div>
+    </div>
+
+    <div class="createFooter">
+        <div id="buttonWrapper">
+            <button id="save" value="SaveDiagnosis" onclick="save()" >Save</button>
+            <button id="close">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    DiagnosisObject = {
+        objectModel: function () {
+            return result = {
+                SupplementalDiagnosisCategoryType: $("#SupplementalDiagnosisCategoryType").val(),
+                DiagnosisAbbreviation: $("#DiagnosisAbbreviation").val(),
+                SupplementalDiagnosisCategoryEffectiveStartDate: $("#SupplementalDiagnosisCategoryEffectiveStartDate").val(),
+                SupplementalDiagnosisCategoryEffectiveEndDate: $("#SupplementalDiagnosisCategoryEffectiveEndDate").val(),
+                Status: $("#Status").val(),
+                SortOrder: $("#SortOrder").val(),
+                IcdCode: $("#IcdCode").val(),
+            };
+        },
+        create: function (inputData) {
+
+            debugger;
+
+            $.ajax({
+
+                url: "/Home/SaveSupplementalCategory",
+                data: JSON.stringify(inputData),
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (mydata) {
+                    if (mydata.result === 1) {
+                        window.parent.getTable(window.parent.currentEntity);
+                    } else {
+                        console.log(mydata.errors);
+                    }
+
+                },
+                error: function (mydata) {
+                    console.log(myData);
+                    alert("error"); alert(mydata);
+                },
+            });
+
+            return false;
+        }
+
+    }
+
+
+
+ function save() {
+        
+        var model = DiagnosisObject.objectModel();
+        DiagnosisObject.create(model);
+
+    }
+
+
+ $('#SupplementalDiagnosisCategoryEffectiveStartDate').datepicker();
+ $('#SupplementalDiagnosisCategoryEffectiveEndDate').datepicker();
+
+
+
+
+    $(document).ready(function () {
+
+        //setValidation();
+
+        $('#close').on('click', function close() {
+
+            window.parent.dialog.dialog("close")
+            window.parent.getTable(window.parent.currentEntity);
+
+            return false;
+        });
+    });
+</script>

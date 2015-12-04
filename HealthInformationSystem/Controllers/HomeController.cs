@@ -77,6 +77,15 @@ namespace HealthInformationProgram.Controllers
                 case "SupplementalDiagnosisModel":
                     viewResult = PartialView("~/Views/Home/CreateDiagnosis/_CreateSupplementalDiagnosis.cshtml", model);
                     break;
+                case "SupplementalDiagnosisCategoryModel":
+                    viewResult = PartialView("~/Views/Home/CreateDiagnosis/_CreateSupplementalCategoryDiagnosis.cshtml", model);
+                    break;
+                case "FacilityModel":
+                    viewResult = PartialView("~/Views/Home/CreateFacility/_CreateFacility.cshtml", model);
+                    break;
+                case "FacilityHarwareInventoryModel":
+                    viewResult = PartialView("~/Views/Home/CreateFacility/_CreateFacilityHardware.cshtml", model);
+                    break;
 
             }
             return viewResult;
@@ -195,7 +204,7 @@ namespace HealthInformationProgram.Controllers
         }
 
 
-   
+
 
         #region Diagnosis Methods
 
@@ -281,7 +290,7 @@ namespace HealthInformationProgram.Controllers
             if ( ModelState.IsValid )
             {
                 model.CreatedBy = "current user";
-                model.UpdatedBy= "current user";
+                model.UpdatedBy = "current user";
 
                 var data = new HealthInformationProgram.Data.DiagnosisData();
                 result = data.CreateSupplementalDiagnosis(model);
@@ -310,8 +319,22 @@ namespace HealthInformationProgram.Controllers
         #endregion
 
         #region Supplemental Diagnosis Methods
-      
-        
+        [HttpPost]
+        public ActionResult SaveSupplementalCategory(SupplementalDiagnosisCategoryModel model)
+        {
+            int result = 0;
+
+            if ( ModelState.IsValid )
+            {
+                model.CreatedBy = "current user";
+                model.UpdatedBy = "current user";
+
+                var data = new HealthInformationProgram.Data.DiagnosisData();
+                result = data.CreateDiagnosisCategory(model);
+            }
+            return Json(new { rowsEffected = result });
+        }
+
         private void UpdateSupplementalDiagnosisCategory(JObject jsonObject)
         {
             var model = new HealthInformationProgram.Models.SupplementalDiagnosisCategoryModel();

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthInformationProgram.Data.Tables
 {
@@ -9,8 +10,8 @@ namespace HealthInformationProgram.Data.Tables
         {
             this.ovs = new List<ov>();
         }
-
-        public decimal faclty_hw_invtry_id { get; set; }
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        public Nullable<decimal> faclty_hw_invtry_id { get; set; }
         public decimal faclty_id { get; set; }
         public string itm_descn { get; set; }
         public string mac_addr { get; set; }

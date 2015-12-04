@@ -239,7 +239,7 @@ namespace HealthInformationProgram.Data
             var repo = new SupplementalDiagnosisCategoryRepository();
             var dataModel = new HealthInformationProgram.Data.Tables.lkup_splmtl_diag_cat();
 
-           dataModel.splmtl_diag_cat_id = Convert.ToDecimal(model.SupplementalDiagnosisCategoryId);
+          // dataModel.splmtl_diag_cat_id = Convert.ToDecimal(model.SupplementalDiagnosisCategoryId);
             dataModel.splmtl_diag_cat_stat = model.Status;
             dataModel.splmtl_diag_cat = model.SupplementalDiagnosisCategoryType;
             dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);

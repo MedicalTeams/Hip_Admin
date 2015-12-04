@@ -335,6 +335,9 @@
     <Content Include="Views\Home\Report.cshtml" />
     <Content Include="Views\Home\CreateDiagnosis\_CreateDiagnosis.cshtml" />
     <Content Include="Views\Home\CreateDiagnosis\_CreateSupplementalDiagnosis.cshtml" />
+    <Content Include="Views\Home\CreateFacility\_CreateFacility.cshtml" />
+    <Content Include="Views\Home\CreateDiagnosis\_CreateSupplementalCategoryDiagnosis.cshtml" />
+    <Content Include="Views\Home\CreateFacility\_CreateFacilityHardware.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
