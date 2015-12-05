@@ -5,6 +5,9 @@
 @Styles.Render("~/Content/themes/base/css")
 <header>
     <style class="cp-pen-styles">
+        .sortOrderWidget {
+            width:40px;
+        }
 
         .longInput {
             width:250px;
@@ -141,6 +144,12 @@
     function getDoNotEdit() {
 
         var do_not_edit = {};
+
+        do_not_edit["OrganizationId"] = "";
+        do_not_edit["SupDxId"] = "";
+        do_not_edit["FacilityId"] = "";
+        do_not_edit["SupDiagCatId"] = "";
+        do_not_edit["SupDiagId"] = "";
         do_not_edit["UpdatedBy"] = "";
         do_not_edit["RevisitId"] = "";
         do_not_edit["CreateDate"] = "";
@@ -183,9 +192,11 @@
             document.getElementById(obj.id).innerHTML = "Update";
             $('#' + rowId + ' :input').prop('disabled', false);
         } else if (currentState == "Update") {
-            document.getElementById(obj.id).innerHTML = "Edit";
-            document.getElementById(obj.id).className = "";
-            doSubmit(obj.id);
+            if (checkSortOrder()) {
+                document.getElementById(obj.id).innOrgIderHTML = "Edit";
+                document.getElementById(obj.id).className = "";
+                doSubmit(obj.id);
+            }
         }
     }
 
@@ -202,6 +213,11 @@
 
     function endsWith(str, suffix) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+
+    function getSortOrderWidget(id, value, key) {
+        var css = "class='" + inputLengthsMap[key] + "'";
+        return "<center><input  type='number' disabled  id='" + id + "' class='sortOrderWidget' value='" + value + "' /></center>";
     }
 
     function getInputTD(id, value, key) {
@@ -319,7 +335,8 @@
                 } else if (key == "SortOrder") {
                    // console.log("SO! " + value); 
                     html += "<td class='ok_edit'>";
-                    html += getInputNumberTD(id, value, key);
+                    html += getSortOrderWidget(id, value, key);
+
                     html += "</td>";
                 } else {
                 if (do_not_edit.hasOwnProperty(key)) {
@@ -337,6 +354,29 @@
     }
 
 
+    function checkSortOrder() {
+        var sorters = document.getElementsByClassName("sortOrderWidget");
+        var sort_is_ok = true;
+        var collision = "Sort order collision!\n";
+        if (sorters.length > 0) {
+            var seen = {};
+            for (var i = 0; i < sorters.length; i++) {
+                var v = sorters[i].value;
+                var id = sorters[i].id;
+                if (seen.hasOwnProperty(v)) {
+                    sort_is_ok = false;
+                    collision += "Value: " + v + "\n";
+                } else {
+                    seen[v] = id;
+                }
+            }
+        }
+
+        if (!sort_is_ok) {
+            alert(collision);
+        }
+        return sort_is_ok;
+    }
 
     //////////// 
     function doSubmit(row) {
