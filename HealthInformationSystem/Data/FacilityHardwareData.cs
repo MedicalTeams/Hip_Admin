@@ -78,5 +78,60 @@ namespace HealthInformationProgram.Data
 
             return hardware;
         }
+
+        public int CreateFacilityHardwareInventory(FacilityHardwareInventoryModel model)
+        {
+           var repo = new FacilityHardwareInventoryRespository();
+            var dataModel = new HealthInformationProgram.Data.Tables.faclty_hw_invtry();
+
+            try
+            {
+                
+                dataModel.faclty_id = Convert.ToDecimal(model.FacilityId);
+                dataModel.aplctn_vrsn = model.ApplicationVersion;
+                dataModel.hw_stat = model.HardwareStatus;
+                dataModel.itm_descn = model.ItemDescription;
+                dataModel.mac_addr = model.MacAddress;
+                dataModel.rec_creat_dt = DateTime.Now;
+                dataModel.rec_creat_user_id_cd = model.CreatedBy;
+                dataModel.rec_updt_dt = DateTime.Now;
+                dataModel.rec_updt_user_id_cd = model.UpdatedBy;
+
+              var result=  repo.CreateFacilityHardware(dataModel);
+
+              return result;
+            }
+            catch ( Exception ex )
+            {
+                throw ex;
+            }
+
+        }
+
+        public int UpdateFacilityHardwareInventory(FacilityHardwareInventoryModel model)
+        {
+            var repo = new FacilityHardwareInventoryRespository();
+            var dataModel = new HealthInformationProgram.Data.Tables.faclty_hw_invtry();
+
+            try
+            {
+                dataModel.faclty_hw_invtry_id = Convert.ToDecimal(model.FacilityHardwareInventoryId);
+                dataModel.faclty_id = Convert.ToDecimal(model.FacilityId);
+                dataModel.aplctn_vrsn = model.ApplicationVersion;
+                dataModel.hw_stat = model.HardwareStatus;
+                dataModel.itm_descn = model.ItemDescription;
+                dataModel.mac_addr = model.MacAddress;
+                dataModel.rec_updt_dt = DateTime.Now;
+                dataModel.rec_updt_user_id_cd = model.UpdatedBy;
+
+
+                var returnCode = repo.UpdateFacilityHardware(dataModel);
+                return returnCode;
+            }
+            catch ( Exception ex )
+            {
+                throw ex;
+            }
+        }
     }
 }

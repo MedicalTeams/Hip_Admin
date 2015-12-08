@@ -1,2 +1,209 @@
 ﻿@model HealthInformationProgram.Models.FacilityHardwareInventoryModel
 
+@Styles.Render("~/Content/css")
+@{
+    var statusList = new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "A" }, new SelectListItem { Text = "Inactive", Value = "I" } };
+ 
+}
+
+<div id="createFormDialog" class="createFormDialog">
+    <div id="createHeader">
+        <h1>Create Facility Hardware</h1>
+    </div>
+    <div>
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.ItemDescription)
+            @Html.TextBoxFor(m => m.ItemDescription)
+            @Html.ValidationMessageFor(m => m.ItemDescription)
+
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Facility)
+            <select id="facilitySelector"></select>
+        </div>
+    </div>
+    <div style="clear:both">
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.MacAddress)
+            @Html.TextBoxFor(m => m.MacAddress)
+            @Html.ValidationMessageFor(m => m.MacAddress)
+        </div>
+
+
+
+    </div>
+    <div style="clear: both">
+        <div class="createForm column left">
+            @Html.LabelFor(m => m.ApplicationVersion)
+            @Html.TextBoxFor(m => m.ApplicationVersion)
+            @Html.ValidationMessageFor(m => m.ApplicationVersion)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.HardwareStatus)
+            @Html.DropDownListFor(m => m.HardwareStatus, statusList)
+
+        </div>
+
+
+
+
+    </div>
+    <div>
+    </div>
+
+    <div class="createFooter">
+        <div id="buttonWrapper">
+            <button id="save" onclick="save()">Save</button>
+            <button id="close">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    FacilityHardwareObject = {
+        objectModel: function () {
+            return result = {
+                FacilityId: $("#facilitySelector").val(),
+                ItemDescription: $("#ItemDescription").val(),
+                MacAddress: $("#MacAddress").val(),
+                ApplicationVersion: $("#ApplicationVersion").val(),
+                HardwareStatus: $("#HardwareStatus").val(),
+
+            };
+        },
+        create: function (inputData) {
+
+            debugger;
+
+            $.ajax({
+
+                url: "/Home/SaveFacilityHardwareInventory",
+                data: JSON.stringify(inputData),
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (mydata) {
+                    if (mydata.rowsEffected === 1) {
+                        window.parent.dialog.dialog("close");
+                        window.parent.getTable(window.parent.currentEntity);
+
+
+                    } else {
+                        console.log(mydata.errors);
+                    }
+
+                },
+                error: function (mydata) {
+                    console.log(myData);
+                    alert("error"); alert(mydata);
+                },
+            });
+
+            return false;
+        }
+
+    }
+
+    //function setValidation() {
+
+    //    var validator=   $('#createForm').validate({
+
+    //        rules:{
+    //            DiagnosisDescription: {
+    //                required: true
+    //            },
+
+    //            DiagnosisEffectiveStartDate: {
+    //                requierd:true
+    //            },
+    //            DiagnosisEffectiveEndDate: {
+    //                requierd: true
+    //            },
+    //            DiagnosisStatus: {
+    //                required: function (element) {
+    //                    return $('#DiagnosisStatus').val() === '';
+    //                }
+    //            }
+    //        },
+    //        messages: {
+    //            DiagnosisDescription: {
+    //                required: "Description Required"
+    //            },
+
+    //            DiagnosisEffectiveStartDate: {
+    //                requierd: "Start Date Required"
+    //            },
+    //            DiagnosisEffectiveEndDate: {
+    //                requierd: "End Date Required"
+    //            },
+    //            DiagnosisStatus: {
+    //                required: "Status Required"
+    //            }
+    //        },
+    //        errorPlacement:function(error,element){
+    //            $(element)
+    //                       .closest("form")
+    //                           .find("label[for='" + element.attr("id") + "']")
+    //                               .append(error);
+    //        },
+    //        errorElement: "span",
+    //        //submitHandler: function (form) {
+    //        //    if (validator.form()) {
+    //        //        var model = DiagnosisObject.objectModel();
+    //        //        DiagnosisObject.create(model);
+    //        //        return false;
+    //        //    }
+    //        //}
+    //    })
+
+    //}
+
+    function save() {
+
+        var model = FacilityHardwareObject.objectModel();
+        FacilityHardwareObject.create(model);
+
+    }
+
+
+    function getFacilityValues() {
+
+        $.ajax({
+            type: 'GET',
+            url: "/Home/GetFacilityList",
+
+            dataType: 'json',
+            success: function (result) {
+                var ddl = $('#facilitySelector');
+                var list = result.list;
+                $.each(list, function (index, value) {
+                    console.log(value);
+                    ddl.append('<option value=' + value.Value + '>' + value.Text + '</option>')
+                });
+            },
+            error: function (e) {
+                alert("Error:Unable to load data from server");
+            }
+        });
+
+    }
+
+
+
+
+    $(document).ready(function () {
+
+
+        getFacilityValues();
+
+        $('#close').on('click', function close() {
+
+            window.parent.dialog.dialog("close")
+            window.parent.getTable(window.parent.currentEntity);
+
+            return false;
+        });
+    });
+</script>

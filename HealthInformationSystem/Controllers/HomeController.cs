@@ -83,7 +83,7 @@ namespace HealthInformationProgram.Controllers
                 case "FacilityModel":
                     viewResult = PartialView("~/Views/Home/CreateFacility/_CreateFacility.cshtml", model);
                     break;
-                case "FacilityHarwareInventoryModel":
+                case "FacilityHardwareInventoryModel":
                     viewResult = PartialView("~/Views/Home/CreateFacility/_CreateFacilityHardware.cshtml", model);
                     break;
                 case "OrganizationModel":
@@ -211,7 +211,7 @@ namespace HealthInformationProgram.Controllers
             model.Indicator = (string) jsonObject["Indicator"];
             model.SortOrder = (string) jsonObject["SortOrder"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = "current user";
+            model.UpdatedBy = "admin ui";
 
 
             repo.UpdateRevisit(model);
@@ -248,8 +248,8 @@ namespace HealthInformationProgram.Controllers
             int result = 0;
             if ( ModelState.IsValid )
             {
-                model.CreatedBy = "current user";
-                model.UpdatedBy = "current user";
+                model.CreatedBy = "admin ui";
+                model.UpdatedBy = "admin ui";
                 var repo = new HealthInformationProgram.Data.DiagnosisData();
                 result = repo.CreateDiagnosis(model);
 
@@ -281,7 +281,7 @@ namespace HealthInformationProgram.Controllers
             model.DiagnosisEffectiveStartDate = (string) jsonObject["DiagnosisEffectiveStartDate"];
             model.DiagnosisEffectiveEndDate = (string) jsonObject["DiagnosisEffectiveEndDate"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = "current user";
+            model.UpdatedBy = "admin ui";
 
             if ( isNew )
             {
@@ -304,8 +304,8 @@ namespace HealthInformationProgram.Controllers
 
             if ( ModelState.IsValid )
             {
-                model.CreatedBy = "current user";
-                model.UpdatedBy = "current user";
+                model.CreatedBy = "admin ui";
+                model.UpdatedBy = "admin ui";
 
                 var data = new HealthInformationProgram.Data.DiagnosisData();
                 result = data.CreateSupplementalDiagnosis(model);
@@ -325,7 +325,7 @@ namespace HealthInformationProgram.Controllers
             model.SupplementalDiagnosisEffectiveEndDate = (string) jsonObject["SupplementalDiagnosisEffectiveEndDate"];
             model.SortOrder = (string) jsonObject["SortOrder"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = "current user";
+            model.UpdatedBy = "admin ui";
 
 
             repo.UpdateSupplementalDiagnosis(model);
@@ -341,8 +341,8 @@ namespace HealthInformationProgram.Controllers
 
             if ( ModelState.IsValid )
             {
-                model.CreatedBy = "current user";
-                model.UpdatedBy = "current user";
+                model.CreatedBy = "admin ui";
+                model.UpdatedBy = "admin ui";
 
                 var data = new HealthInformationProgram.Data.DiagnosisData();
                 result = data.CreateDiagnosisCategory(model);
@@ -362,7 +362,7 @@ namespace HealthInformationProgram.Controllers
             model.SupplementalDiagnosisCategoryEffectiveStartDate = (string) jsonObject["SupplementalDiagnosisCategoryEffectiveStartDate"];
             model.SupplementalDiagnosisCategoryEffectiveEndDate = (string) jsonObject["SupplementalDiagnosisCategoryEffectiveEndDate"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = "current user";
+            model.UpdatedBy = "admin ui";
 
 
             repo.UpdateSupplementalDiagnosisCategory(model);
@@ -379,8 +379,8 @@ namespace HealthInformationProgram.Controllers
 
             if ( ModelState.IsValid )
             {
-                model.CreatedBy = "current user";
-                model.UpdatedBy = "current user";
+                model.CreatedBy = "admin ui";
+                model.UpdatedBy = "admin ui";
 
                 var data = new HealthInformationProgram.Data.FacilityData();
                 result = data.CreateFacility(model);
@@ -407,7 +407,7 @@ namespace HealthInformationProgram.Controllers
             model.FacilityStartEffectiveDate = (string) jsonObject["FacilityStartEffectiveDate"];
             model.FacilityEndEffectiveDate = (string) jsonObject["FacilityEndEffectiveDate"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = "current user";
+            model.UpdatedBy = "admin ui";
 
 
             repo.UpdateFacility(model);
@@ -417,6 +417,20 @@ namespace HealthInformationProgram.Controllers
 
         #region Facility Hardware Inventory
 
+        [HttpGet]
+        public ActionResult GetFacilityList()
+        {
+            var selectList = new List<SelectListItem>();
+            var data = new HealthInformationProgram.Data.FacilityData();
+
+            foreach ( var fac in data.GetFacilityList() )
+            {
+                selectList.Add(new SelectListItem() { Value = fac.FacilityId, Text = fac.HealthCareFacility });
+            }
+
+
+            return Json(new { list = selectList }, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public ActionResult SaveFacilityHardwareInventory(FacilityHardwareInventoryModel model)
         {
@@ -424,10 +438,10 @@ namespace HealthInformationProgram.Controllers
 
             if ( ModelState.IsValid )
             {
-                model.CreatedBy = "current user";
-                model.UpdatedBy = "current user";
+                model.CreatedBy = "admin ui";
+                model.UpdatedBy = "admin ui";
 
-                var data = new HealthInformationProgram.Data.FacilityData();
+                var data = new HealthInformationProgram.Data.FacilityHardwareData();
                 result = data.CreateFacilityHardwareInventory(model);
             }
             return Json(new { rowsEffected = result });
@@ -435,24 +449,17 @@ namespace HealthInformationProgram.Controllers
 
         private void UpdateFacilityHardwareInventory(JObject jsonObject)
         {
-            var model = new HealthInformationProgram.Models.FacilityModel();
-            var repo = new HealthInformationProgram.Data.FacilityData();
+            var model = new HealthInformationProgram.Models.FacilityHardwareInventoryModel();
+            var repo = new HealthInformationProgram.Data.FacilityHardwareData();
 
-            model.HealthCareFacility = (string) jsonObject["HealthCareFacility"];
-            model.HealthCareFacilityLevel = (string) jsonObject["HealthCareFacilityLevel"];
-            model.HealthCoordinator = (string) jsonObject["HealthCoordinator"];
-            model.OrganizationId = (string) jsonObject["OrganizationId"];
-            model.Settlement = (string) jsonObject["Settlement"];
-            model.Country = (string) jsonObject["Country"];
-            model.Region = (string) jsonObject["Region"];
-            model.Latitude = (string) jsonObject["Latitude"];
-            model.Longitude = (string) jsonObject["Longitude"];
-            model.FacilityStatus = (string) jsonObject["FacilityStatus"];
-            model.SortOrder = (string) jsonObject["SortOrder"];
-            model.FacilityStartEffectiveDate = (string) jsonObject["FacilityStartEffectiveDate"];
-            model.FacilityEndEffectiveDate = (string) jsonObject["FacilityEndEffectiveDate"];
+            model.FacilityId = (string) jsonObject["FacilityId"];
+            model.ItemDescription = (string) jsonObject["ItemDescription"];
+            model.MacAddress = (string) jsonObject["MacAddress"];
+            model.ApplicationVersion = (string) jsonObject["ApplicationVersion"];
+            model.HardwareStatus = (string) jsonObject["HardwareStatus"];
+            model.FacilityHardwareInventoryId = (string) jsonObject["FacilityHardwareInventoryId"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = "current user";
+            model.UpdatedBy = "admin ui";
 
 
             repo.UpdateFacilityHardwareInventory(model);
@@ -482,8 +489,8 @@ namespace HealthInformationProgram.Controllers
 
             if ( ModelState.IsValid )
             {
-                model.CreatedBy = "current user";
-                model.UpdatedBy = "current user";
+                model.CreatedBy = "admin ui";
+                model.UpdatedBy = "admin ui";
 
                 var data = new HealthInformationProgram.Data.OrganizationData();
                 result = data.CreateOrganization(model);
@@ -502,7 +509,7 @@ namespace HealthInformationProgram.Controllers
             model.EndEffectiveDate = (string) jsonObject["EndEffectiveDate"];
             model.SortOrder = (string) jsonObject["SortOrder"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = "current user";
+            model.UpdatedBy = "admin ui";
 
 
             repo.UpdateOrganization(model);

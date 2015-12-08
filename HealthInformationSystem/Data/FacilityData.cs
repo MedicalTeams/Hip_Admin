@@ -182,14 +182,6 @@ namespace HealthInformationProgram.Data
             }
         }
 
-        internal int CreateFacilityHardwareInventory(FacilityHardwareInventoryModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void UpdateFacilityHardwareInventory(FacilityModel model)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
