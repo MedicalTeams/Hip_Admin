@@ -36,23 +36,38 @@ namespace HealthInformationProgram.Controllers
         public ActionResult ClientManagement()
         {
             ViewBag.Message = "Client Management";
+            var sysInfo = new FacilityHardwareData();
+            var app = sysInfo.GetCurrentApplicationVersion();
+            //ViewBag.Version
+            TempData["Version"] = String.Format("Current application version is {0} released on {1}", app.ItemVersion, app.ReleaseDate); ;
             return View();
         }
         public ActionResult DatabaseManagement()
         {
             //TODO: Set a default entity for initial load
+            TempData["Version"] = string.Empty;
             return View();
         }
         public ActionResult Report()
         {
+            TempData["Version"] = string.Empty;
             //ViewBag.Message = "Client Management";
             return View();
         }
         [HttpPost]
         public ActionResult GetEntity(string entityName)
         {
-
-
+            //if ( entityName == "FacilityHardwareInventoryModel" )
+            //{
+            //    var sysInfo = new FacilityHardwareData();
+            //    var app = sysInfo.GetCurrentApplicationVersion();
+            //    //ViewBag.Version
+            //    TempData["Version"] = String.Format("Current application version is {0} released on {1}", app.ItemVersion, app.ReleaseDate);
+            //}
+            //else
+            //{
+            //    TempData["Version"] = string.Empty;
+            //}
             var jsonString = GetEntityDefinition(entityName);
             return Json(jsonString);
         }

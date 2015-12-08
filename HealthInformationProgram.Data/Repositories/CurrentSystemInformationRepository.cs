@@ -42,6 +42,21 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
+        public curr_sys_info GetCurrentSystemVersion()
+        {
+            try
+            {
+                using ( var ctx = new ClinicDataContext(connString) )
+                {
+
+                    return ctx.curr_sys_info.OrderByDescending(c=>c.dt_of_rlse).FirstOrDefault();
+                }
+            }
+            catch ( Exception ex )
+            {
+                throw ex;
+            }
+        }
         public int CreateCurrentSystemInfo(curr_sys_info entity)
         {
             try

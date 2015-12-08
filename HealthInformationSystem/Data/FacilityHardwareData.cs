@@ -133,5 +133,24 @@ namespace HealthInformationProgram.Data
                 throw ex;
             }
         }
+
+        #region Current System Information 
+
+        public CurrentSystemInformationModel GetCurrentApplicationVersion()
+        {
+            var repo = new CurrentSystemInformationRepository();
+            var viewModel = new CurrentSystemInformationModel();
+
+            var systemData = repo.GetCurrentSystemVersion();
+
+            viewModel.CurrentSystemId = systemData.curr_sys_id.ToString();
+            viewModel.ItemDescription = systemData.itm_descn;
+            viewModel.ItemVersion = systemData.itm_vrsn;
+            viewModel.ReleaseDate = systemData.dt_of_rlse.Value.ToShortDateString();
+
+            return viewModel;
+        }
+        #endregion
+
     }
 }

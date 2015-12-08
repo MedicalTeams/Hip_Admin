@@ -125,9 +125,10 @@
         </div>
     </div>
     
-    <div>
+    <div style="width:50%;margin:0px !important;float:left">
         <button id="create" type="button">Create</button>
     </div>
+     <div id="versionInformation" style="float:left; padding:0 10em 3em;"><h3>@TempData["Version"]</h3></div>
     <div id="the_table"></div>
 
 </body>
@@ -369,6 +370,12 @@
                 populate();
                 currentEntity = entityName;
                 $('#create').show();
+                if (currentEntity === 'FacilityHardwareInventoryModel') {
+                    $('#versionInformation').show();
+                }
+                else {
+                    $('#versionInformation').hide();
+                }
             },
             error: function (mydata) { alert("error"); alert(mydata); },
         });
@@ -420,6 +427,7 @@
     });
    
     $(document).ready(function () {
+        $('#versionInformation').hide();
         $('#create').hide();
         $('#selectEntity').on('change', function () {
             var entityName = $(this).val()
