@@ -10,14 +10,14 @@
         }
 
         .longInput {
-            width:250px;
+            width:300px;
         }
         .middlingInput {
-            width:100px;
+            width:110px;
         }
 
         .shortInput {
-            width:50px;
+            width:45px;
         }
 
 
@@ -144,12 +144,12 @@
     function getDoNotEdit() {
 
         var do_not_edit = {};
-
+            
         do_not_edit["OrganizationId"] = "";
-        do_not_edit["SupDxId"] = "";
+        do_not_edit["SupplementalDiagnosisId"] = "";
+        do_not_edit["SupplementalDiagnosisCategoryId"] = "";
         do_not_edit["FacilityId"] = "";
         do_not_edit["SupDiagCatId"] = "";
-        do_not_edit["SupDiagId"] = "";
         do_not_edit["UpdatedBy"] = "";
         do_not_edit["RevisitId"] = "";
         do_not_edit["CreateDate"] = "";
@@ -192,17 +192,20 @@
             document.getElementById(obj.id).innerHTML = "Update";
             $('#' + rowId + ' :input').prop('disabled', false);
         } else if (currentState == "Update") {
-            if (checkSortOrder()) {
+            checkSortOrder(); // just nag at the end user but do not enforce it.
+            // The if would enforce sort order properness
+            //if (checkSortOrder()) {
                 document.getElementById(obj.id).innOrgIderHTML = "Edit";
                 document.getElementById(obj.id).className = "";
                 doSubmit(obj.id);
-            }
+            //}
         }
     }
 
     function shortenColumnName(candidate) {
         candidate = candidate.replace("Supplemental", "Sup");
-        candidate = candidate.replace("Diagnosis", "Diag");
+        candidate = candidate.replace("Abbreviation", "Abbr");
+        candidate = candidate.replace("Diagnosis", "Dx");
         candidate = candidate.replace("Effective", "");
         candidate = candidate.replace("Description", "Desc");
         candidate = candidate.replace("Category", "Cat");
@@ -210,7 +213,7 @@
 
         return candidate;
     }
-
+    
     function endsWith(str, suffix) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
     }
