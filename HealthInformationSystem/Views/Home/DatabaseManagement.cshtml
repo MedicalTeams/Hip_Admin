@@ -366,12 +366,16 @@
             var seen = {};
             for (var i = 0; i < sorters.length; i++) {
                 var v = sorters[i].value;
-                var id = sorters[i].id;
-                if (seen.hasOwnProperty(v)) {
-                    sort_is_ok = false;
-                    collision += "Value: " + v + "\n";
+                if (v == 0) {
+                    // ignore 0 in the sort order
                 } else {
-                    seen[v] = id;
+                    var id = sorters[i].id;
+                    if (seen.hasOwnProperty(v)) {
+                        sort_is_ok = false;
+                        collision += "Value: " + v + "\n";
+                    } else {
+                        seen[v] = id;
+                    }
                 }
             }
         }
