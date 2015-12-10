@@ -142,7 +142,6 @@
     }
 
     function btnstate(obj) {
-
         var rowId = obj.id.replace("b", "row_");
 
         var currentState = document.getElementById(obj.id).innerHTML;
@@ -153,11 +152,12 @@
         } else if (currentState == "Update") {
             checkSortOrder(); // just nag at the end user but do not enforce it.
             // The if would enforce sort order properness
-            //if (checkSortOrder()) {
+            if (checkDates( obj.id)) {
                 document.getElementById(obj.id).innOrgIderHTML = "Edit";
                 document.getElementById(obj.id).className = "";
                 doSubmit(obj.id);
-            //}
+            } else {
+            }
         }
     }
 
@@ -315,6 +315,43 @@
         document.getElementById("the_table").innerHTML = html;
     }
 
+    var datefields = [];
+    datefields[0] = "DiagnosisEffectiveStartDate";
+    datefields[1] = "DiagnosisEffectiveEndDate";
+    datefields[2] = "SupplementalDiagnosisCategoryEffectiveStartDate";
+    datefields[3] = "SupplementalDiagnosisCategoryEffectiveEndDate";
+    datefields[4] = "SupplementalDiagnosisEffectiveStartDate";
+    datefields[5] = "SupplementalDiagnosisEffectiveEndDate";
+    datefields[6] = "FacilityStartEffectiveDate";
+    datefields[7] = "FacilityEndEffectiveDate";
+    datefields[8] = "StartEffectiveDate";
+    datefields[9] = "EndEffectiveDate";
+
+    var date_regex = /^([1-9]|0[1-9]|1[0-2])\/([1-9]|0[1-9]|1\d|2\d|3[01])\/\d{4}$/;
+
+    function checkDates(id) {
+        var num = id.replace("b", "");
+        var isOk = true;
+        var problems = "Date format is mm/dd/yyyy\n";
+        for (var i in datefields) {
+            var name = num + "_" + datefields[i];
+            try {
+                var value = document.getElementById(name).value;
+
+                if ( date_regex.test( value ) ) {
+                } else {
+                    isOk = false;
+                    problems += value + " is ill formed\n";
+                }
+            } catch (ignore) {
+                // if a document element is not in the page, that is OK
+            }
+        }
+        if (!isOk) {
+            alert(problems);
+        }
+        return isOk;
+    }
 
     function checkSortOrder() {
         var sorters = document.getElementsByClassName("sortOrderWidget");
@@ -327,13 +364,13 @@
                 if (v == 0) {
                     // ignore 0 in the sort order
                 } else {
-                    var id = sorters[i].id;
-                    if (seen.hasOwnProperty(v)) {
-                        sort_is_ok = false;
-                        collision += "Value: " + v + "\n";
-                    } else {
-                        seen[v] = id;
-                    }
+                        var id = sorters[i].id;
+                        if (seen.hasOwnProperty(v)) {
+                            sort_is_ok = false;
+                            collision += "Value: " + v + "\n";
+                        } else {
+                            seen[v] = id;
+                        }
                 }
             }
         }
