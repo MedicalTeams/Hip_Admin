@@ -57,17 +57,7 @@ namespace HealthInformationProgram.Controllers
         [HttpPost]
         public ActionResult GetEntity(string entityName)
         {
-            //if ( entityName == "FacilityHardwareInventoryModel" )
-            //{
-            //    var sysInfo = new FacilityHardwareData();
-            //    var app = sysInfo.GetCurrentApplicationVersion();
-            //    //ViewBag.Version
-            //    TempData["Version"] = String.Format("Current application version is {0} released on {1}", app.ItemVersion, app.ReleaseDate);
-            //}
-            //else
-            //{
-            //    TempData["Version"] = string.Empty;
-            //}
+           
             var jsonString = GetEntityDefinition(entityName);
             return Json(jsonString);
         }
@@ -79,7 +69,35 @@ namespace HealthInformationProgram.Controllers
             var view = GetPartialViewPath(modelName, model);
             return view;
         }
+        [HttpPost]
+        public ActionResult UpdateRawVisit(RawVisitModel model)
+        {
+            int result = 0;
+            if ( ModelState.IsValid )
+            {
+                model.UpdateDate = DateTime.Now.ToString();
+                model.UpdatedBy = "current user";
 
+                var data = new HealthInformationProgram.Data.HipSystemData();
+
+               result= data.UpdateRawvisit(model);
+                
+            }
+            return GetBadVisitDataView();
+        }
+        [HttpPost]
+        public ActionResult GetBadVisitData()
+        {
+            return GetBadVisitDataView();
+        }
+
+        private ActionResult GetBadVisitDataView()
+        {
+            var data = new HealthInformationProgram.Data.HipSystemData();
+
+            var model = data.GetInvalidRawVisit();
+            return PartialView("~/Views/Home/RawVisit/_ViewRawVisits.cshtml", model);
+        }
         private PartialViewResult GetPartialViewPath(string modelName, object model)
         {
             PartialViewResult viewResult = null;

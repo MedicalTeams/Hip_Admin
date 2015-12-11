@@ -195,6 +195,7 @@
     <Compile Include="Data\DiagnosisData.cs" />
     <Compile Include="Data\FacilityData.cs" />
     <Compile Include="Data\FacilityHardwareData.cs" />
+    <Compile Include="Data\HipSystemData.cs" />
     <Compile Include="Data\OrganizationData.cs" />
     <Compile Include="Data\RevisitData.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Models\CurrentSystemInformationModel.cs" />
     <Compile Include="Models\DiagnosisModel.cs" />
     <Compile Include="Models\DiagnosisAlertThresholdModel.cs" />
+    <Compile Include="Models\ExceptionModel.cs" />
     <Compile Include="Models\FacilityHardwareInventoryModel.cs" />
     <Compile Include="Models\FacilityModel.cs" />
     <Compile Include="Models\GenderModel.cs" />
@@ -339,6 +341,7 @@
     <Content Include="Views\Home\CreateDiagnosis\_CreateSupplementalCategoryDiagnosis.cshtml" />
     <Content Include="Views\Home\CreateFacility\_CreateFacilityHardware.cshtml" />
     <Content Include="Views\Home\CreateOrganization\_CreateOrganization.cshtml" />
+    <Content Include="Views\Home\RawVisit\_ViewRawVisits.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

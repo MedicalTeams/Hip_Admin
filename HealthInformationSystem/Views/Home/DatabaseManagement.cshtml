@@ -5,63 +5,77 @@
 @Styles.Render("~/Content/themes/base/css")
 <header>
     <style class="cp-pen-styles">
-        .sortOrderWidget {
-            width:40px;
+        .sortOrderWidget
+        {
+            width: 40px;
         }
 
-        .longInput {
-            width:300px;
-        }
-        .middlingInput {
-            width:110px;
+        .longInput
+        {
+            width: 300px;
         }
 
-        .shortInput {
-            width:45px;
+        .middlingInput
+        {
+            width: 110px;
+        }
+
+        .shortInput
+        {
+            width: 45px;
         }
 
 
 
 
-        .activeRow {
+        .activeRow
+        {
             background: #ff0000;
         }
 
-        .ok_edit {
+        .ok_edit
+        {
             background: #eee;
             border: 1px solid #000;
             min-width: 50px;
         }
 
-        .no_edit {
+        .no_edit
+        {
             background: #e0e0e0;
             border: 1px solid #000;
             min-width: 50px;
         }
 
-        .disabled_input {
+        .disabled_input
+        {
             background-color: #e0e0e0;
         }
 
-        #the_editor {
+        #the_editor
+        {
             margin-right: 10px;
             border-right-style: solid;
             border-right-width: 1px;
         }
 
-        .highlight {
+        .highlight
+        {
             background-color: red;
         }
 
-        .odd {
+        .odd
+        {
             background: #fff;
         }
 
-        .entry {
+        .entry
+        {
             margin-bottom: 10px;
         }
 
-        .even {
+        .even
+        {
             background: #eee;
         }
         /*
@@ -121,22 +135,22 @@
         <div>
             <select id="selectEntity">
                 <option class="menuOption" value="">Choose a database</option>
-                <option class="menuOption" value="RevisitModel">Revisit</option>
+                @*<option class="menuOption" value="RevisitModel">Revisit</option>*@
                 <option class="menuOption" value="DiagnosisModel">Diagnosis</option>
-                <option class="menuOption" value="SupplementalDiagnosisCategoryModel"> Supplemental Diagnosis Categories</option>
+                <option class="menuOption" value="SupplementalDiagnosisCategoryModel">Supplemental Diagnosis Categories</option>
                 <option class="menuOption" value="SupplementalDiagnosisModel">Supplemental Diagnosis</option>
-                 <option class="menuOption" value="FacilityModel">Facility</option>
-                 
-                 <option class="menuOption" value="OrganizationModel">Organization</option>
+                <option class="menuOption" value="FacilityModel">Facility</option>
+                <option class="menuOption" value="RawVisitModel">Raw Visit</option>
+                <option class="menuOption" value="OrganizationModel">Organization</option>
             </select>
         </div>
     </div>
-    
+
     <div>
         <button id="create" type="button">Create</button>
     </div>
-  
-     <div id="the_table"></div>
+
+    <div id="the_table"></div>
 
 </body>
 <script>
@@ -145,7 +159,7 @@
     function getDoNotEdit() {
 
         var do_not_edit = {};
-            
+
         do_not_edit["OrganizationId"] = "";
         do_not_edit["SupplementalDiagnosisId"] = "";
         do_not_edit["SupplementalDiagnosisCategoryId"] = "";
@@ -196,9 +210,9 @@
             checkSortOrder(); // just nag at the end user but do not enforce it.
             // The if would enforce sort order properness
             //if (checkSortOrder()) {
-                document.getElementById(obj.id).innOrgIderHTML = "Edit";
-                document.getElementById(obj.id).className = "";
-                doSubmit(obj.id);
+            document.getElementById(obj.id).innOrgIderHTML = "Edit";
+            document.getElementById(obj.id).className = "";
+            doSubmit(obj.id);
             //}
         }
     }
@@ -214,7 +228,7 @@
 
         return candidate;
     }
-    
+
     function endsWith(str, suffix) {
         return str.indexOf(suffix, str.length - suffix.length) !== -1;
     }
@@ -253,9 +267,9 @@
         return select;
     }
 
-    var inputLengthsMap = {}; 
+    var inputLengthsMap = {};
     function setInputLengthsMap() {
-        /* determine what css class different inputs ought to recieve */   
+        /* determine what css class different inputs ought to recieve */
         var sizes = {};
         for (var row in matrix) {
             for (var key in matrix[row]) {
@@ -276,22 +290,22 @@
                             sizes[key] = size;
                         }
                     } else {
-                        sizes[key] = size; 
+                        sizes[key] = size;
                     }
                 } catch (feild_might_be_empty) {
                     console.log("Skipping setInputLengthsMap for " + key);
                 }
             }
         }
-        inputLengthsMap = {}; 
+        inputLengthsMap = {};
         for (var key in sizes) {
             var size = sizes[key];
-            if ( size < 6 ) {
-                inputLengthsMap[key] = "shortInput"; 
-             } else if  (size < 20 ) {
-                 inputLengthsMap[key] = "middlingInput"; 
+            if (size < 6) {
+                inputLengthsMap[key] = "shortInput";
+            } else if (size < 20) {
+                inputLengthsMap[key] = "middlingInput";
             } else {
-                 inputLengthsMap[key] = "longInput"; 
+                inputLengthsMap[key] = "longInput";
             }
         }
     }
@@ -299,7 +313,7 @@
     var do_not_edit = {};
     function populate() {
 
-        setInputLengthsMap(); 
+        setInputLengthsMap();
 
         do_not_edit = getDoNotEdit();
 
@@ -329,7 +343,7 @@
                         html += "<td class='no_edit' align='right' id='" + id + "'  >" + value + "</td>";
                     } else {
                         html += "<td class='ok_edit'>";
-                        html += getInputTD(id, value,key);
+                        html += getInputTD(id, value, key);
                         html += "</td>";
                     }
                 } else if (endsWith(key, "Status")) {
@@ -337,17 +351,17 @@
                     html += getSelectTD(row, key, id);
                     html += "</td>";
                 } else if (key == "SortOrder") {
-                   // console.log("SO! " + value); 
+                    // console.log("SO! " + value); 
                     html += "<td class='ok_edit'>";
                     html += getSortOrderWidget(id, value, key);
 
                     html += "</td>";
                 } else {
-                if (do_not_edit.hasOwnProperty(key)) {
+                    if (do_not_edit.hasOwnProperty(key)) {
                         html += "<td class='no_edit' align='right' id='" + id + "'  >" + value + "</td>";
-                } else {
-                    html += "<td class='ok_edit'>";
-                        html += getInputTD(id, value,key);
+                    } else {
+                        html += "<td class='ok_edit'>";
+                        html += getInputTD(id, value, key);
                         html += "</td>";
                     }
                 }
@@ -432,7 +446,7 @@
             dataType: 'json',
             success: function (mydata) {
                 try {
-                matrix = eval("(" + mydata + ')');
+                    matrix = eval("(" + mydata + ')');
                 } catch (it_might_be_empty) {
                     console.log("The matrix is empty ( and that is ok )");
                 }
@@ -446,7 +460,7 @@
         $.ajax({
 
             url: "/Home/Create",
-            data: { modelName: entityName },//{ keyValues: JSON.stringify(keyValue), entityName: entityName },
+            data: { modelName: entityName },
             type: 'POST',
             async: false,
             success: function (mydata) {
@@ -460,18 +474,41 @@
             },
         });
     }
+    function getBadVisitData()
+    {
 
+        $.ajax({
+
+            url: "/Home/GetBadVisitData",
+            //data: { modelName: entityName },
+            type: 'POST',
+            async: false,
+            success: function (mydata) {
+                //dialog.dialog("open");
+               // $(".ui-dialog-titlebar").hide();
+                $('#the_table').html(mydata);
+            },
+            error: function (mydata) {
+                console.log(mydata);
+                alert("error"); alert(mydata);
+            },
+        });
+    }
     dialog = $('#createWrapper').dialog({
         autoOpen: false,
         width: 800,
         modal: true,
     });
-   
+
     $(document).ready(function () {
         $('#create').hide();
         $('#selectEntity').on('change', function () {
             var entityName = $(this).val()
-            getTable(entityName);
+            if (entityName === "RawVisitModel") {
+                getBadVisitData();
+            } else {
+                getTable(entityName);
+            }
         });
 
         $('.menuOption').click(function () {

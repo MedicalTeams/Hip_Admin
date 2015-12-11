@@ -76,7 +76,7 @@ namespace HealthInformationProgram.Data.Repositories
                     rawVisit.visit_json = entity.visit_json;
                     rawVisit.err_cd = entity.err_cd;
                     rawVisit.rec_updt_user_id_cd = entity.rec_updt_user_id_cd;
-
+                    rawVisit.rec_updt_dt = entity.rec_updt_dt;
 
                     ctx.Entry(rawVisit).State = System.Data.Entity.EntityState.Modified;
 

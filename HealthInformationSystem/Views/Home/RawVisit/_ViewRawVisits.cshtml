@@ -1,0 +1,139 @@
+﻿@model List<HealthInformationProgram.Models.RawVisitModel>
+
+<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<h2>Raw Visit</h2>
+
+
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th style="width: 120px;">@Html.DisplayNameFor(m => m[0].VisitId)</th>
+            <th>@Html.DisplayNameFor(m => m[0].VisitJson)</th>
+            <th>@Html.DisplayNameFor(m => m[0].VisitStatus)</th>
+            <th>@Html.DisplayNameFor(m => m[0].ErrorCode)</th>
+            <th>@Html.DisplayNameFor(m => m[0].ErrorDescription)</th>
+            <th>@Html.DisplayNameFor(m => m[0].CreateDate)</th>
+            <th>@Html.DisplayNameFor(m => m[0].CreatedBy)</th>
+            <th>@Html.DisplayNameFor(m => m[0].UpdateDate)</th>
+            <th>@Html.DisplayNameFor(m => m[0].UpdatedBy)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for ( int i = 0; i < Model.Count(); i++ )
+        {
+            var raw = Model[i];
+        
+            <tr id="row_@i">
+                <td>
+                    <button id="edit_@i" onclick="editJson(this)">Edit</button></td>
+                <td id="visitid_@i"style="max-width:120px;word-break:normal; word-wrap:break-word; ">@raw.VisitId</td>
+                <td id="visitjson_@i"style="max-width:900px;word-break:normal; word-wrap:break-word; ">@raw.VisitJson</td>
+                <td id="visitstatus_@i"style="max-width:120px;word-break:normal; word-wrap:break-word; ">@raw.VisitStatus</td>
+                <td id="errorcode_@i"style="max-width:120px;word-break:normal; word-wrap:break-word; ">@raw.ErrorCode</td>
+                <td id="errordescription_@i"style="max-width:120px;word-break:normal; word-wrap:break-word; ">@raw.ErrorDescription</td>
+                <td id="createdate_@i"style="max-width:120px;word-break:normal; word-wrap:break-word; ">@raw.CreateDate</td>
+                <td id="createby_@i"style="max-width:120px;word-break:normal; word-wrap:break-word; ">@raw.CreatedBy</td>
+                <td id="updatedate_@i" style="max-width:120px;word-break:normal; word-wrap:break-word; ">@raw.UpdateDate</td>
+                <td id="updaeby_@i"style="max-width:120px;word-break:normal; word-wrap:break-word; ">@raw.UpdatedBy</td>
+            </tr>
+           
+        }
+    </tbody>
+</table>
+
+<div id="jsonEditor">
+    <div style="width: 590px; padding-right: 10px; margin: 0px !important; float: left">
+        <input id="uuid" type="hidden" />
+        <textarea id="jsonText" style="width: 600px; max-width: 600px; height: 500px"> </textarea>
+        <button id="update" onclick="updateRaw()">Save</button>
+    </div>
+    <div id="validationKey" style="width: 200px; margin: 0px !important; float: right">
+        <h3></h3>
+        <label id="wellformedjson"></label>
+        <button id="formatJson" onclick="formatJson()">Format Json</button>
+    </div>
+</div>
+<script>
+
+    rawVisitObject = {
+        objectModel: function () {
+            return result = {
+                VisitId:$('#uuid').val(),
+                VisitJson: $('#jsonText').val(),
+                VisitStatus: 'N',
+                ErrorCode: null
+            };
+        },
+        create: function updateRaw(inputData) {
+            $.ajax({
+
+                url: "/Home/UpdateRawVisit",
+                data: JSON.stringify(inputData),
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (mydata) {
+                    if (mydata.rowsEffected === 1) {
+                        window.parent.dialog.dialog("close");
+                    }
+
+                },
+                error: function (mydata) {
+                    console.log(mydata);
+                    alert("error"); alert(mydata);
+                },
+            });
+
+            return false;
+        }
+    }
+
+    dialog = $('#jsonEditor').dialog({
+        autoOpen: false,
+        width: 900,
+        modal: true,
+
+    });
+
+    function updateRaw() {
+        var model = rawVisitObject.objectModel();
+        rawVisitObject.create(model);
+    }
+    function formatJson() {
+        var json = $('#jsonText').val();
+        var jsonObj = JSON.parse(json);
+        var pretty = JSON.stringify(jsonObj, null, '\t');
+        $('#jsonText').val(pretty);
+    }
+    function editJson(obj) {
+        console.log(obj);
+        dialog.dialog("open");
+        // $(".ui-dialog-titlebar").hide();
+        var rowId = obj.id.replace("edit", "row");
+        var visitJson = obj.id.replace("edit", "visitjson");
+        var visitId = obj.id.replace("edit", "visitid");
+        var visitStatus = obj.id.replace("edit", "visitstatus");
+        var errorCode = obj.id.replace("edit", "errorcode");
+        $('#uuid').val($('#' + visitId).html());
+        $('#jsonText').val($('#' + visitJson).html());
+
+        try {
+            JSON.parse($('#' + visitJson).html());
+            $('#wellformedjson').css("background-color", "green");
+            $('#wellformedjson').text("Json well formed");
+        } catch (e) {
+            $('#wellformedjson').css("background-color", "red");
+            $('#wellformedjson').text("Json is not well formed");
+            $('#formatJson').hide();
+        }
+    }
+    $(document).ready(function () {
+
+        $('#jsonEditor').hide();
+    });
+</script>
