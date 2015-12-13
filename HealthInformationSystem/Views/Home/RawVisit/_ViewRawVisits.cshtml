@@ -78,15 +78,22 @@
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (mydata) {
-                    if (mydata.rowsEffected === 1) {
+                    console.log("success " + mydata);
+                    if (mydata.success) {
+                        $('#the_table').html(mydata.resp);
                         window.parent.dialog.dialog("close");
+                        window.parent.getBadVisitData();
+                    }
+                    else {
+                        alert("error");
+
                     }
 
                 },
-                error: function (mydata) {
-                    console.log(mydata);
-                    alert("error"); alert(mydata);
-                },
+                //error: function (mydata) {
+                //    console.log(mydata);
+                //    alert("error"); alert(mydata);
+                //},
             });
 
             return false;

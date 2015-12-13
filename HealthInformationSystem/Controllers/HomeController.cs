@@ -73,6 +73,7 @@ namespace HealthInformationProgram.Controllers
         public ActionResult UpdateRawVisit(RawVisitModel model)
         {
             int result = 0;
+            bool isSuccess = false;
             if ( ModelState.IsValid )
             {
                 model.UpdateDate = DateTime.Now.ToString();
@@ -81,9 +82,12 @@ namespace HealthInformationProgram.Controllers
                 var data = new HealthInformationProgram.Data.HipSystemData();
 
                result= data.UpdateRawvisit(model);
-                
+               if ( result == 1 )
+               {
+                   isSuccess = true;
+               }
             }
-            return GetBadVisitDataView();
+            return Json(new {success=isSuccess});//, responseText=GetBadVisitDataView()});
         }
         [HttpPost]
         public ActionResult GetBadVisitData()
