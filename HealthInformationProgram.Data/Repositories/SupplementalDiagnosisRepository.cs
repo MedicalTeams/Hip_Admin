@@ -18,7 +18,7 @@ namespace HealthInformationProgram.Data.Repositories
                 using ( var ctx = new ClinicDataContext(connString) )
                 {
 
-                    return ctx.lkup_splmtl_diag.ToList();
+                    return ctx.lkup_splmtl_diag.OrderBy(x => x.user_intrfc_sort_ord).ToList();
                 }
             }
             catch ( Exception ex )

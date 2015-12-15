@@ -141,25 +141,25 @@ namespace HealthInformationProgram.Controllers
                 case "RevisitModel":
                     var model = new List<RevisitModel>();
                     var data = new Data.RevisitData();
-                    model = data.GetAllRevisits();
+                    model = data.GetAllRevisits().ToList();
                     jsonString = GetJsonString(model);
                     break;
                 case "DiagnosisModel":
                     var diagnosisModel = new List<DiagnosisModel>();
 
-                    diagnosisModel = diagnosisData.GetAllDiagnosis();
+                    diagnosisModel = diagnosisData.GetAllDiagnosis().ToList();//.OrderBy(x => x.SortOrder).ToList();
                     jsonString = GetJsonString(diagnosisModel);
                     break;
                 case "SupplementalDiagnosisCategoryModel":
                     var categoryModel = new List<SupplementalDiagnosisCategoryModel>();
-                    categoryModel = diagnosisData.GetAllSupplementalCategories();
+                    categoryModel = diagnosisData.GetAllSupplementalCategories().ToList();
                     jsonString = GetJsonString(categoryModel);
 
                     break;
                 case "SupplementalDiagnosisModel":
                     var supplementalDiagnosis = new List<SupplementalDiagnosisModel>();
 
-                    supplementalDiagnosis = diagnosisData.GetAllSupplementalDiagnosis();
+                    supplementalDiagnosis = diagnosisData.GetAllSupplementalDiagnosis().ToList();
                     jsonString = GetJsonString(supplementalDiagnosis);
                     break;
 
@@ -167,7 +167,7 @@ namespace HealthInformationProgram.Controllers
                     var orgList = new List<OrganizationModel>();
                     var orgData = new OrganizationData();
 
-                    orgList = orgData.GetAll();
+                    orgList = orgData.GetAll().ToList();
                     jsonString = GetJsonString(orgList);
 
                     break;
@@ -175,7 +175,7 @@ namespace HealthInformationProgram.Controllers
                     var facilityList = new List<FacilityModel>();
                     var facilityData = new FacilityData();
 
-                    facilityList = facilityData.GetFacilityList();
+                    facilityList = facilityData.GetFacilityList().ToList();
                     jsonString = GetJsonString(facilityList);
                     break;
                 case "FacilityHardwareInventoryModel":
