@@ -173,13 +173,13 @@
 
     $(document).ready(function () {
 
-      
+       
 
         $('#close').on('click', function close() {
 
             window.parent.dialog.dialog("close")
             window.parent.getTable(window.parent.currentEntity);
-
+            window.parent.$('#create').hide();
             return false;
         });
     });

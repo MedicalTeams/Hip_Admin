@@ -50,7 +50,14 @@
     <div style="width: 590px; padding-right: 10px; margin: 0px !important; float: left">
         <input id="uuid" type="hidden" />
         <textarea id="jsonText" style="width: 600px; max-width: 600px; height: 500px"> </textarea>
-        <button id="update" onclick="updateRaw()">Save</button>
+        @*<button id="update" onclick="updateRaw()">Save</button>*@
+
+        <div class="createFooter">
+            <div id="buttonWrapper">
+                <button id="save" onclick="updateRaw()">Save</button>
+                <button id="close">Close</button>
+            </div>
+        </div>
     </div>
     <div id="validationKey" style="width: 200px; margin: 0px !important; float: right">
         <h3></h3>
@@ -63,7 +70,7 @@
     rawVisitObject = {
         objectModel: function () {
             return result = {
-                VisitId:$('#uuid').val(),
+                VisitId: $('#uuid').val(),
                 VisitJson: $('#jsonText').val(),
                 VisitStatus: 'N',
                 ErrorCode: null
@@ -78,10 +85,10 @@
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (mydata) {
-                    console.log("success " + mydata);
+                    
                     if (mydata.success) {
                         $('#the_table').html(mydata.resp);
-                        window.parent.dialog.dialog("close");
+                        window.parent.jsonEditorDialog.dialog("close");
                         window.parent.getBadVisitData();
                     }
                     else {
@@ -100,7 +107,7 @@
         }
     }
 
-    dialog = $('#jsonEditor').dialog({
+    jsonEditorDialog = $('#jsonEditor').dialog({
         autoOpen: false,
         width: 900,
         modal: true,
@@ -118,8 +125,8 @@
         $('#jsonText').val(pretty);
     }
     function editJson(obj) {
-        console.log(obj);
-        dialog.dialog("open");
+       // console.log(obj);
+        jsonEditorDialog.dialog("open");
         // $(".ui-dialog-titlebar").hide();
         var rowId = obj.id.replace("edit", "row");
         var visitJson = obj.id.replace("edit", "visitjson");
@@ -142,5 +149,14 @@
     $(document).ready(function () {
 
         $('#jsonEditor').hide();
+
+
+        $('#close').on('click', function close() {
+
+            window.parent.jsonEditorDialog.dialog("close")
+            window.parent.getTable(window.parent.currentEntity);
+
+            return false;
+        });
     });
 </script>

@@ -177,6 +177,7 @@
             }
         }
     }
+
     function debug_showSubmital(id) {
         id = id.replace("b", "");
         for (var key in matrix[0]) {
@@ -530,6 +531,7 @@
         }
         update(results, currentEntity);
     }
+
 </script>
 <script>
     var currentEntity = null;
@@ -572,6 +574,7 @@
     }
     function create(entityName) {
 
+        
         $.ajax({
 
             url: "/Home/Create",
@@ -584,7 +587,7 @@
                 $('#newItem').html(mydata);
             },
             error: function (mydata) {
-                console.log(mydata);
+               // console.log(mydata);
                 alert("error"); alert(mydata);
             },
         });
@@ -604,7 +607,7 @@
                 $('#the_table').html(mydata);
             },
             error: function (mydata) {
-                console.log(mydata);
+                //console.log(mydata);
                 alert("error"); alert(mydata);
             },
         });
@@ -616,11 +619,15 @@
     });
    
     $(document).ready(function () {
+      
         $('#create').hide();
         $('#selectEntity').on('change', function () {
+            
+            $('#newItem').html('');
             var entityName = $(this).val()
             if (entityName === "RawVisitModel") {
                 getBadVisitData();
+                $('#create').hide();
             } else {
             getTable(entityName);
             }
@@ -632,6 +639,7 @@
         })
         $('#create').click(function () {
             var entity = $('#selectEntity').val();
+            
             create(entity);
         });
     });
