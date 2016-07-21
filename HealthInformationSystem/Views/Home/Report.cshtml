@@ -1,26 +1,49 @@
-﻿@{
+﻿@using ReportViewerForMvc;
+@{
     ViewBag.Title = "Report";
 }
 
 <h2>Report</h2>
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/themes/base/css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryui")
+@Scripts.Render("~/bundles/jqueryval")
+
+<style>
+
+    .reportViewer {
+    min-height:200px !important;
+    
+    }
+</style>
 
 
-<a href="http://mti-dev-cambia.cloudapp.net/Reports/Pages/Folder.aspx">Report List</a>
+@Html.ActionLink("Portrait", "Report", new { id = "Portrait" })
 
-<a href="http://mti-dev-cambia.cloudapp.net/Reports/Pages/Report.aspx?ItemPath=%2fDesign%2fPortrait">Portrait</a>
+@Html.ActionLink("3.1 Consultation", "Report", new { id = "3.1 Consultation" })
 
-<a href="http://mti-dev-cambia.cloudapp.net/Reports/Pages/Report.aspx?ItemPath=%2f3.1+Consultation">3.1 Consultation</a>
+@Html.ActionLink("3.2 Morbidity", "Report", new { id = "3.2 Morbidity" })
 
-<a href="http://mti-dev-cambia.cloudapp.net/Reports/Pages/Report.aspx?ItemPath=%2f3.2+Morbidity">3.2 Mobility</a>
+@Html.ActionLink("3.4 STI", "Report", new { id = "3.4 STI" })
+@Html.ActionLink("3.5 Chronic Disease" , "Report", new { id = "3.5 Chronic Disease"})
+@Html.ActionLink("3.6 Mental Illness", "Report", new { id = "3.6 Mental Illness" })
 
-<a href="http://mti-dev-cambia.cloudapp.net/Reports/Pages/Report.aspx?ItemPath=%2f3.4+STI">3.4 STI</a>
+@Html.ActionLink("3.7 Injuries", "Report", new { id = "3.7 Injuries" })
 
-<a href="http://mti-dev-cambia.cloudapp.net/Reports/Pages/Report.aspx?ItemPath=%2f3.5+Chronic+Disease">3.5 Chronic Disease</a>
+@Html.ActionLink("HIS QA", "Report", new { id = "HIS QA" })
+@Html.ActionLink("Tally Details", "Report", new { id = "Tally Details" })
 
-<a href="http://mti-dev-cambia.cloudapp.net/Reports/Pages/Report.aspx?ItemPath=%2f3.6+Mental+Illness">3.6 Mental Illness</a>
 
-<a href="http://mti-dev-cambia.cloudapp.net/Reports/Pages/Report.aspx?ItemPath=%2f3.7+Injuries">3.7 Injuries</a>
+<div style="min-height:500px">
+   @if(ViewBag.ReportViewer != null){
+    @Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer)
+  }
+</div>
 
-<a href="http://mti-dev-cambia.cloudapp.net/Reports/Pages/Report.aspx?ItemPath=%2fHIS+QA">HIS QA</a>
-
-<a href="http://mti-dev-cambia.cloudapp.net/Reports/Pages/Report.aspx?ItemPath=%2fTally+Details">Tally Details</a>
+<style>
+   .reportViewer, div#ReportViewer1 {
+        width: 100% !important;
+        height: 1000px !important;
+    }
+</style>

@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F977247E-B44F-4577-B4AC-AE8C48A21466}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EFMappingProject</RootNamespace>
+    <AssemblyName>EFMappingProject</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Models\ClinicContext.cs" />
+    <Compile Include="Models\curr_sys_info.cs" />
+    <Compile Include="Models\diag_alert_thrshld.cs" />
+    <Compile Include="Models\faclty_hw_invtry.cs" />
+    <Compile Include="Models\lkup_bnfcry.cs" />
+    <Compile Include="Models\lkup_diag.cs" />
+    <Compile Include="Models\lkup_exceptions.cs" />
+    <Compile Include="Models\lkup_faclty.cs" />
+    <Compile Include="Models\lkup_gndr.cs" />
+    <Compile Include="Models\lkup_orgzn.cs" />
+    <Compile Include="Models\lkup_rvisit.cs" />
+    <Compile Include="Models\lkup_splmtl_diag.cs" />
+    <Compile Include="Models\lkup_splmtl_diag_cat.cs" />
+    <Compile Include="Models\Mapping\curr_sys_infoMap.cs" />
+    <Compile Include="Models\Mapping\diag_alert_thrshldMap.cs" />
+    <Compile Include="Models\Mapping\faclty_hw_invtryMap.cs" />
+    <Compile Include="Models\Mapping\lkup_bnfcryMap.cs" />
+    <Compile Include="Models\Mapping\lkup_diagMap.cs" />
+    <Compile Include="Models\Mapping\lkup_exceptionsMap.cs" />
+    <Compile Include="Models\Mapping\lkup_facltyMap.cs" />
+    <Compile Include="Models\Mapping\lkup_gndrMap.cs" />
+    <Compile Include="Models\Mapping\lkup_orgznMap.cs" />
+    <Compile Include="Models\Mapping\lkup_rvisitMap.cs" />
+    <Compile Include="Models\Mapping\lkup_splmtl_diagMap.cs" />
+    <Compile Include="Models\Mapping\lkup_splmtl_diag_catMap.cs" />
+    <Compile Include="Models\Mapping\ovMap.cs" />
+    <Compile Include="Models\Mapping\ov_diagMap.cs" />
+    <Compile Include="Models\Mapping\raw_visitMap.cs" />
+    <Compile Include="Models\Mapping\tmp_jsonvisitMap.cs" />
+    <Compile Include="Models\Mapping\tmp_visit_to_procMap.cs" />
+    <Compile Include="Models\Mapping\vw_diag_alertMap.cs" />
+    <Compile Include="Models\Mapping\vw_lkup_all_splmtl_diagMap.cs" />
+    <Compile Include="Models\Mapping\vw_lkup_base_splmtl_diagMap.cs" />
+    <Compile Include="Models\Mapping\vw_lkup_bnfcryMap.cs" />
+    <Compile Include="Models\Mapping\vw_lkup_chronic_diagMap.cs" />
+    <Compile Include="Models\Mapping\vw_lkup_diagMap.cs" />
+    <Compile Include="Models\Mapping\vw_lkup_facltyMap.cs" />
+    <Compile Include="Models\Mapping\vw_lkup_gndrMap.cs" />
+    <Compile Include="Models\Mapping\vw_lkup_injury_loc_diagMap.cs" />
+    <Compile Include="Models\Mapping\vw_lkup_injury_mode_diagMap.cs" />
+    <Compile Include="Models\Mapping\vw_lkup_mental_diagMap.cs" />
+    <Compile Include="Models\Mapping\vw_lkup_rvisitMap.cs" />
+    <Compile Include="Models\Mapping\vw_lkup_sti_diagMap.cs" />
+    <Compile Include="Models\Mapping\vw_ov_detailsMap.cs" />
+    <Compile Include="Models\Mapping\vw_raw_data_errsMap.cs" />
+    <Compile Include="Models\ov.cs" />
+    <Compile Include="Models\ov_diag.cs" />
+    <Compile Include="Models\raw_visit.cs" />
+    <Compile Include="Models\tmp_jsonvisit.cs" />
+    <Compile Include="Models\tmp_visit_to_proc.cs" />
+    <Compile Include="Models\vw_diag_alert.cs" />
+    <Compile Include="Models\vw_lkup_all_splmtl_diag.cs" />
+    <Compile Include="Models\vw_lkup_base_splmtl_diag.cs" />
+    <Compile Include="Models\vw_lkup_bnfcry.cs" />
+    <Compile Include="Models\vw_lkup_chronic_diag.cs" />
+    <Compile Include="Models\vw_lkup_diag.cs" />
+    <Compile Include="Models\vw_lkup_faclty.cs" />
+    <Compile Include="Models\vw_lkup_gndr.cs" />
+    <Compile Include="Models\vw_lkup_injury_loc_diag.cs" />
+    <Compile Include="Models\vw_lkup_injury_mode_diag.cs" />
+    <Compile Include="Models\vw_lkup_mental_diag.cs" />
+    <Compile Include="Models\vw_lkup_rvisit.cs" />
+    <Compile Include="Models\vw_lkup_sti_diag.cs" />
+    <Compile Include="Models\vw_ov_details.cs" />
+    <Compile Include="Models\vw_raw_data_errs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -8,11 +8,14 @@ using System.Web.Mvc;
 using HealthInformationProgram.Data;
 using HealthInformationProgram.Models;
 using Newtonsoft.Json.Linq;
+using Microsoft.Reporting.WebForms;
 
 namespace HealthInformationProgram.Controllers
 {
     public class HomeController : Controller
     {
+        IReportServerCredentials creds = null;
+
         public ActionResult Index()
         {
             ViewBag.Message = "Instruction:.";
@@ -48,10 +51,16 @@ namespace HealthInformationProgram.Controllers
             TempData["Version"] = string.Empty;
             return View();
         }
-        public ActionResult Report()
+    //    [Route("Report/{reportName:string}")]
+        public ActionResult Report(string id)
         {
             TempData["Version"] = string.Empty;
-            //ViewBag.Message = "Client Management";
+            if (id == null)
+            {
+                id = "3.1 Consultation";
+            }
+            GetReport(id);
+
             return View();
         }
         [HttpPost]
@@ -554,6 +563,34 @@ namespace HealthInformationProgram.Controllers
         }
 
         #endregion
+
+     
+        private void GetReport(string name)
+        {
+            ReportViewer reportViewer = new ReportViewer();
+            try
+            {
+                
+                reportViewer.ProcessingMode = ProcessingMode.Remote;
+                reportViewer.SizeToReportContent = true;
+                reportViewer.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                reportViewer.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+                reportViewer.ServerReport.ReportServerCredentials = new Security.ReportServerCredentials("salzheimer", "M1ghtD3v0p5!", "medicalteams");
+                reportViewer.CssClass = "reportViewer";
+                reportViewer.ShowToolBar = true;
+                reportViewer.ShowParameterPrompts = true;
+                reportViewer.ShowExportControls = true;
+                reportViewer.AsyncRendering = true;
+                reportViewer.ServerReport.ReportPath = String.Format("/{0}", name);
+                reportViewer.ServerReport.ReportServerUrl = new Uri("http://mti-dev-cambia.cloudapp.net/reportserver");
+            }
+            catch (ReportViewerException rvex)
+            {
+                throw new Exception(String.Format("reviewer error {0}", rvex.Message));
+            }
+            ViewBag.ReportViewer = reportViewer;
+          // return View();
+        }
         //not currently being used 11-28-15
         private string GenerateValidationModel(string entityName)
         {
