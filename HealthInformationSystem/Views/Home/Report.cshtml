@@ -34,10 +34,18 @@
 @Html.ActionLink("HIS QA", "Report", new { id = "HIS QA" })
 @Html.ActionLink("Tally Details", "Report", new { id = "Tally Details" })
 
-
-<div style="min-height:500px">
+<div>
+    <span>Current report: @ViewBag.ReportName</span>
+    @*<select id="reportSelector">
+        @foreach (var item in ViewBag.ReportsList)
+        {
+            <option id="@item.id">@item.name</option>
+        }
+    </select>*@
+</div>
+<div style="padding:5px 5px 5px 0">
    @if(ViewBag.ReportViewer != null){
-    @Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer)
+    @Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer, new { width = "1024", height="640" })
   }
 </div>
 
@@ -46,4 +54,29 @@
         width: 100% !important;
         height: 1000px !important;
     }
+    iframe {
+    border: none !important;
+    }
 </style>
+
+<script>
+    $('#reportSelector').on('change', function (e) {
+        var name = $(this).find("option:selected").text();
+        //var url ='<%= Url.Action("GetReport","Home")%>';
+        //$.get('/GetReport', { id: name }, function (data) {
+
+        //});
+        $.ajax({
+            url: "Report/"+name,
+            type: 'GET',
+            dataType:"json",
+            //data: { input: name },
+            success: function (result) {
+                // alert(result.name);
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    });
+</script>
