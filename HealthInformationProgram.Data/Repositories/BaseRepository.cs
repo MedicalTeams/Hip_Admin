@@ -13,7 +13,7 @@ namespace HealthInformationProgram.Data.Repositories
         public BaseRepository()
         {
             var config = new Configuration();
-            connString = config.GetConnection();
+            connString = config.GetConnection("SqlAzure_Clinic");
         
         }
 

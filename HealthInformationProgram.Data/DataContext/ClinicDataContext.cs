@@ -51,6 +51,8 @@ namespace HealthInformationProgram.Data.DataContext
         public DbSet<vw_ov_details> vw_ov_details { get; set; }
         public DbSet<vw_raw_data_errs> vw_raw_data_errs { get; set; }
 
+        /*Reports********************************************/
+        public DbSet<Tables.Reports.Catalog> Catalog { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new curr_sys_infoMap());
@@ -85,6 +87,9 @@ namespace HealthInformationProgram.Data.DataContext
             modelBuilder.Configurations.Add(new vw_lkup_sti_diagMap());
             modelBuilder.Configurations.Add(new vw_ov_detailsMap());
             modelBuilder.Configurations.Add(new vw_raw_data_errsMap());
+
+            /*Reports*************/
+            modelBuilder.Configurations.Add(new Mapping.Reports.CatalogMap());
         }
 
     }

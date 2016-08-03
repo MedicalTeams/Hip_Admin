@@ -8,11 +8,11 @@ namespace HealthInformationProgram.Data
 {
     public class Configuration
     {
-        public  string GetConnection()
+        public  string GetConnection(string connectionStringName)
         {
             string conn = string.Empty;
 
-            conn = ConfigurationManager.ConnectionStrings["SqlAzure_Clinic"].ConnectionString;
+            conn = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
             return conn;
         }
     }

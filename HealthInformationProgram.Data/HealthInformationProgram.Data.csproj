@@ -69,6 +69,7 @@
     <Compile Include="Mapping\ovMap.cs" />
     <Compile Include="Mapping\ov_diagMap.cs" />
     <Compile Include="Mapping\raw_visitMap.cs" />
+    <Compile Include="Mapping\Reports\CatalogMap.cs" />
     <Compile Include="Mapping\tmp_jsonvisitMap.cs" />
     <Compile Include="Mapping\tmp_visit_to_procMap.cs" />
     <Compile Include="Mapping\vw_diag_alertMap.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Repositories\OfficeVisitDiagnosisRepository.cs" />
     <Compile Include="Repositories\OfficeVisitRepository.cs" />
     <Compile Include="Repositories\DiagnosisAlertThresholdRepository.cs" />
+    <Compile Include="Repositories\Reports\CatalogRepository.cs" />
     <Compile Include="Repositories\SupplementalDiagnosisRepository.cs" />
     <Compile Include="Repositories\FacilityRepository.cs" />
     <Compile Include="Repositories\CurrentSystemInformationRepository.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Tables\ov.cs" />
     <Compile Include="Tables\ov_diag.cs" />
     <Compile Include="Tables\raw_visit.cs" />
+    <Compile Include="Tables\Reports\Catalog.cs" />
     <Compile Include="Tables\tmp_jsonvisit.cs" />
     <Compile Include="Tables\tmp_visit_to_proc.cs" />
     <Compile Include="Tables\vw_diag_alert.cs" />

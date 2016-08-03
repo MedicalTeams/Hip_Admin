@@ -19,9 +19,9 @@
 </style>
 
 
-@Html.ActionLink("Portrait", "Report", new { id = "Portrait" })
+@Html.ActionLink("3.0 Morbidity", "Report", new { id = "3.0 Morbidity" })
 
-@Html.ActionLink("3.1 Consultation", "Report", new { id = "3.1 Consultation" })
+@*@Html.ActionLink("3.1 Consultation", "Report", new { id = "3.1 Consultation" })
 
 @Html.ActionLink("3.2 Morbidity", "Report", new { id = "3.2 Morbidity" })
 
@@ -29,9 +29,9 @@
 @Html.ActionLink("3.5 Chronic Disease" , "Report", new { id = "3.5 Chronic Disease"})
 @Html.ActionLink("3.6 Mental Illness", "Report", new { id = "3.6 Mental Illness" })
 
-@Html.ActionLink("3.7 Injuries", "Report", new { id = "3.7 Injuries" })
+@Html.ActionLink("3.7 Injuries", "Report", new { id = "3.7 Injuries" })*@
 
-@Html.ActionLink("HIS QA", "Report", new { id = "HIS QA" })
+@Html.ActionLink("Visit Details", "Report", new { id = "Visit Details" })
 @Html.ActionLink("Tally Details", "Report", new { id = "Tally Details" })
 
 <div>
@@ -56,10 +56,11 @@
     }
     iframe {
     border: none !important;
+    min-height :500px !important;
     }
 </style>
 
-<script>
+@*<script>
     $('#reportSelector').on('change', function (e) {
         var name = $(this).find("option:selected").text();
         //var url ='<%= Url.Action("GetReport","Home")%>';
@@ -79,4 +80,4 @@
             }
         });
     });
-</script>
+</script>*@

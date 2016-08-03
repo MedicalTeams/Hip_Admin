@@ -10,7 +10,7 @@ namespace HealthInformationProgram.Tests
         public void Can_Get_Connection()
         {
             var config = new HealthInformationProgram.Data.Configuration();
-            var conn = config.GetConnection();
+            var conn = config.GetConnection("SqlAzure_Clinic");
 
             Assert.IsTrue(conn != string.Empty, "connection string empty");
         }

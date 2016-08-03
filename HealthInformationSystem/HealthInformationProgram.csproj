@@ -264,6 +264,7 @@
     <Compile Include="Models\GenderModel.cs" />
     <Compile Include="Models\OrganizationModel.cs" />
     <Compile Include="Models\RawVisitModel.cs" />
+    <Compile Include="Models\ReportsViewModel.cs" />
     <Compile Include="Models\RevisitModel.cs" />
     <Compile Include="Models\SupplementalDiagnosisModel.cs" />
     <Compile Include="Models\SupplementalDiagnosisCategoryModel.cs" />

@@ -51,22 +51,24 @@ namespace HealthInformationProgram.Controllers
             TempData["Version"] = string.Empty;
             return View();
         }
-    //    [Route("Report/{reportName:string}")]
+
         public ActionResult Report(string id)
         {
+            //GetReportsList();
+
             TempData["Version"] = string.Empty;
             if (id == null)
             {
-                id = "3.1 Consultation";
+                id = "3.0 Morbidity";
             }
             GetReport(id);
-
+            ViewBag.ReportName = id;
             return View();
         }
         [HttpPost]
         public ActionResult GetEntity(string entityName)
         {
-           
+
             var jsonString = GetEntityDefinition(entityName);
             return Json(jsonString);
         }
@@ -83,20 +85,20 @@ namespace HealthInformationProgram.Controllers
         {
             int result = 0;
             bool isSuccess = false;
-            if ( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 model.UpdateDate = DateTime.Now.ToString();
                 model.UpdatedBy = "current user";
 
                 var data = new HealthInformationProgram.Data.HipSystemData();
 
-               result= data.UpdateRawvisit(model);
-               if ( result == 1 )
-               {
-                   isSuccess = true;
-               }
+                result = data.UpdateRawvisit(model);
+                if (result == 1)
+                {
+                    isSuccess = true;
+                }
             }
-            return Json(new {success=isSuccess});//, responseText=GetBadVisitDataView()});
+            return Json(new { success = isSuccess });//, responseText=GetBadVisitDataView()});
         }
         [HttpPost]
         public ActionResult GetBadVisitData()
@@ -115,7 +117,7 @@ namespace HealthInformationProgram.Controllers
         {
             PartialViewResult viewResult = null;
 
-            switch ( modelName )
+            switch (modelName)
             {
                 case "DiagnosisModel":
                     viewResult = PartialView("~/Views/Home/CreateDiagnosis/_CreateDiagnosis.cshtml", model);
@@ -145,7 +147,7 @@ namespace HealthInformationProgram.Controllers
         {
             string jsonString = string.Empty;
             var diagnosisData = new Data.DiagnosisData();
-            switch ( entityName )
+            switch (entityName)
             {
                 case "RevisitModel":
                     var model = new List<RevisitModel>();
@@ -215,7 +217,7 @@ namespace HealthInformationProgram.Controllers
             var jsonObject = JObject.Parse(keyValues);
             string jsonString = string.Empty;
 
-            switch ( entityName )
+            switch (entityName)
             {
                 case "RevisitModel":
                     UpdateRevisit(jsonObject);
@@ -252,10 +254,10 @@ namespace HealthInformationProgram.Controllers
             var model = new HealthInformationProgram.Models.RevisitModel();
             var repo = new HealthInformationProgram.Data.RevisitData();
 
-            model.Description = (string) jsonObject["Description"];
-            model.RevisitId = (string) jsonObject["RevisitId"];
-            model.Indicator = (string) jsonObject["Indicator"];
-            model.SortOrder = (string) jsonObject["SortOrder"];
+            model.Description = (string)jsonObject["Description"];
+            model.RevisitId = (string)jsonObject["RevisitId"];
+            model.Indicator = (string)jsonObject["Indicator"];
+            model.SortOrder = (string)jsonObject["SortOrder"];
             model.UpdateDate = DateTime.Now.ToString();
             model.UpdatedBy = "admin ui";
 
@@ -275,7 +277,7 @@ namespace HealthInformationProgram.Controllers
             // var diagDict = new Dictionary<string, string>();
             var selectList = new List<SelectListItem>();
             var repo = new HealthInformationProgram.Data.DiagnosisData();
-            foreach ( var diag in repo.GetAllDiagnosis() )
+            foreach (var diag in repo.GetAllDiagnosis())
             {
                 selectList.Add(new SelectListItem() { Value = diag.DiagnosisId, Text = diag.DiagnosisDescription });
 
@@ -292,7 +294,7 @@ namespace HealthInformationProgram.Controllers
 
             var errorList = new Dictionary<string, string>();
             int result = 0;
-            if ( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 model.CreatedBy = "admin ui";
                 model.UpdatedBy = "admin ui";
@@ -318,18 +320,18 @@ namespace HealthInformationProgram.Controllers
             var model = new HealthInformationProgram.Models.DiagnosisModel();
             var repo = new HealthInformationProgram.Data.DiagnosisData();
 
-            model.DiagnosisId = (string) jsonObject["DiagnosisId"];
-            model.DiagnosisDescription = (string) jsonObject["DiagnosisDescription"];
-            model.DiagnosisAbbreviation = (string) jsonObject["DiagnosisAbbreviation"];
-            model.DiagnosisStatus = (string) jsonObject["DiagnosisStatus"];
-            model.IcdCode = (string) jsonObject["IcdCode"];
-            model.SortOrder = (string) jsonObject["SortOrder"];
-            model.DiagnosisEffectiveStartDate = (string) jsonObject["DiagnosisEffectiveStartDate"];
-            model.DiagnosisEffectiveEndDate = (string) jsonObject["DiagnosisEffectiveEndDate"];
+            model.DiagnosisId = (string)jsonObject["DiagnosisId"];
+            model.DiagnosisDescription = (string)jsonObject["DiagnosisDescription"];
+            model.DiagnosisAbbreviation = (string)jsonObject["DiagnosisAbbreviation"];
+            model.DiagnosisStatus = (string)jsonObject["DiagnosisStatus"];
+            model.IcdCode = (string)jsonObject["IcdCode"];
+            model.SortOrder = (string)jsonObject["SortOrder"];
+            model.DiagnosisEffectiveStartDate = (string)jsonObject["DiagnosisEffectiveStartDate"];
+            model.DiagnosisEffectiveEndDate = (string)jsonObject["DiagnosisEffectiveEndDate"];
             model.UpdateDate = DateTime.Now.ToString();
             model.UpdatedBy = "admin ui";
 
-            if ( isNew )
+            if (isNew)
             {
                 repo.CreateDiagnosis(model);
             }
@@ -348,7 +350,7 @@ namespace HealthInformationProgram.Controllers
         {
             int result = 0;
 
-            if ( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 model.CreatedBy = "admin ui";
                 model.UpdatedBy = "admin ui";
@@ -363,13 +365,13 @@ namespace HealthInformationProgram.Controllers
             var model = new HealthInformationProgram.Models.SupplementalDiagnosisModel();
             var repo = new HealthInformationProgram.Data.DiagnosisData();
 
-            model.SupplementalDiagnosisId = (string) jsonObject["SupplementalDiagnosisId"];
-            model.SupplementalDiagnosisDescription = (string) jsonObject["SupplementalDiagnosisDescription"];
-            model.Status = (string) jsonObject["Status"];
-            model.DiagnosisId = (string) jsonObject["DiagnosisId"];
-            model.SupplementalDiagnosisEffectiveStartDate = (string) jsonObject["SupplementalDiagnosisEffectiveStartDate"];
-            model.SupplementalDiagnosisEffectiveEndDate = (string) jsonObject["SupplementalDiagnosisEffectiveEndDate"];
-            model.SortOrder = (string) jsonObject["SortOrder"];
+            model.SupplementalDiagnosisId = (string)jsonObject["SupplementalDiagnosisId"];
+            model.SupplementalDiagnosisDescription = (string)jsonObject["SupplementalDiagnosisDescription"];
+            model.Status = (string)jsonObject["Status"];
+            model.DiagnosisId = (string)jsonObject["DiagnosisId"];
+            model.SupplementalDiagnosisEffectiveStartDate = (string)jsonObject["SupplementalDiagnosisEffectiveStartDate"];
+            model.SupplementalDiagnosisEffectiveEndDate = (string)jsonObject["SupplementalDiagnosisEffectiveEndDate"];
+            model.SortOrder = (string)jsonObject["SortOrder"];
             model.UpdateDate = DateTime.Now.ToString();
             model.UpdatedBy = "admin ui";
 
@@ -385,7 +387,7 @@ namespace HealthInformationProgram.Controllers
         {
             int result = 0;
 
-            if ( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 model.CreatedBy = "admin ui";
                 model.UpdatedBy = "admin ui";
@@ -401,12 +403,12 @@ namespace HealthInformationProgram.Controllers
             var model = new HealthInformationProgram.Models.SupplementalDiagnosisCategoryModel();
             var repo = new HealthInformationProgram.Data.DiagnosisData();
 
-            model.SupplementalDiagnosisCategoryId = (string) jsonObject["SupplementalDiagnosisCategoryId"];
-            model.SupplementalDiagnosisCategoryType = (string) jsonObject["SupplementalDiagnosisCategoryType"];
-            model.Status = (string) jsonObject["Status"];
-            model.SortOrder = (string) jsonObject["SortOrder"];
-            model.SupplementalDiagnosisCategoryEffectiveStartDate = (string) jsonObject["SupplementalDiagnosisCategoryEffectiveStartDate"];
-            model.SupplementalDiagnosisCategoryEffectiveEndDate = (string) jsonObject["SupplementalDiagnosisCategoryEffectiveEndDate"];
+            model.SupplementalDiagnosisCategoryId = (string)jsonObject["SupplementalDiagnosisCategoryId"];
+            model.SupplementalDiagnosisCategoryType = (string)jsonObject["SupplementalDiagnosisCategoryType"];
+            model.Status = (string)jsonObject["Status"];
+            model.SortOrder = (string)jsonObject["SortOrder"];
+            model.SupplementalDiagnosisCategoryEffectiveStartDate = (string)jsonObject["SupplementalDiagnosisCategoryEffectiveStartDate"];
+            model.SupplementalDiagnosisCategoryEffectiveEndDate = (string)jsonObject["SupplementalDiagnosisCategoryEffectiveEndDate"];
             model.UpdateDate = DateTime.Now.ToString();
             model.UpdatedBy = "admin ui";
 
@@ -417,13 +419,13 @@ namespace HealthInformationProgram.Controllers
         #endregion
 
         #region Facility Methods
-      
+
         [HttpPost]
         public ActionResult SaveFacility(FacilityModel model)
         {
             int result = 0;
 
-            if ( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 model.CreatedBy = "admin ui";
                 model.UpdatedBy = "admin ui";
@@ -438,20 +440,20 @@ namespace HealthInformationProgram.Controllers
         {
             var model = new HealthInformationProgram.Models.FacilityModel();
             var repo = new HealthInformationProgram.Data.FacilityData();
-            model.FacilityId = (string) jsonObject["FacilityId"];
-            model.HealthCareFacility = (string) jsonObject["HealthCareFacility"];
-            model.HealthCareFacilityLevel = (string) jsonObject["HealthCareFacilityLevel"];
-            model.HealthCoordinator = (string) jsonObject["HealthCoordinator"];
-            model.OrganizationId = (string) jsonObject["OrganizationId"];
-            model.Settlement = (string) jsonObject["Settlement"];
-            model.Country = (string) jsonObject["Country"];
-            model.Region = (string) jsonObject["Region"];
-            model.Latitude = (string) jsonObject["Latitude"];
-            model.Longitude = (string) jsonObject["Longitude"];
-            model.FacilityStatus = (string) jsonObject["FacilityStatus"];
-            model.SortOrder = (string) jsonObject["SortOrder"];
-            model.FacilityStartEffectiveDate = (string) jsonObject["FacilityStartEffectiveDate"];
-            model.FacilityEndEffectiveDate = (string) jsonObject["FacilityEndEffectiveDate"];
+            model.FacilityId = (string)jsonObject["FacilityId"];
+            model.HealthCareFacility = (string)jsonObject["HealthCareFacility"];
+            model.HealthCareFacilityLevel = (string)jsonObject["HealthCareFacilityLevel"];
+            model.HealthCoordinator = (string)jsonObject["HealthCoordinator"];
+            model.OrganizationId = (string)jsonObject["OrganizationId"];
+            model.Settlement = (string)jsonObject["Settlement"];
+            model.Country = (string)jsonObject["Country"];
+            model.Region = (string)jsonObject["Region"];
+            model.Latitude = (string)jsonObject["Latitude"];
+            model.Longitude = (string)jsonObject["Longitude"];
+            model.FacilityStatus = (string)jsonObject["FacilityStatus"];
+            model.SortOrder = (string)jsonObject["SortOrder"];
+            model.FacilityStartEffectiveDate = (string)jsonObject["FacilityStartEffectiveDate"];
+            model.FacilityEndEffectiveDate = (string)jsonObject["FacilityEndEffectiveDate"];
             model.UpdateDate = DateTime.Now.ToString();
             model.UpdatedBy = "admin ui";
 
@@ -469,7 +471,7 @@ namespace HealthInformationProgram.Controllers
             var selectList = new List<SelectListItem>();
             var data = new HealthInformationProgram.Data.FacilityData();
 
-            foreach ( var fac in data.GetFacilityList() )
+            foreach (var fac in data.GetFacilityList())
             {
                 selectList.Add(new SelectListItem() { Value = fac.FacilityId, Text = fac.HealthCareFacility });
             }
@@ -482,7 +484,7 @@ namespace HealthInformationProgram.Controllers
         {
             int result = 0;
 
-            if ( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 model.CreatedBy = "admin ui";
                 model.UpdatedBy = "admin ui";
@@ -498,12 +500,12 @@ namespace HealthInformationProgram.Controllers
             var model = new HealthInformationProgram.Models.FacilityHardwareInventoryModel();
             var repo = new HealthInformationProgram.Data.FacilityHardwareData();
 
-            model.FacilityId = (string) jsonObject["FacilityId"];
-            model.ItemDescription = (string) jsonObject["ItemDescription"];
-            model.MacAddress = (string) jsonObject["MacAddress"];
-            model.ApplicationVersion = (string) jsonObject["ApplicationVersion"];
-            model.HardwareStatus = (string) jsonObject["HardwareStatus"];
-            model.FacilityHardwareInventoryId = (string) jsonObject["FacilityHardwareInventoryId"];
+            model.FacilityId = (string)jsonObject["FacilityId"];
+            model.ItemDescription = (string)jsonObject["ItemDescription"];
+            model.MacAddress = (string)jsonObject["MacAddress"];
+            model.ApplicationVersion = (string)jsonObject["ApplicationVersion"];
+            model.HardwareStatus = (string)jsonObject["HardwareStatus"];
+            model.FacilityHardwareInventoryId = (string)jsonObject["FacilityHardwareInventoryId"];
             model.UpdateDate = DateTime.Now.ToString();
             model.UpdatedBy = "admin ui";
 
@@ -512,14 +514,14 @@ namespace HealthInformationProgram.Controllers
         }
         #endregion
 
-      
+
         #region Organization Methods
         [HttpGet]
         public ActionResult GetOrganizationList()
         {
             var selectList = new List<SelectListItem>();
             var repo = new HealthInformationProgram.Data.OrganizationData();
-            foreach ( var org in repo.GetAll() )
+            foreach (var org in repo.GetAll())
             {
                 selectList.Add(new SelectListItem() { Value = org.OrganizationId, Text = org.Organization });
 
@@ -533,7 +535,7 @@ namespace HealthInformationProgram.Controllers
         {
             int result = 0;
 
-            if ( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 model.CreatedBy = "admin ui";
                 model.UpdatedBy = "admin ui";
@@ -548,12 +550,12 @@ namespace HealthInformationProgram.Controllers
         {
             var model = new HealthInformationProgram.Models.OrganizationModel();
             var repo = new HealthInformationProgram.Data.OrganizationData();
-            model.OrganizationId = (string) jsonObject["OrganizationId"];
-            model.Organization = (string) jsonObject["Organization"];
-            model.OrganizationStatus = (string) jsonObject["OrganizationStatus"];
-            model.StartEffectiveDate = (string) jsonObject["StartEffectiveDate"];
-            model.EndEffectiveDate = (string) jsonObject["EndEffectiveDate"];
-            model.SortOrder = (string) jsonObject["SortOrder"];
+            model.OrganizationId = (string)jsonObject["OrganizationId"];
+            model.Organization = (string)jsonObject["Organization"];
+            model.OrganizationStatus = (string)jsonObject["OrganizationStatus"];
+            model.StartEffectiveDate = (string)jsonObject["StartEffectiveDate"];
+            model.EndEffectiveDate = (string)jsonObject["EndEffectiveDate"];
+            model.SortOrder = (string)jsonObject["SortOrder"];
             model.UpdateDate = DateTime.Now.ToString();
             model.UpdatedBy = "admin ui";
 
@@ -564,13 +566,14 @@ namespace HealthInformationProgram.Controllers
 
         #endregion
 
-     
-        private void GetReport(string name)
+        //[HttpGet]
+        //[Route("Report/{name}")]
+        public void /*ActionResult*/ GetReport(string name)
         {
             ReportViewer reportViewer = new ReportViewer();
             try
             {
-                
+
                 reportViewer.ProcessingMode = ProcessingMode.Remote;
                 reportViewer.SizeToReportContent = true;
                 reportViewer.Width = System.Web.UI.WebControls.Unit.Percentage(100);
@@ -589,8 +592,26 @@ namespace HealthInformationProgram.Controllers
                 throw new Exception(String.Format("reviewer error {0}", rvex.Message));
             }
             ViewBag.ReportViewer = reportViewer;
-          // return View();
+            //GetReportsList();
+            //return View("Report");
         }
+
+        private void GetReportsList()
+        {
+            var reportList = new List<Models.ReportsViewModel>();
+            var reportCatalog = new HealthInformationProgram.Data.Repositories.Reports.CatalogRepository();
+            var reports = reportCatalog.GetAllReports().Where(r => r.Type == 2);
+            foreach (var r in reports)
+            {
+                var item = new ReportsViewModel();
+                item.id = r.ItemId;
+                item.name = r.Name;
+                reportList.Add(item);
+            }
+
+            ViewBag.ReportsList = reportList;
+        }
+
         //not currently being used 11-28-15
         private string GenerateValidationModel(string entityName)
         {
@@ -605,17 +626,17 @@ namespace HealthInformationProgram.Controllers
 
             var validationModel = string.Empty;
 
-            foreach ( var prop in type.GetProperties() )
+            foreach (var prop in type.GetProperties())
             {
                 object[] attrs = prop.GetCustomAttributes(true);
-                if ( attrs == null || attrs.Length == 0 )
+                if (attrs == null || attrs.Length == 0)
                     continue;
 
                 string conds = "";
 
-                foreach ( Attribute attr in attrs )
+                foreach (Attribute attr in attrs)
                 {
-                    if ( attr is DisplayAttribute )
+                    if (attr is DisplayAttribute)
                     {
                         conds += (attr as DisplayAttribute).Name + ",";
                     }
@@ -623,7 +644,7 @@ namespace HealthInformationProgram.Controllers
                     //{
                     //    conds += ", minLength: " + (attr as MinLengthAttribute).Length;
                     //}
-                    else if ( attr is RequiredAttribute )
+                    else if (attr is RequiredAttribute)
                     {
                         conds += ", required: true";
                     }
