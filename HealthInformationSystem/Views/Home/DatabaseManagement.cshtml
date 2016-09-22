@@ -86,7 +86,7 @@
 
 </header>
 <body>
-    <div id="createWrapper">
+    <div id="createWrapper" class="createWrapper">
         <div id="newItem"></div>
     </div>
     <div>
@@ -582,8 +582,10 @@
             type: 'POST',
             async: false,
             success: function (mydata) {
-                dialog.dialog("open");
-                $(".ui-dialog-titlebar").hide();
+                $('.createWrapper').show()
+                //dialog.dialog("open");
+               
+                //$(".ui-dialog-titlebar").hide();
                 $('#newItem').html(mydata);
             },
             error: function (mydata) {
@@ -612,14 +614,15 @@
             },
         });
     }
-    dialog = $('#createWrapper').dialog({
-        autoOpen: false,
-        width: 800,
-        modal: true,
-    });
+    //dialog = $('#newItem').dialog({
+    //    autoOpen: false,
+    //    width: 800,
+    //    modal: false,
+    //    position:'top'
+    //});
    
     $(document).ready(function () {
-      
+        $('.createWrapper').hide()
         $('#create').hide();
         $('#selectEntity').on('change', function () {
             

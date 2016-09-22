@@ -325,7 +325,9 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ClassDiagram1.cd" />
-    <None Include="Properties\PublishProfiles\HipAdmin.pubxml" />
+    <None Include="Properties\PublishProfiles\hip-admin Prod.pubxml" />
+    <None Include="Properties\PublishProfiles\hip-admin-HipProduction - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\HipAdmin Dev.pubxml" />
     <Content Include="Images\logo-medical-teams.png" />
     <None Include="Scripts\jquery-3.0.0.intellisense.js" />
     <Content Include="ReportViewerWebForm.aspx" />
