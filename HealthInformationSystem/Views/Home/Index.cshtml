@@ -1,4 +1,5 @@
-﻿@{
+﻿@using HealthInformationProgram.SessionData;
+@{
     ViewBag.Title = "Welcome to HIP Admin";
 }
 @section featured {
@@ -20,21 +21,36 @@
 }
 <h3>We suggest the following:</h3>
 <ol class="round">
-    <li class="one">
-        <a href="~/Home/ClientManagement" style="padding:0;margin:0;text-decoration:none"><h5>Client Management</h5></a>
-       Client Management is where administrators can manage and review device information.
-       
-    </li>
+    @if (SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
+    {
+        <li class="one">
+            <a href="~/Home/ClientManagement" style="padding:0;margin:0;text-decoration:none"><h5>Client Management</h5></a>
+           Client Management is where administrators can manage and review device information.
+        </li>
+    }
 
-    <li class="two">
-        <a href="~/Home/DatabaseManagement" style="padding:0;margin:0;;text-decoration:none"><h5>Database Management</h5></a>
-       Administrators can manage constants and records
-       
-    </li>
+    @if (SessionData.Current.loggedInUser.IsAuthroizedToViewDatabaseManagement() || 
+        SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
+    {
+        <li class="two">
+            <a href="~/Home/DatabaseManagement" style="padding:0;margin:0;;text-decoration:none"><h5>Database Management</h5></a>
+           Administrators can manage constants and records
+        </li>
+    }
 
-    <li class="three">
-        <a href="~/Home/Report" style="padding:0;margin:0;text-decoration:none"><h5>Reports</h5></a>
-        View HIP reports
-       
-    </li>
+    @if (SessionData.Current.loggedInUser.IsAuthorizedToViewReports())
+    {
+        <li class="three">
+            <a href="~/Home/Report" style="padding:0;margin:0;text-decoration:none"><h5>Reports</h5></a>
+            View HIP reports
+        </li>
+    }
+
+    @if (SessionData.Current.loggedInUser.IsAuthorizedToAdminsterUsers())
+    {
+        <li class="three">
+            <a href="~/Home/Users" style="padding:0;margin:0;text-decoration:none"><h5>Users</h5></a>
+            User Administration
+        </li>
+    }
 </ol>

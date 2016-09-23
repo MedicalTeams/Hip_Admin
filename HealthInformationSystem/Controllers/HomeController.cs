@@ -9,16 +9,20 @@ using HealthInformationProgram.Data;
 using HealthInformationProgram.Models;
 using Newtonsoft.Json.Linq;
 using Microsoft.Reporting.WebForms;
+using System.Web.Security;
+using HealthInformationProgram.Models.ViewModels;
+using System.Security.Principal;
 
 namespace HealthInformationProgram.Controllers
 {
     public class HomeController : Controller
     {
-        IReportServerCredentials creds = null;
-
         public ActionResult Index()
         {
-            ViewBag.Message = "Instruction:.";
+            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
             return View();
         }
@@ -38,6 +42,11 @@ namespace HealthInformationProgram.Controllers
         }
         public ActionResult ClientManagement()
         {
+            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             ViewBag.Message = "Client Management";
             var sysInfo = new FacilityHardwareData();
             var app = sysInfo.GetCurrentApplicationVersion();
@@ -47,13 +56,91 @@ namespace HealthInformationProgram.Controllers
         }
         public ActionResult DatabaseManagement()
         {
+            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             //TODO: Set a default entity for initial load
             TempData["Version"] = string.Empty;
             return View();
         }
-    //    [Route("Report/{reportName:string}")]
+        public ActionResult Users()
+        {
+            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            //TODO: Set a default entity for initial load
+            TempData["Version"] = string.Empty;
+
+            UsersAdministrationUsersViewModel usersAdministrationUsersViewModel = new UsersAdministrationUsersViewModel();
+            return View(usersAdministrationUsersViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult UserAdministration(UsersAdministrationUsersViewModel usersAdministrationUsersViewModel, string operation)
+        {
+            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (usersAdministrationUsersViewModel == null)
+            {
+                usersAdministrationUsersViewModel = new UsersAdministrationUsersViewModel();
+            }
+
+            if ((operation != null) && (operation.Contains("UserAdministrationEditUser_")))
+            {
+                string selectedUserGuid = string.Format(operation.Replace("UserAdministrationEditUser_", ""));
+                Guid userGuid = new Guid(selectedUserGuid);
+
+                usersAdministrationUsersViewModel.SetSelectedUser(userGuid);
+                usersAdministrationUsersViewModel.ModelState = HIPViewModelStates.EditUser;
+            }
+            else if ((operation != null) && (operation == "AddNewUser"))
+            {
+                usersAdministrationUsersViewModel = new UsersAdministrationUsersViewModel();
+                usersAdministrationUsersViewModel.ModelState = HIPViewModelStates.AddNewUser;
+                ModelState.Clear();
+            }
+            else if ((operation != null) && (operation == "SaveAddNewUser"))
+            {
+
+            }
+            else if ((operation != null) && (operation == "SaveEditUser"))
+            {
+
+            }
+            else
+            {
+                return RedirectToAction("Users", "Home");
+            }
+            
+            return View(usersAdministrationUsersViewModel);
+        }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+
+            System.Web.HttpContext.Current.User =
+                new GenericPrincipal(new GenericIdentity(string.Empty), null);
+
+            Session.Clear();
+
+            return RedirectToAction("Index", "Home");
+        }
+        //    [Route("Report/{reportName:string}")]
         public ActionResult Report(string id)
         {
+            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             TempData["Version"] = string.Empty;
             if (id == null)
             {

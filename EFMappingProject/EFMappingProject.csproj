@@ -41,6 +41,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,11 +76,15 @@
     <Compile Include="Models\Mapping\lkup_rvisitMap.cs" />
     <Compile Include="Models\Mapping\lkup_splmtl_diagMap.cs" />
     <Compile Include="Models\Mapping\lkup_splmtl_diag_catMap.cs" />
+    <Compile Include="Models\Mapping\MTIUserRolesEntityDataModel.cs" />
     <Compile Include="Models\Mapping\ovMap.cs" />
     <Compile Include="Models\Mapping\ov_diagMap.cs" />
     <Compile Include="Models\Mapping\raw_visitMap.cs" />
+    <Compile Include="Models\Mapping\role.cs" />
     <Compile Include="Models\Mapping\tmp_jsonvisitMap.cs" />
     <Compile Include="Models\Mapping\tmp_visit_to_procMap.cs" />
+    <Compile Include="Models\Mapping\user.cs" />
+    <Compile Include="Models\Mapping\userrole.cs" />
     <Compile Include="Models\Mapping\vw_diag_alertMap.cs" />
     <Compile Include="Models\Mapping\vw_lkup_all_splmtl_diagMap.cs" />
     <Compile Include="Models\Mapping\vw_lkup_base_splmtl_diagMap.cs" />

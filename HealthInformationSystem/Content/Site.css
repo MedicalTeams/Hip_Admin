@@ -468,16 +468,26 @@ aside
 }
 
 /* forms */
-fieldset
-{
-    border: none;
-    margin: 0;
-    padding: 0;
+fieldset.scheduler-border {
+    padding: 0 1.4em 0 1.4em !important;
+    margin: 0 0 0 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
 }
 
-    fieldset legend
-    {
-        display: none;
+.legend-border {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: center !important;
+}
+
+    legend.scheduler-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
     }
 
     fieldset ol
@@ -920,4 +930,122 @@ tr.pager td
 #createHeader
 {
     padding-bottom:10px;
+}
+
+/* Search Results Table
+----------------------------------------------------------*/
+.searchResultsTable {
+    width: 100%;
+    border: solid #ccc 1px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 1px #ccc;
+    -moz-box-shadow: 0 1px 1px #ccc;
+    box-shadow: 0 1px 1px #ccc;
+}
+
+.searchResultsTable tr:hover {
+    background: #ADD8E6;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+}
+
+.searchResultsTable td, .bordered th {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.searchResultsTable th {
+    background-color: #dce9f9;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
+    background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:    -moz-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:     -ms-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:      -o-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:         linear-gradient(top, #ebf3fc, #dce9f9);
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    border-top: none;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    text-align: center;
+}
+
+.searchResultsTable td:first-child, .bordered th:first-child {
+    border-left: none;
+}
+
+.searchResultsTable th:first-child {
+    -moz-border-radius: 6px 0 0 0;
+    -webkit-border-radius: 6px 0 0 0;
+    border-radius: 6px 0 0 0;
+}
+
+.searchResultsTable th:last-child {
+    -moz-border-radius: 0 6px 0 0;
+    -webkit-border-radius: 0 6px 0 0;
+    border-radius: 0 6px 0 0;
+}
+
+.searchResultsTable th:only-child{
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}
+
+.searchResultsTable tr:last-child td:first-child {
+    -moz-border-radius: 0 0 0 6px;
+    -webkit-border-radius: 0 0 0 6px;
+    border-radius: 0 0 0 6px;
+}
+
+.searchResultsTable tr:last-child td:last-child {
+    -moz-border-radius: 0 0 6px 0;
+    -webkit-border-radius: 0 0 6px 0;
+    border-radius: 0 0 6px 0;
+}
+
+.tableBottomButtonTable
+{
+    margin-top: 5px;
+    margin-left: 20px;
+    border-spacing: 5px;
+    border-collapse: separate;
+}
+
+.editor-label > label:after {
+    content: ": "
+}
+
+/* Search Criteria Table
+----------------------------------------------------------*/
+.searchCriteriaTable
+{
+    margin: 20px 0px 0px 10px;
+    clear: left;
+}
+
+    .searchCriteriaTable td
+    {
+        padding: 6px;
+    }
+
+.singleLineDiv {
+    border: 1px solid black;
+    width: 70px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.centeredDiv {
+    display: flex;
+    flex-wrap: wrap; /* optional. only if you want the items to wrap */
+    justify-content: center; /* for horizontal alignment */
+    align-items: center; /* for vertical alignment */
 }
