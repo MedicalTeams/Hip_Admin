@@ -36,7 +36,6 @@
                     @if (Model.ModelState == HIPViewModelStates.EditUser)
                     {
                         @Html.HiddenFor(model => model.SelectedUser.userId)
-                        @Html.HiddenFor(model => model.SelectedUser.email)
                         @Html.HiddenFor(model => model.SelectedUser.createDate)
                         @Html.HiddenFor(model => model.SelectedUser.createdBy)
                         @Html.HiddenFor(model => model.ModelState)
@@ -88,6 +87,7 @@
                                     else
                                     {
                                         @Html.TextBoxFor(model => model.SelectedUser.email, new { disabled = "disabled" })
+                                        @Html.HiddenFor(model => model.SelectedUser.email)
                                     }
                                 </div>
                             </td>
