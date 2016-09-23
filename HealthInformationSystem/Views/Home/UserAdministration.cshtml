@@ -39,6 +39,7 @@
                         @Html.HiddenFor(model => model.SelectedUser.email)
                         @Html.HiddenFor(model => model.SelectedUser.createDate)
                         @Html.HiddenFor(model => model.SelectedUser.createdBy)
+                        @Html.HiddenFor(model => model.ModelState)
                     }
 
                     @if (!ViewData.ModelState.IsValid)
@@ -80,7 +81,14 @@
                             </td>
                             <td>
                                 <div class="editor-field">
-                                    @Html.TextBoxFor(model => model.SelectedUser.email, new { disabled = "disabled" })
+                                    @if (Model.ModelState == HIPViewModelStates.AddNewUser)
+                                    {
+                                        @Html.TextBoxFor(model => model.SelectedUser.email)
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(model => model.SelectedUser.email, new { disabled = "disabled" })
+                                    }
                                 </div>
                             </td>
                         </tr>
@@ -133,6 +141,9 @@
 
                         @for (int index = 0; index < Model.BoundUserRolesListForSelectedUser.Count(); index++)
                         {
+                            @Html.HiddenFor(model => model.BoundUserRolesListForSelectedUser[index].RoleId)
+                            @Html.HiddenFor(model => model.BoundUserRolesListForSelectedUser[index].RoleName)
+
                             <tr>
                                 <td>
                                     @Html.CheckBoxFor(model => model.BoundUserRolesListForSelectedUser[index].UserIsInRole)
@@ -147,24 +158,24 @@
 
                 </fieldset>
 
-                @if (Model.ModelState == HIPViewModelStates.EditUser)
-                {
-                    <table class="tableBottomButtonTable">
-                        <tr>
-                            <td>
-                                <button id="SaveEditUserButton" type="submit" class="btn btn-primary" name="operation" value="SaveEditUser">Save</button>
-                                <button id="CancelEditUserButton" type="submit" class="btn cancel" name="operation" value="CancelEditUser">Cancel</button>
-                            </td>
-                        </tr>
-                    </table>
-                }
-                else if (Model.ModelState == HIPViewModelStates.AddNewUser)
+                @if (Model.ModelState == HIPViewModelStates.AddNewUser)
                 {
                     <table class="tableBottomButtonTable">
                         <tr>
                             <td>
                                 <button id="SaveAddNewUserButton" type="submit" class="btn btn-primary" name="operation" value="SaveAddNewUser">Add New</button>
                                 <button id="CancelAddNewUserButton" type="submit" class="btn cancel" name="operation" value="CancelAddNewUser">Cancel</button>
+                            </td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                    <table class="tableBottomButtonTable">
+                        <tr>
+                            <td>
+                                <button id="SaveEditUserButton" type="submit" class="btn btn-primary" name="operation" value="SaveEditUser">Save</button>
+                                <button id="CancelEditUserButton" type="submit" class="btn cancel" name="operation" value="CancelEditUser">Cancel</button>
                             </td>
                         </tr>
                     </table>

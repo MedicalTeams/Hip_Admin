@@ -2,28 +2,11 @@
 @{
     ViewBag.Title = "Welcome to HIP Admin";
 }
-@section featured {
-    <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h1>@ViewBag.Title.</h1>
-                
-            </hgroup>
-            <p>
-                @*To learn more about ASP.NET MVC visit
-                <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET MVC.
-                If you have any questions about ASP.NET MVC visit
-                <a href="http://forums.asp.net/1146.aspx/1?MVC" title="ASP.NET MVC Forum">our forums</a>.*@
-            </p>
-        </div>
-    </section>
-}
-<h3>We suggest the following:</h3>
+
 <ol class="round">
     @if (SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
     {
-        <li class="one">
+        <li>
             <a href="~/Home/ClientManagement" style="padding:0;margin:0;text-decoration:none"><h5>Client Management</h5></a>
            Client Management is where administrators can manage and review device information.
         </li>
@@ -32,7 +15,7 @@
     @if (SessionData.Current.loggedInUser.IsAuthroizedToViewDatabaseManagement() || 
         SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
     {
-        <li class="two">
+        <li>
             <a href="~/Home/DatabaseManagement" style="padding:0;margin:0;;text-decoration:none"><h5>Database Management</h5></a>
            Administrators can manage constants and records
         </li>
@@ -40,7 +23,7 @@
 
     @if (SessionData.Current.loggedInUser.IsAuthorizedToViewReports())
     {
-        <li class="three">
+        <li>
             <a href="~/Home/Report" style="padding:0;margin:0;text-decoration:none"><h5>Reports</h5></a>
             View HIP reports
         </li>
@@ -48,7 +31,7 @@
 
     @if (SessionData.Current.loggedInUser.IsAuthorizedToAdminsterUsers())
     {
-        <li class="three">
+        <li>
             <a href="~/Home/Users" style="padding:0;margin:0;text-decoration:none"><h5>Users</h5></a>
             User Administration
         </li>

@@ -99,6 +99,7 @@ namespace HealthInformationProgram.Controllers
 
                 usersAdministrationUsersViewModel.SetSelectedUser(userGuid);
                 usersAdministrationUsersViewModel.ModelState = HIPViewModelStates.EditUser;
+                ModelState.Clear();
             }
             else if ((operation != null) && (operation == "AddNewUser"))
             {
@@ -108,11 +109,19 @@ namespace HealthInformationProgram.Controllers
             }
             else if ((operation != null) && (operation == "SaveAddNewUser"))
             {
-
+                if(ViewData.ModelState.IsValid)
+                {
+                    usersAdministrationUsersViewModel.SaveAddNewUser();
+                    return RedirectToAction("Users", "Home");
+                }
             }
             else if ((operation != null) && (operation == "SaveEditUser"))
             {
-
+                if (ViewData.ModelState.IsValid)
+                {
+                    usersAdministrationUsersViewModel.SaveEditUser();
+                    return RedirectToAction("Users", "Home");
+                }
             }
             else
             {

@@ -241,8 +241,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BAL\UserAdministrationLogic.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CustomAttributes\PasswordRequirementsAttribute.cs" />
+    <Compile Include="CustomAttributes\UniqueUserEmailAddressAttribute.cs" />
+    <Compile Include="DAL\UserAdministrationRepository.cs" />
     <Compile Include="Data\BaseHipData.cs" />
     <Compile Include="Data\DiagnosisData.cs" />
     <Compile Include="Data\FacilityData.cs" />
@@ -411,7 +415,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="CustomAttributes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
