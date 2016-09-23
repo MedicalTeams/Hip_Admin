@@ -3,37 +3,50 @@
     ViewBag.Title = "Welcome to HIP Admin";
 }
 
-<ol class="round">
-    @if (SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
-    {
-        <li>
-            <a href="~/Home/ClientManagement" style="padding:0;margin:0;text-decoration:none"><h5>Client Management</h5></a>
-           Client Management is where administrators can manage and review device information.
-        </li>
-    }
+<body>
 
-    @if (SessionData.Current.loggedInUser.IsAuthroizedToViewDatabaseManagement() || 
-        SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
-    {
-        <li>
-            <a href="~/Home/DatabaseManagement" style="padding:0;margin:0;;text-decoration:none"><h5>Database Management</h5></a>
-           Administrators can manage constants and records
-        </li>
-    }
+    <table class="searchCriteriaTable" style="font-size:16px">
+        @if (SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
+        {
+            <tr>
+                <td>
+                    <a href="~/Home/ClientManagement" style="padding:0;margin:0;text-decoration:none"><h5>Client Management</h5></a>
+                    Client Management is where administrators can manage and review device information.
+                </td>
+            </tr>
+        }
 
-    @if (SessionData.Current.loggedInUser.IsAuthorizedToViewReports())
-    {
-        <li>
-            <a href="~/Home/Report" style="padding:0;margin:0;text-decoration:none"><h5>Reports</h5></a>
-            View HIP reports
-        </li>
-    }
+        @if (SessionData.Current.loggedInUser.IsAuthroizedToViewDatabaseManagement() ||
+                                        SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
+        {
+            <tr>
+                <td>
+                    <a href="~/Home/DatabaseManagement" style="padding:0;margin:0;;text-decoration:none"><h5>Database Management</h5></a>
+                    Administrators can manage constants and records
+                </td>
+            </tr>
+        }
 
-    @if (SessionData.Current.loggedInUser.IsAuthorizedToAdminsterUsers())
-    {
-        <li>
-            <a href="~/Home/Users" style="padding:0;margin:0;text-decoration:none"><h5>Users</h5></a>
-            User Administration
-        </li>
-    }
-</ol>
+        @if (SessionData.Current.loggedInUser.IsAuthorizedToViewReports())
+        {
+            <tr>
+                <td>
+                    <a href="~/Home/Report" style="padding:0;margin:0;text-decoration:none"><h5>Reports</h5></a>
+                    View HIP reports
+                </td>
+            </tr>
+        }
+
+        @if (SessionData.Current.loggedInUser.IsAuthorizedToAdminsterUsers())
+        {
+            <tr>
+                <td>
+                    <a href="~/Home/Users" style="padding:0;margin:0;text-decoration:none"><h5>Users</h5></a>
+                    User Administration
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</body>
