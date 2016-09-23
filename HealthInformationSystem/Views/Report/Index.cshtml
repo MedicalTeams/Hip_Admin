@@ -1,0 +1,83 @@
+﻿@using ReportViewerForMvc;
+@{
+    ViewBag.Title = "Report";
+}
+
+<h2>Report</h2>
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/themes/base/css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryui")
+@Scripts.Render("~/bundles/jqueryval")
+
+<style>
+
+    .reportViewer {
+    min-height:200px !important;
+    
+    }
+</style>
+
+
+@Html.ActionLink("3.0 Morbidity", "Index", new { id = "3.0 Morbidity" })
+
+@*@Html.ActionLink("3.1 Consultation", "Report", new { id = "3.1 Consultation" })
+
+@Html.ActionLink("3.2 Morbidity", "Report", new { id = "3.2 Morbidity" })
+
+@Html.ActionLink("3.4 STI", "Report", new { id = "3.4 STI" })
+@Html.ActionLink("3.5 Chronic Disease" , "Report", new { id = "3.5 Chronic Disease"})
+@Html.ActionLink("3.6 Mental Illness", "Report", new { id = "3.6 Mental Illness" })
+
+@Html.ActionLink("3.7 Injuries", "Report", new { id = "3.7 Injuries" })*@
+
+@Html.ActionLink("Visit Details", "Index", new { id = "Visit Details" })
+@Html.ActionLink("Tally Details", "Index", new { id = "Tally Details" })
+
+<div>
+    <span>Current report: @ViewBag.ReportName</span>
+    @*<select id="reportSelector">
+        @foreach (var item in ViewBag.ReportsList)
+        {
+            <option id="@item.id">@item.name</option>
+        }
+    </select>*@
+</div>
+<div style="padding:5px 5px 5px 0">
+   @if(ViewBag.ReportViewer != null){
+    @Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer, new { width = "1024", height="640" })
+  }
+</div>
+
+<style>
+   .reportViewer, div#ReportViewer1 {
+        width: 100% !important;
+        height: 1000px !important;
+    }
+    iframe {
+    border: none !important;
+    min-height :500px !important;
+    }
+</style>
+
+@*<script>
+    $('#reportSelector').on('change', function (e) {
+        var name = $(this).find("option:selected").text();
+        //var url ='<%= Url.Action("GetReport","Home")%>';
+        //$.get('/GetReport', { id: name }, function (data) {
+
+        //});
+        $.ajax({
+            url: "Report/"+name,
+            type: 'GET',
+            dataType:"json",
+            //data: { input: name },
+            success: function (result) {
+                // alert(result.name);
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    });
+</script>*@

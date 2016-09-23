@@ -1,0 +1,446 @@
+﻿@{
+    ViewBag.Title = "Client Management";
+}
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/themes/base/css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryui")
+@Scripts.Render("~/bundles/jqueryval")
+<header>
+    <style class="cp-pen-styles">
+
+        .longInput {
+            width:250px;
+        }
+        .middlingInput {
+            width:100px;
+        }
+
+        .shortInput {
+            width:50px;
+        }
+
+
+
+
+        .activeRow {
+            background: #ff0000;
+        }
+
+        .ok_edit {
+            background: #eee;
+            border: 1px solid #000;
+            min-width: 50px;
+        }
+
+        .no_edit {
+            background: #e0e0e0;
+            border: 1px solid #000;
+            min-width: 50px;
+        }
+
+        .disabled_input {
+            background-color: #e0e0e0;
+        }
+
+        #the_editor {
+            margin-right: 10px;
+            border-right-style: solid;
+            border-right-width: 1px;
+        }
+
+        .highlight {
+            background-color: red;
+        }
+
+        .odd {
+            background: #fff;
+        }
+
+        .entry {
+            margin-bottom: 10px;
+        }
+
+        .even {
+            background: #eee;
+        }
+        /*
+        .table-header-rotated {
+            border-collapse: collapse;
+            height: 400px;
+            overflow: scroll;
+        }
+
+        .csstransforms .table-header-rotated  {
+            width: 30px;
+        }
+
+        .no-csstransforms .table-header-rotated th {
+            padding: 5px 10px;
+        }
+
+        .table-header-rotated td {
+            text-align: center;
+            padding: 10px 5px;
+            border: 1px solid #ccc;
+        }
+
+        .csstransforms .table-header-rotated th.rotate {
+            height: 140px;
+            white-space: nowrap;
+        }
+
+            .csstransforms .table-header-rotated th.rotate > div {
+                -webkit-transform: translate(25px, 51px) rotate(315deg);
+                -ms-transform: translate(25px, 51px) rotate(315deg);
+                transform: translate(25px, 51px) rotate(315deg);
+                width: 30px;
+            }
+
+                .csstransforms .table-header-rotated th.rotate > div > span {
+                    border-bottom: 1px solid #ccc;
+                    padding: 5px 10px;
+                }
+
+        .table-header-rotated th.row-header {
+            padding: 0 10px;
+            border-bottom: 1px solid #ccc;
+        }
+            */
+    </style>
+
+</header>
+<body>
+    <div id="createWrapper">
+        <div id="newItem"></div>
+    </div>
+    <div>
+        <div>
+            <select id="selectEntity">
+                <option class="menuOption" value="">Choose a database</option>
+                
+                 <option class="menuOption" value="FacilityHardwareInventoryModel">Facility Hardware</option>
+                
+            </select>
+        </div>
+    </div>
+    
+    <div style="width:50%;margin:0px !important;float:left">
+        <button id="create" type="button">Create</button>
+    </div>
+     <div id="versionInformation" style="float:left; padding:0 10em 3em;"><h3>@TempData["Version"]</h3></div>
+    <div id="the_table"></div>
+
+</body>
+<script>
+    var matrix = [];
+
+    function getDoNotEdit() {
+
+        var do_not_edit = {};
+        do_not_edit["UpdatedBy"] = "";
+        do_not_edit["RevisitId"] = "";
+        do_not_edit["CreateDate"] = "";
+        do_not_edit["CreatedBy"] = "";
+        do_not_edit["UpdateDate"] = "";
+        do_not_edit["curr_sys_id"] = "";
+        do_not_edit["DiagnosisId"] = "";
+        do_not_edit["diag_alert_thrshld_id"] = "";
+        do_not_edit["faclty_hw_invtry_id"] = "";
+        do_not_edit["bnfcry_id"] = "";
+        do_not_edit["diag_id"] = "";
+        do_not_edit["faclty_id"] = "";
+        do_not_edit["gndr_id"] = "";
+        do_not_edit["orgzn_id"] = "";
+        do_not_edit["rvisit_id"] = "";
+        do_not_edit["splmtl_diag_id"] = "";
+        do_not_edit["splmtl_diag_cat_id"] = "";
+        do_not_edit["faclty_id"] = "";
+        do_not_edit["ov_diag_id"] = "";
+        do_not_edit["visit_uuid"] = "";
+        do_not_edit["element_id"] = "";
+
+        return do_not_edit;
+    }
+
+    function createButtons(row) {
+        var btn = "<td class='no_edit'>";
+        btn += "<button id='b" + row + "' onclick='btnstate(this);'>Edit</button>";
+        btn += "</td>";
+        return btn;
+    }
+
+    function btnstate(obj) {
+
+        var rowId = obj.id.replace("b", "row_");
+
+        var currentState = document.getElementById(obj.id).innerHTML;
+        if (currentState == "Edit") {
+            document.getElementById(obj.id).className = "activeRow";
+            document.getElementById(obj.id).innerHTML = "Update";
+            $('#' + rowId + ' :input').prop('disabled', false);
+        } else if (currentState == "Update") {
+            document.getElementById(obj.id).innerHTML = "Edit";
+            document.getElementById(obj.id).className = "";
+            doSubmit(obj.id);
+        }
+    }
+
+    function shortenColumnName(candidate) {
+        candidate = candidate.replace("Supplemental", "Sup");
+        candidate = candidate.replace("Diagnosis", "Diag");
+        candidate = candidate.replace("Effective", "");
+        candidate = candidate.replace("Description", "Desc");
+        candidate = candidate.replace("Category", "Cat");
+        candidate = candidate.replace("SortOrder", "Sort");
+
+        return candidate;
+    }
+
+    function endsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+
+    function getInputTD(id, value, key) {
+        var css = "class='" + inputLengthsMap[key] + "'";
+        return "<center><input  type='text' disabled  id='" + id + "' " + css + " value='" + value + "'  /></center>";
+    }
+
+    function getInputNumberTD(id, value, key) {
+        var css = "class='" + inputLengthsMap[key] + "'";
+        return "<center><input  type='number' disabled  id='" + id + "'  " + css + " value='" + value + "'  /></center>";
+    }
+
+    function getSelectTD(row, key, id) {
+        var select = "<select id='" + id + "' disabled>";
+        var fromDatabase = matrix[row][key];
+        if (fromDatabase == "A") {
+            select += "<option value='A' selected >A</option>";
+        } else {
+            select += "<option value='A'>A</option>";
+        }
+
+        if (fromDatabase == "I") {
+            select += "<option value='I' selected>I</option>";
+        } else {
+            select += "<option value='I'>I</option>";
+        }
+        select += "</select>";
+
+        return select;
+    }
+
+    var inputLengthsMap = {}; 
+    function setInputLengthsMap() {
+        /* determine what css class different inputs ought to recieve */   
+        var sizes = {};
+        for (var row in matrix) {
+            for (var key in matrix[row]) {
+                try {
+
+                    var value = matrix[row][key];
+
+                    if (endsWith(key, "Date")) {
+                        var value = matrix[row][key].split(" ")[0];
+                        if (value == undefined) {
+                            value = matrix[row][key];
+                        }
+                    }
+
+                    var size = value.length;
+                    if (sizes.hasOwnProperty(key)) {
+                        if (size > sizes[key]) {
+                            sizes[key] = size;
+                        }
+                    } else {
+                        sizes[key] = size; 
+                    }
+                } catch (feild_might_be_empty) {
+                    console.log("Skipping setInputLengthsMap for " + key);
+                }
+            }
+        }
+        inputLengthsMap = {}; 
+        for (var key in sizes) {
+            var size = sizes[key];
+            if ( size < 6 ) {
+                inputLengthsMap[key] = "shortInput"; 
+             } else if  (size < 20 ) {
+                 inputLengthsMap[key] = "middlingInput"; 
+            } else {
+                 inputLengthsMap[key] = "longInput"; 
+            }
+        }
+    }
+
+    var do_not_edit = {};
+    function populate() {
+
+        setInputLengthsMap(); 
+
+        do_not_edit = getDoNotEdit();
+
+        var update_rows_placeholder = "<th class='rotate'><div><span>Controls</span></div></th>";
+        var html = "<table class='table table-header-rotated'><thead><tr>" + update_rows_placeholder;
+
+        for (var key in matrix[0]) {
+            html += "<th class='rotate'><div><span>" + shortenColumnName(key) + "</span></div></th>";
+        }
+        html += "</tr>";
+
+        for (var row = 0; row < matrix.length; row++) {
+
+            html += "<tr id='row_" + row + "' >";
+            html += createButtons(row);
+            for (var key in matrix[row]) {
+
+                var id = row + "_" + key;
+                var value = matrix[row][key];
+
+                if (endsWith(key, "Date")) {
+                    var value = matrix[row][key].split(" ")[0];
+                    if (value == undefined) {
+                        value = matrix[row][key];
+                    }
+                    if (do_not_edit.hasOwnProperty(key)) {
+                        html += "<td class='no_edit' align='right' id='" + id + "'  >" + value + "</td>";
+                    } else {
+                        html += "<td class='ok_edit'>";
+                        html += getInputTD(id, value,key);
+                        html += "</td>";
+                    }
+                } else if (endsWith(key, "Status")) {
+                    html += "<td class='ok_edit'>";
+                    html += getSelectTD(row, key, id);
+                    html += "</td>";
+                } else if (key == "SortOrder") {
+                   // console.log("SO! " + value); 
+                    html += "<td class='ok_edit'>";
+                    html += getInputNumberTD(id, value, key);
+                    html += "</td>";
+                } else {
+                if (do_not_edit.hasOwnProperty(key)) {
+                        html += "<td class='no_edit' align='right' id='" + id + "'  >" + value + "</td>";
+                } else {
+                    html += "<td class='ok_edit'>";
+                        html += getInputTD(id, value,key);
+                        html += "</td>";
+                    }
+                }
+            }
+            html += "</tr>";
+        }
+        document.getElementById("the_table").innerHTML = html;
+    }
+
+
+
+    //////////// 
+    function doSubmit(row) {
+        console.log("Current entity(do Submit function = " + currentEntity);
+        var results = {};
+        var out = "";
+
+        row = row.replace("b", "");
+        for (var key in matrix[0]) {
+            var id = row + "_" + key;
+            var val = "";
+            if (do_not_edit.hasOwnProperty(key)) {
+                val = document.getElementById(id).innerHTML;
+            } else {
+                val = document.getElementById(id).value;
+            }
+            results[key] = val;
+        }
+        update(results, currentEntity);
+    }
+</script>
+<script>
+    var currentEntity = null;
+    var dialog = null;
+    function getTable(entityName) {
+        $.ajax({
+            url: "/Home/GetEntity",
+            data: { entityName: entityName },
+            type: 'POST',
+            dataType: 'json',
+            success: function (mydata) {
+                // Need to eval mydata into an object. Before the eval mydata is just a complicated string
+                matrix = eval("(" + mydata + ')');
+                populate();
+                currentEntity = entityName;
+                $('#create').show();
+                if (currentEntity === 'FacilityHardwareInventoryModel') {
+                    $('#versionInformation').show();
+                }
+                else {
+                    $('#versionInformation').hide();
+                }
+            },
+            error: function (mydata) { alert("error"); alert(mydata); },
+        });
+    }
+
+    function update(keyValue, entityName) {
+
+        $.ajax({
+
+            url: "/Home/SaveEntity",
+            data: { keyValues: JSON.stringify(keyValue), entityName: entityName, isNew: false },
+            type: 'POST',
+            dataType: 'json',
+            success: function (mydata) {
+                try {
+                matrix = eval("(" + mydata + ')');
+                } catch (it_might_be_empty) {
+                    console.log("The matrix is empty ( and that is ok )");
+                }
+                populate();
+            },
+            error: function (mydata) { alert("error"); alert(mydata); },
+        });
+    }
+    function create(entityName) {
+
+        $.ajax({
+
+            url: "/Home/Create",
+            data: { modelName: entityName },
+            type: 'POST',
+            async: false,
+            success: function (mydata) {
+                dialog.dialog("open");
+                $(".ui-dialog-titlebar").hide();
+                $('#newItem').html(mydata);
+            },
+            error: function (mydata) {
+                console.log(mydata);
+                alert("error"); alert(mydata);
+            },
+        });
+    }
+
+    dialog = $('#createWrapper').dialog({
+        autoOpen: false,
+        width: 800,
+        modal: true,
+    });
+   
+    $(document).ready(function () {
+        $('#versionInformation').hide();
+        $('#create').hide();
+        $('#selectEntity').on('change', function () {
+            var entityName = $(this).val()
+            getTable(entityName);
+        });
+
+        $('.menuOption').click(function () {
+            var entityName = $(this).val()
+            getTable(entityName);
+        })
+        $('#create').click(function () {
+            var entity = $('#selectEntity').val();
+            create(entity);
+        });
+    });
+</script>

@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="Connections.cs" />
     <Compile Include="DataContext\ClinicDataContext.cs" />
     <Compile Include="Mapping\curr_sys_infoMap.cs" />
     <Compile Include="Mapping\diag_alert_thrshldMap.cs" />
@@ -144,6 +145,7 @@
     <None Include="App.config" />
     <None Include="Data.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

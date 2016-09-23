@@ -240,7 +240,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClientManagementController.cs" />
+    <Compile Include="Controllers\DataManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\VisitManagementController.cs" />
     <Compile Include="Data\BaseHipData.cs" />
     <Compile Include="Data\DiagnosisData.cs" />
     <Compile Include="Data\FacilityData.cs" />
@@ -326,7 +330,6 @@
     <Content Include="Global.asax" />
     <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\hip-admin Prod.pubxml" />
-    <None Include="Properties\PublishProfiles\hip-admin-HipProduction - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\HipAdmin Dev.pubxml" />
     <Content Include="Images\logo-medical-teams.png" />
     <None Include="Scripts\jquery-3.0.0.intellisense.js" />
@@ -348,7 +351,9 @@
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="SqlServerTypes\readme.htm" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -399,9 +404,13 @@
     <Content Include="Views\Home\RawVisit\_ViewRawVisits.cshtml" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
+    <Content Include="Views\DataManagement\Index.cshtml" />
+    <Content Include="Views\ClientManagement\Index.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\VisitManagement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
