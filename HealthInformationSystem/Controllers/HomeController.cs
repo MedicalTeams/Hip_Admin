@@ -48,10 +48,10 @@ namespace HealthInformationProgram.Controllers
             }
 
             ViewBag.Message = "Client Management";
-            var sysInfo = new FacilityHardwareData();
-            var app = sysInfo.GetCurrentApplicationVersion();
+          //  var sysInfo = new FacilityHardwareData();
+          //  var app = sysInfo.GetCurrentApplicationVersion();
             //ViewBag.Version
-            TempData["Version"] = String.Format("Current application version is {0} released on {1}", app.ItemVersion, app.ReleaseDate); ;
+           // TempData["Version"] = String.Format("Current application version is {0} released on {1}", app.ItemVersion, app.ReleaseDate); ;
             return View();
         }
         public ActionResult DatabaseManagement()
@@ -668,6 +668,23 @@ namespace HealthInformationProgram.Controllers
             try
             {
 
+                var reportUri = System.Configuration.ConfigurationManager.AppSettings["reportServerUri"];
+                var reportUser = System.Configuration.ConfigurationManager.AppSettings["reportUserName"];
+                var reportUserPass = System.Configuration.ConfigurationManager.AppSettings["reportUserPass"];
+                var reportUserDomain = System.Configuration.ConfigurationManager.AppSettings["reportUserDomain"];
+                reportViewer.ProcessingMode = ProcessingMode.Remote;
+                reportViewer.SizeToReportContent = true;
+                reportViewer.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                reportViewer.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+                reportViewer.ServerReport.ReportServerCredentials = new Security.ReportServerCredentials(reportUser, reportUserPass, reportUserDomain);
+                reportViewer.CssClass = "reportViewer";
+                reportViewer.ShowToolBar = true;
+                reportViewer.ShowParameterPrompts = true;
+                reportViewer.ShowExportControls = true;
+                reportViewer.AsyncRendering = true;
+                reportViewer.ServerReport.ReportPath = String.Format("/{0}", name);
+                reportViewer.ServerReport.ReportServerUrl = new Uri(reportUri);
+                /*
                 reportViewer.ProcessingMode = ProcessingMode.Remote;
                 reportViewer.SizeToReportContent = true;
                 reportViewer.Width = System.Web.UI.WebControls.Unit.Percentage(100);
@@ -680,6 +697,7 @@ namespace HealthInformationProgram.Controllers
                 reportViewer.AsyncRendering = true;
                 reportViewer.ServerReport.ReportPath = String.Format("/{0}", name);
                 reportViewer.ServerReport.ReportServerUrl = new Uri("http://mti-dev-cambia.cloudapp.net/reportserver");
+                */
             }
             catch (ReportViewerException rvex)
             {

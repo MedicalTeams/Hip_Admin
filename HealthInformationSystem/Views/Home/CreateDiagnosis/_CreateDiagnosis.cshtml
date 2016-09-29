@@ -181,9 +181,10 @@
 
         $('#close').on('click', function close() {
 
-            window.parent.dialog.dialog("close")
+            window.parent.$('.createWrapper').hide();
+            //window.parent.dialog.dialog("close")
             window.parent.getTable(window.parent.currentEntity);
-
+            
             return false;
         });
     });
