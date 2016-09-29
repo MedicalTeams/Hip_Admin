@@ -122,6 +122,7 @@
       <HintPath>..\packages\Microsoft.SqlServer.Types.11.0.2\lib\net20\Microsoft.SqlServer.Types.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Web.WebPages.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.3.2.3\lib\net45\Microsoft.Web.WebPages.OAuth.dll</HintPath>
       <Private>True</Private>
@@ -202,6 +203,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Transactions" />
@@ -239,8 +241,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BAL\UserAdministrationLogic.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CustomAttributes\PasswordRequirementsAttribute.cs" />
+    <Compile Include="CustomAttributes\UniqueUserEmailAddressAttribute.cs" />
+    <Compile Include="DAL\UserAdministrationRepository.cs" />
     <Compile Include="Data\BaseHipData.cs" />
     <Compile Include="Data\DiagnosisData.cs" />
     <Compile Include="Data\FacilityData.cs" />
@@ -255,6 +261,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\BeneficiaryModel.cs" />
+    <Compile Include="Models\BoundUserRoles.cs" />
     <Compile Include="Models\CurrentSystemInformationModel.cs" />
     <Compile Include="Models\DiagnosisModel.cs" />
     <Compile Include="Models\DiagnosisAlertThresholdModel.cs" />
@@ -262,14 +269,23 @@
     <Compile Include="Models\FacilityHardwareInventoryModel.cs" />
     <Compile Include="Models\FacilityModel.cs" />
     <Compile Include="Models\GenderModel.cs" />
+    <Compile Include="Models\MTIUserRolesEntityDataModel.cs" />
     <Compile Include="Models\OrganizationModel.cs" />
     <Compile Include="Models\RawVisitModel.cs" />
     <Compile Include="Models\ReportsViewModel.cs" />
     <Compile Include="Models\RevisitModel.cs" />
+    <Compile Include="Models\role.cs" />
     <Compile Include="Models\SupplementalDiagnosisModel.cs" />
     <Compile Include="Models\SupplementalDiagnosisCategoryModel.cs" />
+    <Compile Include="Models\user.cs" />
+    <Compile Include="Models\userrole.cs" />
+    <Compile Include="Models\ViewModels\HIPAdminCommonViewModel.cs" />
+    <Compile Include="Models\ViewModels\UsersAdministrationUsersViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ReportServerCredentials.cs" />
+    <Compile Include="Security\UserLogin.cs" />
+    <Compile Include="SessionData\LoggedInUserSessionData\LoggedInUserSessionData.cs" />
+    <Compile Include="SessionData\SessionData.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -325,7 +341,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ClassDiagram1.cd" />
-    <None Include="Properties\PublishProfiles\HipAdmin.pubxml" />
     <Content Include="Images\logo-medical-teams.png" />
     <None Include="Scripts\jquery-3.0.0.intellisense.js" />
     <Content Include="ReportViewerWebForm.aspx" />
@@ -355,19 +370,6 @@
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -378,8 +380,6 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -397,9 +397,12 @@
     <Content Include="Views\Home\RawVisit\_ViewRawVisits.cshtml" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
+    <Content Include="Views\Home\Users.cshtml" />
+    <Content Include="Views\Home\UserAdministration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

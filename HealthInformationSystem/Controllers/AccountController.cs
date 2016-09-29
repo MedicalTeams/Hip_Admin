@@ -8,13 +8,11 @@ using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using HealthInformationProgram.Filters;
 using HealthInformationProgram.Models;
 
 namespace HealthInformationProgram.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //
@@ -35,9 +33,10 @@ namespace HealthInformationProgram.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if ( ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe) )
+            if ( ModelState.IsValid && Security.UserLogin.LoginUser(model.UserName, model.Password) )
             {
-                return RedirectToLocal(returnUrl);
+                FormsAuthentication.SetAuthCookie(model.UserName, false);
+                return RedirectToAction("Index", "Home");
             }
 
             // If we got this far, something failed, redisplay form

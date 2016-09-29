@@ -1,8 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using HealthInformationProgram.SessionData;
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <title>@ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
@@ -13,18 +14,33 @@
             <div class="content-wrapper">
                 <div class="float-left">
                     <img src="~/Images/logo-medical-teams.png" alt="Medical Teams International"/>
-                    @*<p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>*@
                 </div>
                 <div class="float-left">
-                    <section id="login">
-                        @*@Html.Partial("_LoginPartial")*@
-                    </section>
                     <nav>
                         <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+
+                            @if (SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
+                            {
                             <li>@Html.ActionLink("Client Management", "ClientManagement", "Home")</li>
-                            <li>@Html.ActionLink("Database Management", "DatabaseManagement", "Home")</li>
-                            <li>@Html.ActionLink("Reports", "Report", "Home")</li>
+                            }
+                            @if (SessionData.Current.loggedInUser.IsAuthroizedToEditDatabaseManagement() ||
+                                SessionData.Current.loggedInUser.IsAuthroizedToViewDatabaseManagement())
+                            {
+                                <li>@Html.ActionLink("Database Management", "DatabaseManagement", "Home")</li>
+                            }
+                            @if (SessionData.Current.loggedInUser.IsAuthorizedToViewReports())
+                            {
+                                <li>@Html.ActionLink("Reports", "Report", "Home")</li>
+                            }
+                            @if (SessionData.Current.loggedInUser.IsAuthorizedToAdminsterUsers())
+                            {
+                                <li>@Html.ActionLink("Users", "Users", "Home")</li>
+                            }
+                            @if (SessionData.Current.loggedInUser.IsLoggedIn())
+                            {
+                                <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                            }
+
                         </ul>
                     </nav>
                 </div>
