@@ -30,7 +30,7 @@
                             }
                             @if (SessionData.Current.loggedInUser.IsAuthorizedToViewReports())
                             {
-                                <li>@Html.ActionLink("Reports", "Report", "Home")</li>
+                                <li>@Html.ActionLink("Reports", "Index", "Report")</li>
                             }
                             @if (SessionData.Current.loggedInUser.IsAuthorizedToAdminsterUsers())
                             {

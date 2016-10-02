@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Reporting.WebForms;
+using HealthInformationProgram.Models;
 
 namespace HealthInformationProgram.Controllers
 {
@@ -12,6 +13,10 @@ namespace HealthInformationProgram.Controllers
         // GET: Report
         public ActionResult Index(string id)
         {
+            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
             TempData["Version"] = string.Empty;
             if (id == null)
@@ -25,12 +30,11 @@ namespace HealthInformationProgram.Controllers
 
         public void /*ActionResult*/ GetReport(string name)
         {
-            var connection = new HealthInformationProgram.Data.Connections();
-
+           
             ReportViewer reportViewer = new ReportViewer();
             try
             {
-                connection.GetReportConnection();
+                
                 var reportUri = System.Configuration.ConfigurationManager.AppSettings["reportServerUri"];
                 var reportUser = System.Configuration.ConfigurationManager.AppSettings["reportUserName"];
                 var reportUserPass = System.Configuration.ConfigurationManager.AppSettings["reportUserPass"];
@@ -53,8 +57,22 @@ namespace HealthInformationProgram.Controllers
                 throw new Exception(String.Format("reviewer error {0}", rvex.Message));
             }
             ViewBag.ReportViewer = reportViewer;
-            //GetReportsList();
-            //return View("Report");
+         
+        }
+        private void GetReportsList()
+        {
+            var reportList = new List<Models.ReportsViewModel>();
+            var reportCatalog = new HealthInformationProgram.Data.Repositories.Reports.CatalogRepository();
+            var reports = reportCatalog.GetAllReports().Where(r => r.Type == 2);
+            foreach (var r in reports)
+            {
+                var item = new ReportsViewModel();
+                item.id = r.ItemId;
+                item.name = r.Name;
+                reportList.Add(item);
+            }
+
+            ViewBag.ReportsList = reportList;
         }
 
     }

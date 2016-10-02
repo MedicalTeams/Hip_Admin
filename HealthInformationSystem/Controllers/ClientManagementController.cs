@@ -11,6 +11,16 @@ namespace HealthInformationProgram.Controllers
         // GET: ClientManagement
         public ActionResult Index()
         {
+            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            ViewBag.Message = "Client Management";
+            //  var sysInfo = new FacilityHardwareData();
+            //  var app = sysInfo.GetCurrentApplicationVersion();
+            //ViewBag.Version
+            // TempData["Version"] = String.Format("Current application version is {0} released on {1}", app.ItemVersion, app.ReleaseDate); ;
             return View();
         }
     }
