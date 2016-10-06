@@ -13,33 +13,22 @@ using System.Web.Security;
 using HealthInformationProgram.Models.ViewModels;
 using System.Security.Principal;
 
+
 namespace HealthInformationProgram.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+
+            if (SessionData.SessionData.Current.loggedInUser.LoggedInUserId == Guid.Empty || !System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Account");
             }
 
             return View();
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+        
         public ActionResult ClientManagement()
         {
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)

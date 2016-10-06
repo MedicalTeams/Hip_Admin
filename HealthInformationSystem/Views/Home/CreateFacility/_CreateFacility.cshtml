@@ -1,11 +1,14 @@
 ﻿@model HealthInformationProgram.Models.FacilityModel
 
-<script src="~/Scripts/jquery-1.8.2.min.js"></script>
-<script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+@*<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryui")
+@Scripts.Render("~/bundles/jqueryval")
 @Styles.Render("~/Content/css")
+
 @{
     var statusList = new List<SelectListItem>() { new SelectListItem { Text = "Active", Value = "A" }, new SelectListItem { Text = "Inactive", Value = "I" } };
  
@@ -142,7 +145,8 @@
                 contentType: "application/json",
                 success: function (mydata) {
                     if (mydata.rowsEffected === 1) {
-                        window.parent.dialog.dialog("close");
+                        window.parent.$('.createWrapper').hide();
+                        //window.parent.dialog.dialog("close");
                         window.parent.getTable(window.parent.currentEntity);
                     } else {
                         console.log(mydata.errors);
@@ -200,7 +204,8 @@
 
         $('#close').on('click', function close() {
 
-            window.parent.dialog.dialog("close")
+             window.parent.$('.createWrapper').hide();
+            //window.parent.dialog.dialog("close")
             window.parent.getTable(window.parent.currentEntity);
 
             return false;

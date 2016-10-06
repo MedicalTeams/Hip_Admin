@@ -83,7 +83,8 @@
                 contentType: "application/json",
                 success: function (mydata) {
                     if (mydata.rowsEffected === 1) {
-                        window.parent.dialog.dialog("close");
+                        window.parent.$('.createWrapper').hide();
+                        //window.parent.dialog.dialog("close")
                         window.parent.getTable(window.parent.currentEntity);
                     } else {
                         console.log(mydata.errors);
