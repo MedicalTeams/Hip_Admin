@@ -111,6 +111,7 @@
 
 </header>
 <body>
+    <h2>@ViewBag.Title</h2>
     <div id="createWrapper">
         <div id="newItem"></div>
     </div>
@@ -337,7 +338,7 @@
 
     //////////// 
     function doSubmit(row) {
-        console.log("Current entity(do Submit function = " + currentEntity);
+        //console.log("Current entity(do Submit function = " + currentEntity);
         var results = {};
         var out = "";
 
@@ -360,7 +361,7 @@
     var dialog = null;
     function getTable(entityName) {
         $.ajax({
-            url: "/Home/GetEntity",
+            url: "/ClientManagement/GetEntity",
             data: { entityName: entityName },
             type: 'POST',
             dataType: 'json',
@@ -385,7 +386,7 @@
 
         $.ajax({
 
-            url: "/Home/SaveEntity",
+            url: "/ClientManagement/SaveEntity",
             data: { keyValues: JSON.stringify(keyValue), entityName: entityName, isNew: false },
             type: 'POST',
             dataType: 'json',
@@ -404,7 +405,7 @@
 
         $.ajax({
 
-            url: "/Home/Create",
+            url: "/ClientManagement/Create",
             data: { modelName: entityName },
             type: 'POST',
             async: false,

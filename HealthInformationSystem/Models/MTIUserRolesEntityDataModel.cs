@@ -8,7 +8,7 @@ namespace HealthInformationProgram.Models
     public partial class MTIUserRolesEntityDataModel : DbContext
     {
         public MTIUserRolesEntityDataModel()
-            : base("name=MTIUserRolesEntityDataModel")
+            : base("name=SqlAzure_Clinic")
         {
         }
 

@@ -1,8 +1,646 @@
 ﻿
 @{
-    ViewBag.Title = "View";
+    
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    ViewBag.Title = "Database Management";
+}
+@Styles.Render("~/Content/css")
+@Styles.Render("~/Content/themes/base/css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryui")
+@Scripts.Render("~/bundles/jqueryval")
+<header>
+    <style class="cp-pen-styles">
+        .sortOrderWidget {
+            width: 40px;
+        }
 
-<h2>Data Management</h2>
+        .longInput {
+            width: 300px;
+        }
+
+        .middlingInput {
+            width: 110px;
+        }
+
+        .shortInput {
+            width: 45px;
+        }
+
+
+
+
+        .activeRow {
+            background: #ff0000;
+        }
+
+        .ok_edit {
+            background: #eee;
+            border: 1px solid #000;
+            min-width: 50px;
+        }
+
+        .no_edit {
+            background: #e0e0e0;
+            border: 1px solid #000;
+            min-width: 50px;
+        }
+
+        .disabled_input {
+            background-color: #e0e0e0;
+        }
+
+        #the_editor {
+            margin-right: 10px;
+            border-right-style: solid;
+            border-right-width: 1px;
+        }
+
+        .highlight {
+            background-color: red;
+        }
+
+        .odd {
+            background: #fff;
+        }
+
+        .entry {
+            margin-bottom: 10px;
+        }
+
+        .even {
+            background: #eee;
+        }
+    </style>
+    @*<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+        <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+</header>
+<body>
+    <h2>@ViewBag.Title</h2>
+    <div id="createWrapper" class="createWrapper">
+        <div id="newItem"></div>
+    </div>
+    <div>
+        <div>
+            <select id="selectEntity">
+                <option class="menuOption" value="">Choose a database</option>
+                @*<option class="menuOption" value="RevisitModel">Revisit</option>*@
+                <option class="menuOption" value="DiagnosisModel">Diagnosis</option>
+                <option class="menuOption" value="SupplementalDiagnosisCategoryModel">Supplemental Diagnosis Categories</option>
+                <option class="menuOption" value="SupplementalDiagnosisModel">Supplemental Diagnosis</option>
+                <option class="menuOption" value="FacilityModel">Facility</option>
+                <option class="menuOption" value="RawVisitModel">Raw Visit</option>
+                <option class="menuOption" value="OrganizationModel">Organization</option>
+            </select>
+        </div>
+    </div>
+
+    <div>
+        <button id="create" type="button">Create</button>
+    </div>
+
+    <div id="the_table"></div>
+
+</body>
+<script>
+    var matrix = [];
+
+    function getDoNotEdit() {
+
+        var do_not_edit = {};
+        do_not_edit["OrganizationName"] = "";
+        do_not_edit["OrganizationId"] = "";
+        do_not_edit["SupplementalDiagnosisId"] = "";
+        do_not_edit["SupplementalDiagnosisCategoryId"] = "";
+        do_not_edit["FacilityId"] = "";
+        do_not_edit["SupDiagCatId"] = "";
+        do_not_edit["UpdatedBy"] = "";
+        do_not_edit["RevisitId"] = "";
+        do_not_edit["CreateDate"] = "";
+        do_not_edit["CreatedBy"] = "";
+        do_not_edit["UpdateDate"] = "";
+        do_not_edit["curr_sys_id"] = "";
+        do_not_edit["DiagnosisId"] = "";
+        do_not_edit["diag_alert_thrshld_id"] = "";
+        do_not_edit["faclty_hw_invtry_id"] = "";
+        do_not_edit["bnfcry_id"] = "";
+        do_not_edit["diag_id"] = "";
+        do_not_edit["faclty_id"] = "";
+        do_not_edit["gndr_id"] = "";
+        do_not_edit["orgzn_id"] = "";
+        do_not_edit["rvisit_id"] = "";
+        do_not_edit["splmtl_diag_id"] = "";
+        do_not_edit["splmtl_diag_cat_id"] = "";
+        do_not_edit["faclty_id"] = "";
+        do_not_edit["ov_diag_id"] = "";
+        do_not_edit["visit_uuid"] = "";
+        do_not_edit["element_id"] = "";
+
+        return do_not_edit;
+    }
+
+    function createButtons(row) {
+        var btn = "<td class='no_edit'>";
+        btn += "<button id='b" + row + "' onclick='btnstate(this);'>Edit</button>";
+        btn += "</td>";
+        return btn;
+    }
+
+    function btnstate(obj) {
+        var rowId = obj.id.replace("b", "row_");
+
+        var currentState = document.getElementById(obj.id).innerHTML;
+        if (currentState == "Edit") {
+            document.getElementById(obj.id).className = "activeRow";
+            document.getElementById(obj.id).innerHTML = "Update";
+            $('#' + rowId + ' :input').prop('disabled', false);
+        } else if (currentState == "Update") {
+            checkSortOrder(); // just nag at the end user but do not enforce it.
+            // The if would enforce sort order properness
+            if (checkDates(obj.id) && checkLengths(obj.id) && checkLatLong(obj.id)) {
+                document.getElementById(obj.id).innOrgIderHTML = "Edit";
+                document.getElementById(obj.id).className = "";
+                doSubmit(obj.id);
+//                alert("would POST");
+                debug_showSubmital(obj.id);
+            } else {
+//                alert("NOPE! ")
+            }
+        }
+    }
+
+    function debug_showSubmital(id) {
+        id = id.replace("b", "");
+        for (var key in matrix[0]) {
+            var name = id + "_" + key;
+            var value = "";
+            if (document.getElementById(name)) {
+                if (document.getElementById(name).value != undefined) {
+                    value = document.getElementById(name).value;
+                } else {
+                    value = document.getElementById(name).innerHTML;
+                }
+                console.log(name + "            |" + value + "|");
+            } else {
+                console.log("Did not see " + name);
+            }
+        }
+    }
+
+
+
+    var harden = {};
+    harden["Description"] = 10;
+    harden["Indicator"] = 1;
+    harden["DiagnosisDescription"] = 50;
+    harden["DiagnosisAbbreviation"] = 10;
+    harden["IcdCode"] = 10;
+    harden["SupplementalDiagnosisCategoryType"]=25;
+    harden["SupplementalDiagnosisDescription"]=100;
+    //harden["Diagnosis"]=50; Supplimental Diagnosis is a foreign and is special...
+    harden["HealthCareFacility"]=50;
+    harden["HealthCoordinator"]=5;
+    harden["HealthCoordinator"]=50;
+    harden["Settlement"]=50;
+    harden["Country"]=50;
+    harden["Region"] = 50;
+    harden["Organization"] = 50;
+    //harden["Longitude"]=10.6; //DECIMAL
+    //harden["Latitude"]=10.6;
+
+
+    function checkLengths( id ) {
+
+        var num = id.replace("b", "");
+        var isOk = true;
+
+
+        var problems = "The human inputted fields have a max size\n";
+        for (var key in harden) {
+            var name = num + "_" + key;
+
+            if (document.getElementById(name) != null) {
+                if (document.getElementById(name).value != undefined) {
+                    if (harden[key] < document.getElementById(name).value.length) {
+                        isOk = false;
+                        problems += "Too long |" + document.getElementById(name).value + "\n";
+                        problems += "The max length is " + harden[key];
+                        problems += "\n---\n";
+                        console.log(problems);
+                    }
+                }
+            }
+        }
+        if (!isOk) {
+            alert(problems);
+        }
+
+        return isOk;
+    }
+
+
+    function checkLatLong(id) {
+
+        var num = id.replace("b", "");
+        var isOk = true;
+        var longitude = num + "_Longitude";
+        var latitude = num + "_Latitude";
+        var isLongOk = _checkLatLongIsNumber(longitude);
+        var isLatOk = _checkLatLongIsNumber(latitude);
+
+        var problems = "";
+        if (!isLongOk) {
+            problems += "The longitude is not a number\n";
+
+        }
+        if (!isLatOk) {
+            problems += "The latitude is not a number\n";
+
+        }
+
+        var result = false;
+        if (isLongOk && isLatOk) {
+            result = true;
+        } else {
+            alert(problems);
+        }
+        return result;
+    }
+
+    function _checkLatLongIsNumber(id) {
+        var result = true;
+        if (document.getElementById(id) != null) {
+            if (document.getElementById(id).value != undefined) {
+                var x = document.getElementById(id).value;
+                result = !isNaN(x);
+            }
+        }
+        return result;
+    }
+
+    function shortenColumnName(candidate) {
+
+        candidate = candidate.replace("Supplemental", "Sup");
+        candidate = candidate.replace("Abbreviation", "Abbr");
+        candidate = candidate.replace("Diagnosis", "Dx");
+        candidate = candidate.replace("Effective", "");
+        candidate = candidate.replace("Description", "Desc");
+        candidate = candidate.replace("Category", "Cat");
+        candidate = candidate.replace("SortOrder", "Sort");
+        candidate = candidate.replace("HealthCareFacility", "Care");
+        candidate = candidate.replace("Facility", "Fclty");
+        candidate = candidate.replace("Organization", "Org");
+        candidate = candidate.replace("HealthCoordinator", "Coordinator");
+        candidate = candidate.replace("Level", "Lvl");
+        candidate = candidate.replace("StartDate", "Start");
+        candidate = candidate.replace("EndDate", "End");
+
+
+        return candidate;
+    }
+
+    function endsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+
+    function getSortOrderWidget(id, value, key) {
+        var css = "class='" + inputLengthsMap[key] + "'";
+        return "<center><input  type='number' disabled  id='" + id + "' class='sortOrderWidget' value='" + value + "' /></center>";
+    }
+
+    function getInputTD(id, value, key) {
+        var css = "class='" + inputLengthsMap[key] + "'";
+        return "<center><input  type='text' disabled  id='" + id + "' " + css + " value='" + value + "'  /></center>";
+    }
+
+    function getInputNumberTD(id, value, key) {
+        var css = "class='" + inputLengthsMap[key] + "'";
+        return "<center><input  type='number' disabled  id='" + id + "'  " + css + " value='" + value + "'  /></center>";
+    }
+
+    function getSelectTD(row, key, id) {
+        var select = "<select id='" + id + "' disabled>";
+        var fromDatabase = matrix[row][key];
+        if (fromDatabase == "A") {
+            select += "<option value='A' selected >A</option>";
+        } else {
+            select += "<option value='A'>A</option>";
+        }
+
+        if (fromDatabase == "I") {
+            select += "<option value='I' selected>I</option>";
+        } else {
+            select += "<option value='I'>I</option>";
+        }
+        select += "</select>";
+
+        return select;
+    }
+
+    var inputLengthsMap = {};
+    function setInputLengthsMap() {
+        /* determine what css class different inputs ought to recieve */
+        var sizes = {};
+        for (var row in matrix) {
+            for (var key in matrix[row]) {
+                try {
+
+                    var value = matrix[row][key];
+
+                    if (endsWith(key, "Date")) {
+                        var value = matrix[row][key].split(" ")[0];
+                        if (value == undefined) {
+                            value = matrix[row][key];
+                        }
+                    }
+
+                    var size = value.length;
+                    if (sizes.hasOwnProperty(key)) {
+                        if (size > sizes[key]) {
+                            sizes[key] = size;
+                        }
+                    } else {
+                        sizes[key] = size;
+                    }
+                } catch (feild_might_be_empty) {
+                    console.log("Skipping setInputLengthsMap for " + key);
+                }
+            }
+        }
+        inputLengthsMap = {};
+        for (var key in sizes) {
+            var size = sizes[key];
+            if (size < 6) {
+                inputLengthsMap[key] = "shortInput";
+            } else if (size < 20) {
+                 inputLengthsMap[key] = "middlingInput";
+            } else {
+                 inputLengthsMap[key] = "longInput";
+            }
+        }
+    }
+
+    var do_not_edit = {};
+    function populate() {
+
+        setInputLengthsMap();
+
+        do_not_edit = getDoNotEdit();
+
+        var update_rows_placeholder = "<th><div><span>Controls</span></div></th>";
+        var html = "<table class='table'><thead><tr>" + update_rows_placeholder;
+        for (var key in matrix[0]) {
+            html += "<th class='rotate'><div><span>" + shortenColumnName(key) + "</span></div></th>";
+        }
+        html += "</tr>";
+
+        for (var row = 0; row < matrix.length; row++) {
+
+            html += "<tr id='row_" + row + "' >";
+            html += createButtons(row);
+            for (var key in matrix[row]) {
+
+                var id = row + "_" + key;
+                var value = matrix[row][key];
+
+                if (endsWith(key, "Date")) {
+                    var value = matrix[row][key].split(" ")[0];
+                    if (value == undefined) {
+                        value = matrix[row][key];
+                    }
+                    if (do_not_edit.hasOwnProperty(key)) {
+                        html += "<td class='no_edit' align='right' id='" + id + "'  >" + value + "</td>";
+                    } else {
+                        html += "<td class='ok_edit'>";
+                        html += getInputTD(id, value, key);
+                        html += "</td>";
+                    }
+                } else if (endsWith(key, "Status")) {
+                    html += "<td class='ok_edit'>";
+                    html += getSelectTD(row, key, id);
+                    html += "</td>";
+                } else if (key == "SortOrder") {
+                   // console.log("SO! " + value);
+                    html += "<td class='ok_edit'>";
+                    html += getSortOrderWidget(id, value, key);
+
+                    html += "</td>";
+                } else {
+                if (do_not_edit.hasOwnProperty(key)) {
+                        html += "<td class='no_edit' align='right' id='" + id + "'  >" + value + "</td>";
+                } else {
+                    html += "<td class='ok_edit'>";
+                        html += getInputTD(id, value, key);
+                        html += "</td>";
+                    }
+                }
+            }
+            html += "</tr>";
+        }
+        document.getElementById("the_table").innerHTML = html;
+    }
+
+    var datefields = [];
+    datefields[0] = "DiagnosisEffectiveStartDate";
+    datefields[1] = "DiagnosisEffectiveEndDate";
+    datefields[2] = "SupplementalDiagnosisCategoryEffectiveStartDate";
+    datefields[3] = "SupplementalDiagnosisCategoryEffectiveEndDate";
+    datefields[4] = "SupplementalDiagnosisEffectiveStartDate";
+    datefields[5] = "SupplementalDiagnosisEffectiveEndDate";
+    datefields[6] = "FacilityStartEffectiveDate";
+    datefields[7] = "FacilityEndEffectiveDate";
+    datefields[8] = "StartEffectiveDate";
+    datefields[9] = "EndEffectiveDate";
+
+    var date_regex = /^([1-9]|0[1-9]|1[0-2])\/([1-9]|0[1-9]|1\d|2\d|3[01])\/\d{4}$/;
+
+    function checkDates(id) {
+        var num = id.replace("b", "");
+        var isOk = true;
+        var problems = "Date format is mm/dd/yyyy\n";
+        for (var i in datefields) {
+            var name = num + "_" + datefields[i];
+                if (document.getElementById(name) != null ) {
+                    var value = document.getElementById(name).value;
+                    if (date_regex.test(value)) {
+                    } else {
+                        isOk = false;
+                        problems += value + " is ill formed\n";
+                    }
+                }
+        }
+        if (!isOk) {
+            alert(problems);
+        }
+        return isOk;
+    }
+
+    function checkSortOrder() {
+        var sorters = document.getElementsByClassName("sortOrderWidget");
+        var sort_is_ok = true;
+        var collision = "Sort order collision!\n";
+        if (sorters.length > 0) {
+            var seen = {};
+            for (var i = 0; i < sorters.length; i++) {
+                var v = sorters[i].value;
+                if (v == 0) {
+                    // ignore 0 in the sort order
+                } else {
+                var id = sorters[i].id;
+                if (seen.hasOwnProperty(v)) {
+                    sort_is_ok = false;
+                    collision += "Value: " + v + "\n";
+                } else {
+                    seen[v] = id;
+                }
+            }
+        }
+        }
+
+        if (!sort_is_ok) {
+            alert(collision);
+        }
+        return sort_is_ok;
+    }
+
+    ////////////
+    function doSubmit(row) {
+        console.log("Current entity(do Submit function = " + currentEntity);
+        var results = {};
+        var out = "";
+
+        row = row.replace("b", "");
+        for (var key in matrix[0]) {
+            var id = row + "_" + key;
+            var val = "";
+            if (do_not_edit.hasOwnProperty(key)) {
+                val = document.getElementById(id).innerHTML;
+            } else {
+                val = document.getElementById(id).value;
+            }
+            results[key] = val;
+        }
+        update(results, currentEntity);
+    }
+
+</script>
+<script>
+    var currentEntity = null;
+    var dialog = null;
+    function getTable(entityName) {
+        $.ajax({
+            url: "/DataManagement/GetEntity",
+            data: { entityName: entityName },
+            type: 'POST',
+            dataType: 'json',
+            success: function (mydata) {
+                // Need to eval mydata into an object. Before the eval mydata is just a complicated string
+                matrix = eval("(" + mydata + ')');
+                populate();
+                currentEntity = entityName;
+                $('#create').show();
+            },
+            error: function (mydata) { alert("error"); alert(mydata); },
+        });
+    }
+
+    function update(keyValue, entityName) {
+
+        $.ajax({
+
+            url: "/DataManagement/SaveEntity",
+            data: { keyValues: JSON.stringify(keyValue), entityName: entityName, isNew: false },
+            type: 'POST',
+            dataType: 'json',
+            success: function (mydata) {
+                try {
+                matrix = eval("(" + mydata + ')');
+                } catch (it_might_be_empty) {
+                    console.log("The matrix is empty ( and that is ok )");
+                }
+                populate();
+            },
+            error: function (mydata) { alert("error"); alert(mydata); },
+        });
+    }
+    function create(entityName) {
+
+
+        $.ajax({
+
+            url: "/DataManagement/Create",
+            data: { modelName: entityName },
+            type: 'POST',
+            async: false,
+            success: function (mydata) {
+                $('.createWrapper').show()
+                //dialog.dialog("open");
+
+                //$(".ui-dialog-titlebar").hide();
+                $('#newItem').html(mydata);
+            },
+            error: function (mydata) {
+               // console.log(mydata);
+                alert("error"); alert(mydata);
+            },
+        });
+    }
+    function getBadVisitData()
+    {
+
+        $.ajax({
+
+            url: "/DataManagement/GetBadVisitData",
+            //data: { modelName: entityName },
+            type: 'POST',
+            async: false,
+            success: function (mydata) {
+                //dialog.dialog("open");
+               // $(".ui-dialog-titlebar").hide();
+                $('#the_table').html(mydata);
+            },
+            error: function (mydata) {
+                //console.log(mydata);
+                alert("error"); alert(mydata);
+            },
+        });
+    }
+    //dialog = $('#newItem').dialog({
+    //    autoOpen: false,
+    //    width: 800,
+    //    modal: false,
+    //    position:'top'
+    //});
+
+    $(document).ready(function () {
+        $('.createWrapper').hide()
+        $('#create').hide();
+        $('#selectEntity').on('change', function () {
+
+            $('#newItem').html('');
+            var entityName = $(this).val()
+            if (entityName === "RawVisitModel") {
+                getBadVisitData();
+                $('#create').hide();
+            } else {
+            getTable(entityName);
+            }
+        });
+
+        $('.menuOption').click(function () {
+            var entityName = $(this).val()
+            getTable(entityName);
+        })
+        $('#create').click(function () {
+            var entity = $('#selectEntity').val();
+
+            create(entity);
+        });
+    });
+</script>
+
 

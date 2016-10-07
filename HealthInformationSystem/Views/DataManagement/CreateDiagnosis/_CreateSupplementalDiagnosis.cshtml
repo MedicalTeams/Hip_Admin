@@ -66,7 +66,7 @@
 
         $.ajax({
             type: 'GET',
-            url: "/Home/GetDiagnosisList",
+            url: "/DataManagement/GetDiagnosisList",
            
             dataType: 'json',
             success: function (result) {
@@ -103,7 +103,7 @@
 
                 $.ajax({
 
-                    url: "/Home/SaveSupplementalDiagnosis",
+                    url: "/DataManagement/SaveSupplementalDiagnosis",
                     data: JSON.stringify(inputData),
                     type: 'POST',
                     dataType: 'json',

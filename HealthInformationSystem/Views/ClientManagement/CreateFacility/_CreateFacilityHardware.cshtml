@@ -79,7 +79,7 @@
 
             $.ajax({
 
-                url: "/Home/SaveFacilityHardwareInventory",
+                url: "/ClientManagement/SaveFacilityHardwareInventory",
                 data: JSON.stringify(inputData),
                 type: 'POST',
                 dataType: 'json',
@@ -172,14 +172,14 @@
 
         $.ajax({
             type: 'GET',
-            url: "/Home/GetFacilityList",
+            url: "/ClientManagement/GetFacilityList",
 
             dataType: 'json',
             success: function (result) {
                 var ddl = $('#facilitySelector');
                 var list = result.list;
                 $.each(list, function (index, value) {
-                    console.log(value);
+                    //console.log(value);
                     ddl.append('<option value=' + value.Value + '>' + value.Text + '</option>')
                 });
             },

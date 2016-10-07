@@ -25,6 +25,7 @@ namespace HealthInformationProgram.Security
                     {
                         IsValidLogin = true;
                         SessionData.SessionData.Current.loggedInUser.LoggedInUserId = loggedInUser.userId;
+                        SessionData.SessionData.Current.loggedInUser.UserName = loggedInUser.email;
                     }
                 }
             }

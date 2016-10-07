@@ -35,6 +35,10 @@ namespace HealthInformationProgram.SessionData
                     _loggedInUserId = value;
                 }
             }
+            public string UserName
+            {
+                get;set;
+            }
 
             public bool IsLoggedIn()
             {

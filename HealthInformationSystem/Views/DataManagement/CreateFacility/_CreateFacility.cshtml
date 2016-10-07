@@ -138,7 +138,7 @@
 
             $.ajax({
 
-                url: "/Home/SaveFacility",
+                url: "/DataManagement/SaveFacility",
                 data: JSON.stringify(inputData),
                 type: 'POST',
                 dataType: 'json',
@@ -168,7 +168,7 @@
 
         $.ajax({
             type: 'GET',
-            url: "/Home/GetOrganizationList",
+            url: "/DataManagement/GetOrganizationList",
 
             dataType: 'json',
             success: function (result) {

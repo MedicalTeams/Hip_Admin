@@ -21,12 +21,12 @@
 
                             @if (SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
                             {
-                            <li>@Html.ActionLink("Client Management", "ClientManagement", "Home")</li>
+                            <li>@Html.ActionLink("Client Management","Index", "ClientManagement")</li>
                             }
                             @if (SessionData.Current.loggedInUser.IsAuthroizedToEditDatabaseManagement() ||
                                 SessionData.Current.loggedInUser.IsAuthroizedToViewDatabaseManagement())
                             {
-                                <li>@Html.ActionLink("Database Management", "DatabaseManagement", "Home")</li>
+                                <li>@Html.ActionLink("Database Management", "Index", "DataManagement")</li>
                             }
                             @if (SessionData.Current.loggedInUser.IsAuthorizedToViewReports())
                             {

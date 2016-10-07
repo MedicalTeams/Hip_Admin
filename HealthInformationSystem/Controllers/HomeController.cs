@@ -147,6 +147,7 @@ namespace HealthInformationProgram.Controllers
             var view = GetPartialViewPath(modelName, model);
             return view;
         }
+        /*
         [HttpPost]
         public ActionResult UpdateRawVisit(RawVisitModel model)
         {
@@ -180,6 +181,7 @@ namespace HealthInformationProgram.Controllers
             var model = data.GetInvalidRawVisit();
             return PartialView("~/Views/Home/RawVisit/_ViewRawVisits.cshtml", model);
         }
+        */
         private PartialViewResult GetPartialViewPath(string modelName, object model)
         {
             PartialViewResult viewResult = null;
@@ -216,39 +218,39 @@ namespace HealthInformationProgram.Controllers
             var diagnosisData = new Data.DiagnosisData();
             switch (entityName)
             {
-                case "RevisitModel":
-                    var model = new List<RevisitModel>();
-                    var data = new Data.RevisitData();
-                    model = data.GetAllRevisits().ToList();
-                    jsonString = GetJsonString(model);
-                    break;
-                case "DiagnosisModel":
-                    var diagnosisModel = new List<DiagnosisModel>();
+                //case "RevisitModel":
+                //    var model = new List<RevisitModel>();
+                //    var data = new Data.RevisitData();
+                //    model = data.GetAllRevisits().ToList();
+                //    jsonString = GetJsonString(model);
+                //    break;
+                //case "DiagnosisModel":
+                //    var diagnosisModel = new List<DiagnosisModel>();
 
-                    diagnosisModel = diagnosisData.GetAllDiagnosis().ToList();//.OrderBy(x => x.SortOrder).ToList();
-                    jsonString = GetJsonString(diagnosisModel);
-                    break;
-                case "SupplementalDiagnosisCategoryModel":
-                    var categoryModel = new List<SupplementalDiagnosisCategoryModel>();
-                    categoryModel = diagnosisData.GetAllSupplementalCategories().ToList();
-                    jsonString = GetJsonString(categoryModel);
+                //    diagnosisModel = diagnosisData.GetAllDiagnosis().ToList();//.OrderBy(x => x.SortOrder).ToList();
+                //    jsonString = GetJsonString(diagnosisModel);
+                //    break;
+                //case "SupplementalDiagnosisCategoryModel":
+                //    var categoryModel = new List<SupplementalDiagnosisCategoryModel>();
+                //    categoryModel = diagnosisData.GetAllSupplementalCategories().ToList();
+                //    jsonString = GetJsonString(categoryModel);
 
-                    break;
-                case "SupplementalDiagnosisModel":
-                    var supplementalDiagnosis = new List<SupplementalDiagnosisModel>();
+                //    break;
+                //case "SupplementalDiagnosisModel":
+                //    var supplementalDiagnosis = new List<SupplementalDiagnosisModel>();
 
-                    supplementalDiagnosis = diagnosisData.GetAllSupplementalDiagnosis().ToList();
-                    jsonString = GetJsonString(supplementalDiagnosis);
-                    break;
+                //    supplementalDiagnosis = diagnosisData.GetAllSupplementalDiagnosis().ToList();
+                //    jsonString = GetJsonString(supplementalDiagnosis);
+                //    break;
 
-                case "OrganizationModel":
-                    var orgList = new List<OrganizationModel>();
-                    var orgData = new OrganizationData();
+                //case "OrganizationModel":
+                //    var orgList = new List<OrganizationModel>();
+                //    var orgData = new OrganizationData();
 
-                    orgList = orgData.GetAll().ToList();
-                    jsonString = GetJsonString(orgList);
+                //    orgList = orgData.GetAll().ToList();
+                //    jsonString = GetJsonString(orgList);
 
-                    break;
+                //    break;
                 case "FacilityModel":
                     var facilityList = new List<FacilityModel>();
                     var facilityData = new FacilityData();
@@ -286,27 +288,27 @@ namespace HealthInformationProgram.Controllers
 
             switch (entityName)
             {
-                case "RevisitModel":
-                    UpdateRevisit(jsonObject);
-                    break;
-                case "DiagnosisModel":
-                    SaveDiagnosis(jsonObject, isNew);
-                    break;
-                case "SupplementalDiagnosisModel":
-                    UpdateSupplementalDiagnosis(jsonObject);
-                    break;
-                case "SupplementalDiagnosisCategoryModel":
-                    UpdateSupplementalDiagnosisCategory(jsonObject);
-                    break;
-                case "FacilityModel":
-                    UpdateFacility(jsonObject);
-                    break;
+                //case "RevisitModel":
+                //    UpdateRevisit(jsonObject);
+                //    break;
+                //case "DiagnosisModel":
+                //    SaveDiagnosis(jsonObject, isNew);
+                //    break;
+                //case "SupplementalDiagnosisModel":
+                //    UpdateSupplementalDiagnosis(jsonObject);
+                //    break;
+                //case "SupplementalDiagnosisCategoryModel":
+                //    UpdateSupplementalDiagnosisCategory(jsonObject);
+                //    break;
+                //case "FacilityModel":
+                //    UpdateFacility(jsonObject);
+                //    break;
                 case "FacilityHardwareInventoryModel":
                     UpdateFacilityHardwareInventory(jsonObject);
                     break;
-                case "OrganizationModel":
-                    UpdateOrganization(jsonObject);
-                    break;
+                //case "OrganizationModel":
+                //    UpdateOrganization(jsonObject);
+                //    break;
 
             }
 
@@ -334,7 +336,7 @@ namespace HealthInformationProgram.Controllers
         }
 
 
-
+        /*
 
         #region Diagnosis Methods
 
@@ -529,7 +531,7 @@ namespace HealthInformationProgram.Controllers
 
         }
         #endregion
-
+*/
         #region Facility Hardware Inventory
 
         [HttpGet]
@@ -580,7 +582,7 @@ namespace HealthInformationProgram.Controllers
             repo.UpdateFacilityHardwareInventory(model);
         }
         #endregion
-
+/*
 
         #region Organization Methods
         [HttpGet]
@@ -633,7 +635,7 @@ namespace HealthInformationProgram.Controllers
 
         #endregion
         
-
+*/
         //not currently being used 11-28-15
         private string GenerateValidationModel(string entityName)
         {

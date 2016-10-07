@@ -36,7 +36,19 @@ namespace HealthInformationProgram.Controllers
             if ( ModelState.IsValid && Security.UserLogin.LoginUser(model.UserName, model.Password) )
             {
                 FormsAuthentication.SetAuthCookie(model.UserName, false);
-                return RedirectToAction("Index", "Home");
+               var role= SessionData.SessionData.Current.loggedInUser.LoggedInUsersRoles.ElementAt(0);
+               
+                    switch (role.ToString())
+                    {
+                        case "ViewReports":
+                            return RedirectToAction("Index", "Report");
+                    case "ViewDataManagement":
+                        return RedirectToAction("Index", "DataManagement");
+                    default:
+                            return RedirectToAction("Index", "Home");
+                            
+                    }
+                
             }
 
             // If we got this far, something failed, redisplay form

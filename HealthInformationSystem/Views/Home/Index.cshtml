@@ -4,13 +4,14 @@
 }
 
 <body>
-
+   
     <table class="searchCriteriaTable" style="font-size:16px">
-        @if (SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
+      <tr><td><label style="font-size:1em;padding:0;margin:0">Click a bold type title below to navigate to section</label></td></tr>
+          @if (SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
         {
             <tr>
                 <td>
-                    <a href="~/Home/ClientManagement" style="padding:0;margin:0;text-decoration:none"><h5>Client Management</h5></a>
+                    <a href="~/ClientManagement" style="padding:0;margin:0;text-decoration:none"><h5>Client Management</h5></a>
                     Client Management is where administrators can manage and review device information.
                 </td>
             </tr>
@@ -21,7 +22,7 @@
         {
             <tr>
                 <td>
-                    <a href="~/Home/DatabaseManagement" style="padding:0;margin:0;;text-decoration:none"><h5>Database Management</h5></a>
+                    <a href="~/DataManagement" style="padding:0;margin:0;;text-decoration:none"><h5>Database Management</h5></a>
                     Administrators can manage constants and records
                 </td>
             </tr>
@@ -31,7 +32,7 @@
         {
             <tr>
                 <td>
-                    <a href="~/Home/Report" style="padding:0;margin:0;text-decoration:none"><h5>Reports</h5></a>
+                    <a href="~/Report" style="padding:0;margin:0;text-decoration:none"><h5>Reports</h5></a>
                     View HIP reports
                 </td>
             </tr>
