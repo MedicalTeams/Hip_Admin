@@ -19,14 +19,13 @@ namespace HealthInformationProgram.Data.Mapping
             this.Property(t => t.rvisit_ind)
                 .IsRequired()
                 .HasMaxLength(1);
-
             this.Property(t => t.rec_creat_user_id_cd)
-                .IsRequired()
-                .HasMaxLength(20);
+                            .IsRequired()
+                            .HasMaxLength(100);
 
             this.Property(t => t.rec_updt_user_id_cd)
                 .IsRequired()
-                .HasMaxLength(20);
+                .HasMaxLength(100);
 
             // Table & Column Mappings
             this.ToTable("lkup_rvisit");

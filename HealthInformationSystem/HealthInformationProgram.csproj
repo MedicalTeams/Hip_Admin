@@ -346,8 +346,10 @@
     <Content Include="Global.asax" />
     <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\Hip-Admin - Dev.pubxml" />
-    <None Include="Properties\PublishProfiles\hip-admin Prod.pubxml" />
     <Content Include="Images\logo-medical-teams.png" />
+    <None Include="Properties\PublishProfiles\hip-admin - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\hip-admin - Prod.pubxml" />
+    <None Include="Properties\PublishProfiles\hip-admin-HipProduction - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.0.0.intellisense.js" />
     <Content Include="ReportViewerWebForm.aspx" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -392,7 +394,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Home\ClientManagement.cshtml" />
     <Content Include="Views\DataManagement\CreateDiagnosis\_CreateDiagnosis.cshtml" />
     <Content Include="Views\DataManagement\CreateDiagnosis\_CreateSupplementalDiagnosis.cshtml" />

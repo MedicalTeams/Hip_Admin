@@ -105,7 +105,7 @@ namespace HealthInformationProgram.Controllers
         }
 
         private ActionResult GetBadVisitDataView()
-        {
+        { 
             var data = new HealthInformationProgram.Data.HipSystemData();
 
             var model = data.GetInvalidRawVisit();

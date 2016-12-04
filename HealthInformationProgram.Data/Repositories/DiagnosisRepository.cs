@@ -13,15 +13,15 @@ namespace HealthInformationProgram.Data.Repositories
     {
         public List<lkup_diag> GetAll()
         {
-         try
+            try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using (var ctx = new ClinicDataContext(connString))
                 {
 
-                    return ctx.lkup_diag.OrderBy(x=>x.user_intrfc_sort_ord).ToList();
+                    return ctx.lkup_diag.OrderBy(x => x.user_intrfc_sort_ord).ToList();
                 }
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -32,13 +32,13 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using (var ctx = new ClinicDataContext(connString))
                 {
 
                     return ctx.lkup_diag.Where(v => v.diag_id == id).FirstOrDefault();
                 }
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -48,25 +48,34 @@ namespace HealthInformationProgram.Data.Repositories
             try
             {
 
-                using ( var ctx = new ClinicDataContext(connString) )
+                using (var ctx = new ClinicDataContext(connString))
                 {
 
                     IdentityInsertOn<lkup_diag>(ctx, entity);
                     ctx.Entry(entity).State = System.Data.Entity.EntityState.Added;
                     int result = ctx.SaveChanges();
 
-                    return  result;
+                    return result;
                 }
             }
-            catch ( DbEntityValidationException ex )
+            catch (DbEntityValidationException ex)
+            {
+                string returnerror = string.Empty;
+                foreach (var error in ex.EntityValidationErrors)
+                {
+                    foreach (var ve in error.ValidationErrors)
+                    {
+                        returnerror += string.Format("Error on property {0}, message {1}", ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+               
+                throw new DbEntityValidationException(returnerror);
+            }
+            catch (EntityException ex)
             {
                 throw ex;
             }
-            catch ( EntityException ex )
-            {
-                throw ex;
-            }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -76,15 +85,15 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using (var ctx = new ClinicDataContext(connString))
                 {
                     var lookupDiagnosis = ctx.lkup_diag.FirstOrDefault(x => x.diag_id == entity.diag_id);
-                    if ( lookupDiagnosis == null )
+                    if (lookupDiagnosis == null)
                     {
                         throw new Exception("Record doesn't exist and cannot be updated");
                     }
                     lookupDiagnosis.diag_id = entity.diag_id;
-                    lookupDiagnosis.diag_descn = entity. diag_descn;
+                    lookupDiagnosis.diag_descn = entity.diag_descn;
                     lookupDiagnosis.diag_abrvn = entity.diag_abrvn;
                     lookupDiagnosis.rec_updt_user_id_cd = entity.rec_updt_user_id_cd;
                     lookupDiagnosis.rec_updt_dt = entity.rec_updt_dt;
@@ -100,7 +109,7 @@ namespace HealthInformationProgram.Data.Repositories
                     return result;
                 }
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 throw ex;
             }
