@@ -10,6 +10,7 @@ namespace HealthInformationProgram.Models
         public OfficeVisitModel()
         {
             OfficeVisitDiagnosis = new List<OfficeVisitDiagnosisModel>();
+
         }
         public string FacililtyName { get; set; }
         public decimal FacilityId { get; set; }

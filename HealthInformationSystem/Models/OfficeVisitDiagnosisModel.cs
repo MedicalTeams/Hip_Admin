@@ -8,6 +8,7 @@ namespace HealthInformationProgram.Models
     public class OfficeVisitDiagnosisModel:BaseModel
     {
         public decimal OfficeVisitDiagnosisId { get; set; }
+
         public decimal OfficeVisitId { get; set; }
         public decimal DiagnosisId { get; set; }
         public string DiganosisName { get; set; }
