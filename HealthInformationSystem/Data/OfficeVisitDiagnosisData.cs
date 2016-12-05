@@ -11,6 +11,7 @@ namespace HealthInformationProgram.Data
         public OfficeVisitDiagnosisData()
         {
             _ovDiagRepo = new Repositories.OfficeVisitDiagnosisRepository();
+        
         }
         public List<Models.OfficeVisitDiagnosisModel> GetByVisit(decimal officeVisitId)
         {

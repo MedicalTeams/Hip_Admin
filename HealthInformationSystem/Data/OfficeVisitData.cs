@@ -11,6 +11,7 @@ namespace HealthInformationProgram.Data
         public OfficeVisitData()
         {
             _officeVisitRepo = new Repositories.OfficeVisitRepository();
+
         }
         public List<Models.OfficeVisitModel> GetOfficeVisits()
         {
