@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HealthInformationProgram.SessionObject;
 
 namespace HealthInformationProgram.Controllers
 {
@@ -117,8 +118,8 @@ namespace HealthInformationProgram.Controllers
 
             if (ModelState.IsValid)
             {
-                model.CreatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
-                model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;// "admin ui";
+                model.CreatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
+                model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;// "admin ui";
 
                 var data = new HealthInformationProgram.Data.FacilityHardwareData();
                 result = data.CreateFacilityHardwareInventory(model);
@@ -138,7 +139,7 @@ namespace HealthInformationProgram.Controllers
             model.HardwareStatus = (string)jsonObject["HardwareStatus"];
             model.FacilityHardwareInventoryId = (string)jsonObject["FacilityHardwareInventoryId"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;// "admin ui";
+            model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;// "admin ui";
 
 
             repo.UpdateFacilityHardwareInventory(model);

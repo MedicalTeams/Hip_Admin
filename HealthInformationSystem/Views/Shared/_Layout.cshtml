@@ -1,4 +1,4 @@
-﻿@using HealthInformationProgram.SessionData;
+﻿@using HealthInformationProgram.SessionObject;
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,24 +19,24 @@
                     <nav>
                         <ul id="menu">
 
-                            @if (SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
+                            @if (SessionData.Current.LoggedInUser.IsAuthorizedToEditClientManagement())
                             {
-                            <li>@Html.ActionLink("Client Management","Index", "ClientManagement")</li>
+                                <li>@Html.ActionLink("Client Management","Index", "ClientManagement")</li>
                             }
-                            @if (SessionData.Current.loggedInUser.IsAuthroizedToEditDatabaseManagement() ||
-                                SessionData.Current.loggedInUser.IsAuthroizedToViewDatabaseManagement())
+                            @if (SessionData.Current.LoggedInUser.IsAuthroizedToEditDatabaseManagement() ||
+                                SessionData.Current.LoggedInUser.IsAuthroizedToViewDatabaseManagement())
                             {
                                 <li>@Html.ActionLink("Database Management", "Index", "DataManagement")</li>
                             }
-                            @if (SessionData.Current.loggedInUser.IsAuthorizedToViewReports())
+                            @if (SessionData.Current.LoggedInUser.IsAuthorizedToViewReports())
                             {
                                 <li>@Html.ActionLink("Reports", "Index", "Report")</li>
                             }
-                            @if (SessionData.Current.loggedInUser.IsAuthorizedToAdminsterUsers())
+                            @if (SessionData.Current.LoggedInUser.IsAuthorizedToAdminsterUsers())
                             {
                                 <li>@Html.ActionLink("Users", "Users", "Home")</li>
                             }
-                            @if (SessionData.Current.loggedInUser.IsLoggedIn())
+                            @if (SessionData.Current.LoggedInUser.IsLoggedIn())
                             {
                                 <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
                             }

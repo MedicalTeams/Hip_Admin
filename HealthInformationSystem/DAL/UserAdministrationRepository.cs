@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using HealthInformationProgram.Models;
-using HealthInformationProgram.SessionData;
+using HealthInformationProgram.SessionObject;
 using System.Data.Entity.Validation;
 
 namespace HealthInformationProgram.DAL
@@ -41,7 +41,7 @@ namespace HealthInformationProgram.DAL
                 if (existingUser == null)
                 {
                     userToSave.createDate = DateTime.Now;
-                    userToSave.createdBy = SessionData.SessionData.Current.loggedInUser.LoggedInUserId;
+                    userToSave.createdBy = SessionData.Current.LoggedInUser.LoggedInUserId;
                     mtiUserRolesEntityDataModel.users.Add(userToSave);
                 }
                 else
@@ -51,7 +51,7 @@ namespace HealthInformationProgram.DAL
                     existingUser.lastname = userToSave.lastname;
                     existingUser.password = userToSave.password;
                     existingUser.createDate = DateTime.Now;
-                    existingUser.createdBy = SessionData.SessionData.Current.loggedInUser.LoggedInUserId;
+                    existingUser.createdBy = SessionData.Current.LoggedInUser.LoggedInUserId;
                 }
 
                 mtiUserRolesEntityDataModel.SaveChanges();
@@ -101,7 +101,7 @@ namespace HealthInformationProgram.DAL
                 addedUserRole.userId = userId;
                 addedUserRole.roleId = roleId;
                 addedUserRole.createDate = DateTime.Now;
-                addedUserRole.createdBy = SessionData.SessionData.Current.loggedInUser.LoggedInUserId;
+                addedUserRole.createdBy = SessionData.Current.LoggedInUser.LoggedInUserId;
 
                 mtiUserRolesEntityDataModel.userroles.Add(addedUserRole);
 

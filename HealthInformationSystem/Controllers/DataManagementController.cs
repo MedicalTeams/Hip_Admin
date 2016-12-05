@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HealthInformationProgram.SessionObject;
 
 namespace HealthInformationProgram.Controllers
 {
@@ -119,7 +120,7 @@ namespace HealthInformationProgram.Controllers
             if (ModelState.IsValid)
             {
                 model.UpdateDate = DateTime.Now.ToString();
-                model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"current user";
+                model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;//"current user";
 
                 var data = new HealthInformationProgram.Data.HipSystemData();
 
@@ -207,7 +208,7 @@ namespace HealthInformationProgram.Controllers
             model.Indicator = (string)jsonObject["Indicator"];
             model.SortOrder = (string)jsonObject["SortOrder"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;// "admin ui";
+            model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;// "admin ui";
 
 
             repo.UpdateRevisit(model);
@@ -244,8 +245,8 @@ namespace HealthInformationProgram.Controllers
             int result = 0;
             if (ModelState.IsValid)
             {
-                model.CreatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
-                model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
+                model.CreatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
+                model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
                 var repo = new HealthInformationProgram.Data.DiagnosisData();
                 result = repo.CreateDiagnosis(model);
 
@@ -277,7 +278,7 @@ namespace HealthInformationProgram.Controllers
             model.DiagnosisEffectiveStartDate = (string)jsonObject["DiagnosisEffectiveStartDate"];
             model.DiagnosisEffectiveEndDate = (string)jsonObject["DiagnosisEffectiveEndDate"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
+            model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
 
             if (isNew)
             {
@@ -300,8 +301,8 @@ namespace HealthInformationProgram.Controllers
 
             if (ModelState.IsValid)
             {
-                model.CreatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
-                model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;// "admin ui";
+                model.CreatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
+                model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;// "admin ui";
 
                 var data = new HealthInformationProgram.Data.DiagnosisData();
                 result = data.CreateSupplementalDiagnosis(model);
@@ -321,7 +322,7 @@ namespace HealthInformationProgram.Controllers
             model.SupplementalDiagnosisEffectiveEndDate = (string)jsonObject["SupplementalDiagnosisEffectiveEndDate"];
             model.SortOrder = (string)jsonObject["SortOrder"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
+            model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
 
 
             repo.UpdateSupplementalDiagnosis(model);
@@ -337,8 +338,8 @@ namespace HealthInformationProgram.Controllers
 
             if (ModelState.IsValid)
             {
-                model.CreatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
-                model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
+                model.CreatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
+                model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
 
                 var data = new HealthInformationProgram.Data.DiagnosisData();
                 result = data.CreateDiagnosisCategory(model);
@@ -358,7 +359,7 @@ namespace HealthInformationProgram.Controllers
             model.SupplementalDiagnosisCategoryEffectiveStartDate = (string)jsonObject["SupplementalDiagnosisCategoryEffectiveStartDate"];
             model.SupplementalDiagnosisCategoryEffectiveEndDate = (string)jsonObject["SupplementalDiagnosisCategoryEffectiveEndDate"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
+            model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
 
 
             repo.UpdateSupplementalDiagnosisCategory(model);
@@ -387,8 +388,8 @@ namespace HealthInformationProgram.Controllers
 
             if (ModelState.IsValid)
             {
-                model.CreatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
-                model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
+                model.CreatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
+                model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
 
                 var data = new HealthInformationProgram.Data.OrganizationData();
                 result = data.CreateOrganization(model);
@@ -407,7 +408,7 @@ namespace HealthInformationProgram.Controllers
             model.EndEffectiveDate = (string)jsonObject["EndEffectiveDate"];
             model.SortOrder = (string)jsonObject["SortOrder"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
+            model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
 
 
             repo.UpdateOrganization(model);
@@ -425,8 +426,8 @@ namespace HealthInformationProgram.Controllers
 
             if (ModelState.IsValid)
             {
-                model.CreatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
-                model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
+                model.CreatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
+                model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
 
                 var data = new HealthInformationProgram.Data.FacilityData();
                 result = data.CreateFacility(model);
@@ -453,7 +454,7 @@ namespace HealthInformationProgram.Controllers
             model.FacilityStartEffectiveDate = (string)jsonObject["FacilityStartEffectiveDate"];
             model.FacilityEndEffectiveDate = (string)jsonObject["FacilityEndEffectiveDate"];
             model.UpdateDate = DateTime.Now.ToString();
-            model.UpdatedBy = SessionData.SessionData.Current.loggedInUser.UserName;//"admin ui";
+            model.UpdatedBy = SessionData.Current.LoggedInUser.UserName;//"admin ui";
 
 
             repo.UpdateFacility(model);

@@ -1,4 +1,4 @@
-﻿@using HealthInformationProgram.SessionData;
+﻿@using HealthInformationProgram.SessionObject;
 @{
     ViewBag.Title = "Welcome to HIP Admin";
 }
@@ -7,7 +7,7 @@
    
     <table class="searchCriteriaTable" style="font-size:16px">
       <tr><td><label style="font-size:1em;padding:0;margin:0">Click a bold type title below to navigate to section</label></td></tr>
-          @if (SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
+          @if (SessionData.Current.LoggedInUser.IsAuthorizedToEditClientManagement())
         {
             <tr>
                 <td>
@@ -17,8 +17,8 @@
             </tr>
         }
 
-        @if (SessionData.Current.loggedInUser.IsAuthroizedToViewDatabaseManagement() ||
-                                        SessionData.Current.loggedInUser.IsAuthorizedToEditClientManagement())
+        @if (SessionData.Current.LoggedInUser.IsAuthroizedToViewDatabaseManagement() || 
+            SessionData.Current.LoggedInUser.IsAuthorizedToEditClientManagement())
         {
             <tr>
                 <td>
@@ -28,7 +28,7 @@
             </tr>
         }
 
-        @if (SessionData.Current.loggedInUser.IsAuthorizedToViewReports())
+        @if (SessionData.Current.LoggedInUser.IsAuthorizedToViewReports())
         {
             <tr>
                 <td>
@@ -38,7 +38,7 @@
             </tr>
         }
 
-        @if (SessionData.Current.loggedInUser.IsAuthorizedToAdminsterUsers())
+        @if (SessionData.Current.LoggedInUser.IsAuthorizedToAdminsterUsers())
         {
             <tr>
                 <td>

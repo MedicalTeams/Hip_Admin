@@ -9,6 +9,7 @@ using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using HealthInformationProgram.Models;
+using HealthInformationProgram.SessionObject;
 
 namespace HealthInformationProgram.Controllers
 {
@@ -36,18 +37,18 @@ namespace HealthInformationProgram.Controllers
             if ( ModelState.IsValid && Security.UserLogin.LoginUser(model.UserName, model.Password) )
             {
                 FormsAuthentication.SetAuthCookie(model.UserName, false);
-               var role= SessionData.SessionData.Current.loggedInUser.LoggedInUsersRoles.ElementAt(0);
-               
-                    switch (role.ToString())
-                    {
-                        case "ViewReports":
-                            return RedirectToAction("Index", "Report");
-                    case "ViewDataManagement":
-                        return RedirectToAction("Index", "DataManagement");
-                    default:
-                            return RedirectToAction("Index", "Home");
+                var role= SessionData.Current.LoggedInUser.LoggedInUsersRoles.ElementAt(0);
+
+                switch (role.ToString())
+                {
+                    case "ViewReports":
+                        return RedirectToAction("Index", "Report");
+                case "ViewDataManagement":
+                    return RedirectToAction("Index", "DataManagement");
+                default:
+                        return RedirectToAction("Index", "Home");
                             
-                    }
+                }
                 
             }
 

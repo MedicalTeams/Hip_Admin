@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using HealthInformationProgram.Models;
 
-namespace HealthInformationProgram.SessionData
+namespace HealthInformationProgram.SessionObject
 {
     public partial class SessionData
     {
@@ -153,7 +153,7 @@ namespace HealthInformationProgram.SessionData
             }
         }
         private User _user = new User();
-        public User loggedInUser
+        public User LoggedInUser
         {
             get
             {

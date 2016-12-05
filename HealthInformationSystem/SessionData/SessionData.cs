@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HealthInformationProgram.SessionData
+namespace HealthInformationProgram.SessionObject
 {
     public partial class SessionData
     {
@@ -26,6 +26,16 @@ namespace HealthInformationProgram.SessionData
                 }
 
                 return session;
+            }
+        }
+
+        public static void Reset()
+        {
+            SessionData session = (SessionData)HttpContext.Current.Session["MTIHealthInformationProgramSessionData"];
+            if (session == null)
+            {
+                session = new SessionData();
+                HttpContext.Current.Session["MTIHealthInformationProgramSessionData"] = null;
             }
         }
     }

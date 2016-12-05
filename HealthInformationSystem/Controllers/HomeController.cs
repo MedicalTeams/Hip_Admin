@@ -12,7 +12,7 @@ using Microsoft.Reporting.WebForms;
 using System.Web.Security;
 using HealthInformationProgram.Models.ViewModels;
 using System.Security.Principal;
-
+using HealthInformationProgram.SessionObject;
 
 namespace HealthInformationProgram.Controllers
 {
@@ -21,7 +21,7 @@ namespace HealthInformationProgram.Controllers
         public ActionResult Index()
         {
 
-            if (SessionData.SessionData.Current.loggedInUser.LoggedInUserId == Guid.Empty || !System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            if (SessionData.Current.LoggedInUser.LoggedInUserId == Guid.Empty || !System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Account");
             }

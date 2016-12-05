@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 using HealthInformationProgram.Models;
-using HealthInformationProgram.SessionData;
+using HealthInformationProgram.SessionObject;
 
 namespace HealthInformationProgram.Security
 {
@@ -24,8 +24,8 @@ namespace HealthInformationProgram.Security
                         (loggedInUser.password == EncryptDecryptPassword(password.ToString())))
                     {
                         IsValidLogin = true;
-                        SessionData.SessionData.Current.loggedInUser.LoggedInUserId = loggedInUser.userId;
-                        SessionData.SessionData.Current.loggedInUser.UserName = loggedInUser.email;
+                        SessionData.Current.LoggedInUser.LoggedInUserId = loggedInUser.userId;
+                        SessionData.Current.LoggedInUser.UserName = loggedInUser.email;
                     }
                 }
             }
