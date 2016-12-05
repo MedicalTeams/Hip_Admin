@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HealthInformationProgram.SessionObject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -86,7 +87,7 @@ namespace HealthInformationProgram.Data
             dataOfficeVisit.opd_id = officeVisit.OpdId;
             dataOfficeVisit.ov_id = officeVisit.OfficeVisitId;
             dataOfficeVisit.rec_updt_dt = DateTime.UtcNow;
-            dataOfficeVisit.rec_updt_user_id_cd = SessionData.SessionData.Current.loggedInUser.UserName;
+            dataOfficeVisit.rec_updt_user_id_cd = SessionData.Current.LoggedInUser.UserName;
 
             return  _officeVisitRepo.Update(dataOfficeVisit);
 
@@ -103,9 +104,9 @@ namespace HealthInformationProgram.Data
             dataOfficeVisit.opd_id = officeVisit.OpdId;
             dataOfficeVisit.ov_id = officeVisit.OfficeVisitId;
             dataOfficeVisit.rec_updt_dt = DateTime.UtcNow;
-            dataOfficeVisit.rec_updt_user_id_cd = SessionData.SessionData.Current.loggedInUser.UserName;
+            dataOfficeVisit.rec_updt_user_id_cd = SessionData.Current.LoggedInUser.UserName;
             dataOfficeVisit.rec_creat_dt = DateTime.UtcNow;
-            dataOfficeVisit.rec_creat_user_id_cd = SessionData.SessionData.Current.loggedInUser.UserName;
+            dataOfficeVisit.rec_creat_user_id_cd = SessionData.Current.LoggedInUser.UserName;
             return _officeVisitRepo.CreateOfficeVisit(dataOfficeVisit);
 
         }

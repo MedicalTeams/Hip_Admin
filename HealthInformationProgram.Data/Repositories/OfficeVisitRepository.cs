@@ -7,7 +7,7 @@ using HealthInformationProgram.Data.Tables;
 
 namespace HealthInformationProgram.Data.Repositories
 {
-    public class OfficeVisitDiagnosisRepository : BaseRepository
+    public class OfficeVisitRepository : BaseRepository
     {
         public List<ov> GetAll()
         {

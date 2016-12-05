@@ -258,6 +258,8 @@
     <Compile Include="Data\FacilityHardwareData.cs" />
     <Compile Include="Data\GenderData.cs" />
     <Compile Include="Data\HipSystemData.cs" />
+    <Compile Include="Data\OfficeVisitData.cs" />
+    <Compile Include="Data\OfficeVisitDiagnosisData.cs" />
     <Compile Include="Data\OrganizationData.cs" />
     <Compile Include="Data\RevisitData.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -276,6 +278,8 @@
     <Compile Include="Models\FacilityModel.cs" />
     <Compile Include="Models\GenderModel.cs" />
     <Compile Include="Models\MTIUserRolesEntityDataModel.cs" />
+    <Compile Include="Models\OfficeVisitDiagnosisModel.cs" />
+    <Compile Include="Models\OfficeVisitModel.cs" />
     <Compile Include="Models\OrganizationModel.cs" />
     <Compile Include="Models\RawVisitModel.cs" />
     <Compile Include="Models\ReportsViewModel.cs" />

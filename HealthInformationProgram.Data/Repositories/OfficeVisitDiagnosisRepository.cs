@@ -7,7 +7,7 @@ using HealthInformationProgram.Data.Tables;
 
 namespace HealthInformationProgram.Data.Repositories
 {
-    public class OfficeVisitRepository: BaseRepository
+    public class OfficeVisitDiagnosisRepository: BaseRepository
     {
         public List<ov_diag> GetAll()
         {
@@ -37,6 +37,21 @@ namespace HealthInformationProgram.Data.Repositories
                 }
             }
             catch ( Exception ex )
+            {
+                throw ex;
+            }
+        }
+        public List<ov_diag> GetDiagnosisByVisitId(decimal officeVisitId)
+        {
+            try
+            {
+                using (var ctx = new ClinicDataContext(connString))
+                {
+
+                    return ctx.ov_diag.Where(v => v.ov_id == officeVisitId).ToList();
+                }
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
