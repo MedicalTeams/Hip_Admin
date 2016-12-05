@@ -252,9 +252,11 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\VisitManagementController.cs" />
     <Compile Include="Data\BaseHipData.cs" />
+    <Compile Include="Data\BeneficiaryData.cs" />
     <Compile Include="Data\DiagnosisData.cs" />
     <Compile Include="Data\FacilityData.cs" />
     <Compile Include="Data\FacilityHardwareData.cs" />
+    <Compile Include="Data\GenderData.cs" />
     <Compile Include="Data\HipSystemData.cs" />
     <Compile Include="Data\OrganizationData.cs" />
     <Compile Include="Data\RevisitData.cs" />
