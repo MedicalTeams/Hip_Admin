@@ -28,6 +28,8 @@
                             {
                                 <li>@Html.ActionLink("Database Management", "Index", "DataManagement")</li>
                             }
+                            @*@if(SessionData.Current.loggedInUser.)*@
+<li>@Html.ActionLink("Visit Management", "Index","VisitManagement")</li> @*need to figure out security role SA 12/4/16*@
                             @if (SessionData.Current.loggedInUser.IsAuthorizedToViewReports())
                             {
                                 <li>@Html.ActionLink("Reports", "Index", "Report")</li>
