@@ -28,6 +28,10 @@
                             {
                                 <li>@Html.ActionLink("Database Management", "Index", "DataManagement")</li>
                             }
+                            @if (SessionData.Current.LoggedInUser.IsAuthorizedToEditVisits())
+                            {
+                                <li>@Html.ActionLink("Visit Management", "Index", "VisitManagement")</li>
+                            }
                             @if (SessionData.Current.LoggedInUser.IsAuthorizedToViewReports())
                             {
                                 <li>@Html.ActionLink("Reports", "Index", "Report")</li>
@@ -66,3 +70,73 @@
         @RenderSection("scripts", required: false)
     </body>
 </html>
+
+<script type="text/javascript"
+        src="@Url.Content("~/Scripts/spin.min.js")"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#SearchButton').click(function () {
+            $("#searching").fadeIn();
+            var opts = {
+                lines: 12, // The number of lines to draw
+                length: 7, // The length of each line
+                width: 4, // The line thickness
+                radius: 10, // The radius of the inner circle
+                color: '#000', // #rgb or #rrggbb
+                speed: 1, // Rounds per second
+                trail: 60, // Afterglow percentage
+                shadow: false, // Whether to render a shadow
+                hwaccel: false // Whether to use hardware acceleration
+            };
+            var target = document.getElementById('searching');
+            var spinner = new Spinner(opts).spin(target);
+            $(target).data('spinner', spinner);
+        });
+    });
+    $(function () {
+        $('#LoginButton').click(function () {
+            $("#loading").fadeIn();
+            var opts = {
+                lines: 12, // The number of lines to draw
+                length: 7, // The length of each line
+                width: 4, // The line thickness
+                radius: 10, // The radius of the inner circle
+                color: '#000', // #rgb or #rrggbb
+                speed: 1, // Rounds per second
+                trail: 60, // Afterglow percentage
+                shadow: false, // Whether to render a shadow
+                hwaccel: false // Whether to use hardware acceleration
+            };
+            var target = document.getElementById('loading');
+            var spinner = new Spinner(opts).spin(target);
+        });
+    });
+    $(function () {
+        $('#SaveNewVisitButton').click(function () {
+            $("#saving").fadeIn();
+            var opts = {
+                lines: 12, // The number of lines to draw
+                length: 7, // The length of each line
+                width: 4, // The line thickness
+                radius: 10, // The radius of the inner circle
+                color: '#000', // #rgb or #rrggbb
+                speed: 1, // Rounds per second
+                trail: 60, // Afterglow percentage
+                shadow: false, // Whether to render a shadow
+                hwaccel: false // Whether to use hardware acceleration
+            };
+            var target = document.getElementById('saving');
+            var spinner = new Spinner(opts).spin(target);
+        });
+    });
+    $(document).ready(
+    function () {
+        $('#VisitIdSearchStringFilterTextBox').bind('input', function () {
+            if ($(this).val() != '') {
+                if (!$(this).is($('#VisitIdSearchStringFilterTextBox'))) {
+                    $('#VisitIdSearchStringFilterTextBox').val('');
+                }
+            }
+        });
+    });
+</script>

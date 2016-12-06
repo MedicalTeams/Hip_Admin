@@ -13,6 +13,7 @@ using System.Web.Security;
 using HealthInformationProgram.Models.ViewModels;
 using System.Security.Principal;
 using HealthInformationProgram.SessionObject;
+using HealthInformationProgram.Models.ViewModels.Common;
 
 namespace HealthInformationProgram.Controllers
 {

@@ -242,12 +242,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BAL\UserAdministrationLogic.cs" />
+    <Compile Include="BAL\VisitManagementLogic.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientManagementController.cs" />
     <Compile Include="Controllers\DataManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="CustomAttributes\PasswordRequirementsAttribute.cs" />
     <Compile Include="CustomAttributes\UniqueUserEmailAddressAttribute.cs" />
+    <Compile Include="CustomExtensions\StringExtensions.cs" />
     <Compile Include="DAL\UserAdministrationRepository.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\VisitManagementController.cs" />
@@ -289,13 +291,15 @@
     <Compile Include="Models\SupplementalDiagnosisCategoryModel.cs" />
     <Compile Include="Models\user.cs" />
     <Compile Include="Models\userrole.cs" />
-    <Compile Include="Models\ViewModels\HIPAdminCommonViewModel.cs" />
+    <Compile Include="Models\ViewModels\Common\HIPAdminCommonViewModel.cs" />
     <Compile Include="Models\ViewModels\UsersAdministrationUsersViewModel.cs" />
+    <Compile Include="Models\ViewModels\VisitManagementViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ReportServerCredentials.cs" />
     <Compile Include="Security\UserLogin.cs" />
     <Compile Include="SessionData\LoggedInUserSessionData\LoggedInUserSessionData.cs" />
     <Compile Include="SessionData\SessionData.cs" />
+    <Compile Include="SessionData\VisitManagementSessionData\VisitManagementSessionData.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -374,6 +378,8 @@
     <Content Include="Scripts\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\spin.js" />
+    <Content Include="Scripts\spin.min.js" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -418,10 +424,13 @@
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Home\Users.cshtml" />
     <Content Include="Views\Home\UserAdministration.cshtml" />
+    <Content Include="Views\VisitManagement\VisitSearchPartialView.cshtml" />
+    <Content Include="Views\VisitManagement\Index.cshtml" />
+    <Content Include="Views\VisitManagement\VisitDetailsPartialView.cshtml" />
+    <Content Include="Views\VisitManagement\VisistDiagnosisPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\VisitManagement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
