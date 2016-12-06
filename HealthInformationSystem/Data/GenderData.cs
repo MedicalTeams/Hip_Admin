@@ -45,21 +45,6 @@ namespace HealthInformationProgram.Data
             return gender;
         }
 
-        public Models.GenderModel Get(decimal id)
-        {
-            var genderList = new List<Models.GenderModel>();
-            var repo = new Data.Repositories.LookupGenderRepository();
-            var genderData = repo.GetGender(id);
-
-            var gender = new Models.GenderModel();
-
-            gender.GenderCode = genderData.gndr_cd;
-            gender.GenderDescription = genderData.gndr_descn;
-            gender.GenderId = GetDataValue(genderData.gndr_id);
-            gender.SortOrder = GetDataValue(genderData.user_intrfc_sort_ord);
-
-
-            return gender;
-        }
+        
     }
 }
