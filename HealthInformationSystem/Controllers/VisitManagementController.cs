@@ -10,6 +10,7 @@ using HealthInformationProgram.Models.ViewModels.Common;
 
 namespace HealthInformationProgram.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class VisitManagementController : Controller
     {
         // GET: VisitManagement
