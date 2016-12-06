@@ -353,6 +353,33 @@ namespace HealthInformationProgram.Data
 
             return cat;
         }
+        public SupplementalDiagnosisModel GetSupplementalDiagnosis(decimal id)
+        {
+
+            var repo = new HealthInformationProgram.Data.Repositories.SupplementalDiagnosisRepository();
+
+            var dataItem = repo.GetSupplementalDiagnosis(id);
+
+
+
+            var cat = new SupplementalDiagnosisModel();
+
+            cat.SupplementalDiagnosisId = GetDataValue(dataItem.splmtl_diag_id);
+            cat.SupplementalDiagnosisDescription = GetDataValue(dataItem.splmtl_diag_descn);
+            cat.DiagnosisId = GetDataValue(dataItem.diag_id);
+            cat.Diagnosis = GetDiagnosis(dataItem.diag_id).DiagnosisDescription;
+            cat.SortOrder = GetDataValue(dataItem.user_intrfc_sort_ord);
+            cat.Status = GetDataValue(dataItem.splmtl_diag_stat);
+            cat.SupplementalDiagnosisEffectiveStartDate = GetDataValue(dataItem.splmtl_diag_strt_eff_dt);
+            cat.SupplementalDiagnosisEffectiveEndDate = GetDataValue(dataItem.splmtl_diag_end_eff_dt);
+            cat.UpdatedBy = GetDataValue(dataItem.rec_updt_user_id_cd);
+            cat.UpdateDate = GetDataValue(dataItem.rec_updt_dt);
+            cat.CreatedBy = GetDataValue(dataItem.rec_creat_user_id_cd);
+            cat.CreateDate = GetDataValue(dataItem.rec_creat_dt);
+
+
+            return cat;
+        }
         public SupplementalDiagnosisModel GetSupplementalDiagnosisByDescription(string description)
         {
 

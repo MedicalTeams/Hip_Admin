@@ -18,8 +18,10 @@ namespace HealthInformationProgram.Data
         {
             var officeVisits = new List<Models.OfficeVisitModel>();
             var visitDiag = new OfficeVisitDiagnosisData();
-
+            var beneficiaryData = new BeneficiaryData();
             var dataList = _officeVisitRepo.GetAll();
+            var genderData = new GenderData();
+            var facilityHardwareData = new FacilityHardwareData();
 
             foreach (var item in dataList)
             {
@@ -27,11 +29,11 @@ namespace HealthInformationProgram.Data
                 visit.OfficeVisitId = item.ov_id;
                 visit.OpdId = item.opd_id;
                 visit.BeneficiaryId = item.bnfcry_id;
-                visit.BeneficiaryName = item.lkup_bnfcry.bnfcry;
-                visit.FacililtyName = item.lkup_faclty.hlth_care_faclty;
+                visit.BeneficiaryName = beneficiaryData.Get(item.bnfcry_id).BeneficiaryType;
+                visit.FacililtyName = facilityHardwareData.GetFacilityHardware(item.faclty_hw_invtry_id).FacilityId;
                 visit.FacilityId = item.faclty_id;
                 visit.GenderId = item.gndr_id;
-                visit.GenderName = item.lkup_gndr.gndr_descn;
+                visit.GenderName = genderData.Get(item.gndr_id).GenderDescription;
                 visit.OfficeVisitDiagnosis = visitDiag.GetByVisit(item.ov_id);
                 visit.Age = item.infnt_age_mos;
                 visit.FacilityHardwareId = item.faclty_hw_invtry_id;

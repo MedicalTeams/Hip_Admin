@@ -15,22 +15,22 @@ namespace HealthInformationProgram.Data
         public List<Models.OfficeVisitDiagnosisModel> GetByVisit(decimal officeVisitId)
         {
             var list = new List<Models.OfficeVisitDiagnosisModel>();
-
+            var diagnosisData = new DiagnosisData();
             var dataList = _ovDiagRepo.GetDiagnosisByVisitId(officeVisitId);
             foreach (var item in dataList)
             {
                 var visitDiag = new Models.OfficeVisitDiagnosisModel();
                 visitDiag.ContactTreatmentCount = item.cntct_trmnt_cnt;
                 visitDiag.DiagnosisId = item.diag_id;
-                visitDiag.DiganosisName = item.lkup_diag.diag_descn;
+                visitDiag.DiganosisName = diagnosisData.GetDiagnosis(item.diag_id).DiagnosisDescription;
                 visitDiag.OfficeVisitDiagnosisId = item.ov_diag_id;
                 visitDiag.OfficeVisitId = item.ov_id;
                 visitDiag.OtherDiagnosisDescription = item.oth_diag_descn;
                 visitDiag.OtherSupplementalDiagnosisDescription = item.oth_splmtl_diag_descn;
                 if (item.lkup_splmtl_diag_cat.splmtl_diag_cat_id.HasValue)
                 {
-                    visitDiag.SupplementalDiagnosisCategoryId = item.lkup_splmtl_diag_cat.splmtl_diag_cat_id.Value;
-                    visitDiag.SupplementalDiagnosisCategoryName = item.lkup_splmtl_diag_cat.splmtl_diag_cat;
+                    visitDiag.SupplementalDiagnosisCategoryId = Convert.ToDecimal(diagnosisData.GetSupplementalDiagnosis(item.splmtl_diag_id.Value).DiagnosisId);
+                    visitDiag.SupplementalDiagnosisCategoryName = diagnosisData.GetSupplementalDiagnosis(item.splmtl_diag_id.Value).SupplementalDiagnosisDescription;
                 }
                 visitDiag.UpdateDate = item.rec_updt_dt.ToShortDateString();
                 visitDiag.UpdatedBy = item.rec_updt_user_id_cd;
