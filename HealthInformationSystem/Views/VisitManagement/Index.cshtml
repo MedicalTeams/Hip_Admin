@@ -1,0 +1,31 @@
+﻿@using HealthInformationProgram.Models.ViewModels
+@using HealthInformationProgram.SessionObject
+@model HealthInformationProgram.Models.ViewModels.VisitManagementViewModel
+
+@{
+    ViewBag.Title = "Visit Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="text-align:center"><h2>Visit Management</h2></div>
+
+@if (SessionData.Current.LoggedInUser.IsAuthorizedToEditVisits())
+{
+    using (Html.BeginForm("Index", "VisitManagement", FormMethod.Post))
+    {
+        @Html.Partial("VisitSearchPartialView", Model)
+        @Html.Partial("VisitDetailsPartialView", Model)
+        @Html.Partial("VisistDiagnosisPartialView", Model)
+    }
+}
+else
+{
+    <div class="body searchCriteria">
+        <div class="user-message">
+            <p>
+                You are currently NOT AUTHORIZED to use the Visit Management feature of the Health Information Program - for authorization please see your administrator.
+            </p>
+        </div>
+    </div>
+}
+

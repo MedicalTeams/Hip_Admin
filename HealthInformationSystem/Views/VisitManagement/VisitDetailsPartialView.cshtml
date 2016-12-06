@@ -1,0 +1,253 @@
+﻿@using HealthInformationProgram.Models.ViewModels.Common
+@model HealthInformationProgram.Models.ViewModels.VisitManagementViewModel
+
+<div class="body searchCriteria">
+
+    <fieldset class="scheduler-border">
+
+        <legend class="legend-border">Visit Details</legend>
+
+        @if(((Model.ModelState == HIPViewModelStates.FindVisit) && (Model.VisitSearchResult != null)) ||
+            (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+        {
+            <table class="searchCriteriaTable" style="margin-top:10px;">
+                <tr>
+                    <td class="rightJustifiedLabelTableCell">
+                        <div class="editor-label">
+                            @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
+                                (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                            {
+                                @Html.LabelFor(model => model.AddNewEditOfficeVisit.FacililtyName)
+                            }
+                            else
+                            {
+                                @Html.LabelFor(model => model.VisitSearchResult.FacililtyName)
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) || 
+                            (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                        {
+                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.FacililtyName)
+                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.FacililtyName)
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.VisitSearchResult.FacililtyName, new { @readonly = "readonly" })
+                        }
+                    </td>
+
+                    <td class="rightJustifiedLabelTableCell">
+                        <div class="editor-label">
+                            @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
+                                (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                            {
+                                @Html.LabelFor(model => model.AddNewEditOfficeVisit.StaffMemberName)
+                            }
+                            else
+                            {
+                                @Html.LabelFor(model => model.VisitSearchResult.StaffMemberName)
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) || 
+                            (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                        {
+                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.StaffMemberName)
+                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.StaffMemberName)
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.VisitSearchResult.StaffMemberName, new { @readonly = "readonly" })
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="rightJustifiedLabelTableCell">
+                        <div class="editor-label">
+                            @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
+                            (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                            {
+                                @Html.LabelFor(model => model.AddNewEditOfficeVisit.OfficeVisitId)
+                            }
+                            else
+                            {
+                                @Html.LabelFor(model => model.VisitSearchResult.OfficeVisitId)
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) || 
+                            (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                        {
+                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.OfficeVisitId)
+                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.OfficeVisitId)
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.VisitSearchResult.OfficeVisitId, new { @readonly = "readonly" })
+                        }
+                    </td>
+
+                    <td class="rightJustifiedLabelTableCell">
+                        <div class="editor-label">
+                            @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
+                                (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                            {
+                                @Html.LabelFor(model => model.AddNewEditOfficeVisit.VisitDate)
+                            }
+                            else
+                            {
+                                @Html.LabelFor(model => model.VisitSearchResult.VisitDate)
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
+                            (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                        {
+                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.VisitDate, new { @class = "datefield", @type = "date" })
+                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.VisitDate)
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.VisitSearchResult.VisitDate, new { @readonly = "readonly" })
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="rightJustifiedLabelTableCell">
+                        <div class="editor-label">
+                            @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
+                            (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                            {
+                                @Html.LabelFor(model => model.AddNewEditOfficeVisit.GenderName)
+                            }
+                            else
+                            {
+                                @Html.LabelFor(model => model.VisitSearchResult.GenderName)
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) || 
+                            (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                        {
+                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.GenderName)
+                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.GenderName)
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.VisitSearchResult.GenderName, new { @readonly = "readonly" })
+                        }
+                    </td>
+
+                    <td class="rightJustifiedLabelTableCell">
+                        <div class="editor-label">
+                            @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
+                            (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                            {
+                                @Html.LabelFor(model => model.AddNewEditOfficeVisit.Age, new { @type = "number" })
+                            }
+                            else
+                            {
+                                @Html.LabelFor(model => model.VisitSearchResult.Age, new { @type = "number" })
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) || 
+                            (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                        {
+                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.Age, new { @type = "number" })
+                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.Age)
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.VisitSearchResult.Age, new { @readonly = "readonly", @type = "number" })
+                        }
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="rightJustifiedLabelTableCell">
+                        <div class="editor-label">
+                            @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
+                                (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                            {
+                                @Html.LabelFor(model => model.AddNewEditOfficeVisit.OpdId)
+                            }
+                            else
+                            {
+                                @Html.LabelFor(model => model.VisitSearchResult.OpdId)
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
+                            (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                        {
+                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.OpdId)
+                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.OpdId)
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.VisitSearchResult.OpdId, new { @readonly = "readonly" })
+                        }
+                    </td>
+                </tr>
+
+            </table>
+        }
+        else if(((Model.ModelState == HIPViewModelStates.FindVisit) && 
+            (Model.UserActionResponse == HIPUserActionResult.VisitNotFound)))
+        {
+            <div class="body searchCriteria">
+                <div class="alert alert-danger">
+                    <p>
+                        @string.Format("Could NOT find a visit with the Visit Id of {0}", Model.VisitIdSearchStringFilter)
+                    </p>
+                </div>
+            </div>
+        }
+
+        <table class="searchCriteriaTable" style="margin-top:10px;">
+
+            <tr>  
+                              
+                @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) |
+                    (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
+                {
+                    <td style="text-align:left">
+                        <button id="SaveEditOfficeVisitButton" type="submit" class="btn btn-primary btn-xs" name="operation" value="SaveEditOfficeVisit">Save</button>
+                    </td>
+                    <td style="text-align:left">
+                        <button id="CancelSaveEditOfficeVisitButton" type="submit" class="btn btn-primary btn-xs" name="operation" value="CancelSaveEditOfficeVisit">Cancel</button>
+                    </td>
+                }
+                else
+                {
+                    if (((Model.ModelState == HIPViewModelStates.FindVisit) &&
+                        (Model.UserActionResponse == HIPUserActionResult.VisitFound)))
+                    {
+                        <td style="text-align:left">
+                            <button id="EditOfficeVisitButton" type="submit" class="btn btn-primary btn-xs" name="operation" value="EditOfficeVisit">Edit Visit</button>
+                        </td>
+                    }
+
+                    <td style="text-align:left">
+                        <button id="AddNewVisitButton" type="submit" class="btn btn-primary btn-xs" name="operation" value="AddNewVisit">Add New Visit</button>
+                    </td>
+                }
+
+            </tr>
+
+        </table>
+
+    </fieldset>
+
+</div>

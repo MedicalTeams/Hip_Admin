@@ -42,7 +42,7 @@ namespace HealthInformationProgram.Data.Mapping
             this.Property(t => t.staff_mbr_name).HasColumnName("staff_mbr_name");
             this.Property(t => t.refl_in_ind).HasColumnName("refl_in_ind");
             this.Property(t => t.refl_out_ind).HasColumnName("refl_out_ind");
-            this.Property(t => t.infnt_age_mos).HasColumnName("infnt_age_mos");
+            this.Property(t => t.infnt_age_mos).HasColumnName("age_years_low");
             this.Property(t => t.rvisit_id).HasColumnName("rvisit_id");
             this.Property(t => t.rec_creat_dt).HasColumnName("rec_creat_dt");
             this.Property(t => t.rec_creat_user_id_cd).HasColumnName("rec_creat_user_id_cd");

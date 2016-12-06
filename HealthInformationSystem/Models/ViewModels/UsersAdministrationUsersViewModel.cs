@@ -6,6 +6,7 @@ using System.ComponentModel;
 using HealthInformationProgram.Security;
 using HealthInformationProgram.BAL;
 using HealthInformationProgram.CustomAttributes;
+using HealthInformationProgram.Models.ViewModels.Common;
 
 namespace HealthInformationProgram.Models.ViewModels
 {

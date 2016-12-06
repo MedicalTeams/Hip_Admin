@@ -26,22 +26,22 @@ namespace HealthInformationProgram.Data
 
             return beneficiaryList;
         }
+
         public Models.BeneficiaryModel Get(decimal id)
         {
             var repo = new Data.Repositories.LookupBeneficiaryTypeRepository();
             var beneficiaryList = new List<Models.BeneficiaryModel>();
 
             var beneficiaryData = repo.GetBeneficiaryType(id);
-           
-                var beneficiary = new Models.BeneficiaryModel();
 
-                beneficiary.BeneficiaryId = GetDataValue(beneficiaryData.bnfcry_id);
-                beneficiary.BeneficiaryType = GetDataValue(beneficiaryData.bnfcry);
-                beneficiary.SortOrder = GetDataValue(beneficiaryData.user_intrfc_sort_ord);
+            var beneficiary = new Models.BeneficiaryModel();
 
-             
+            beneficiary.BeneficiaryId = GetDataValue(beneficiaryData.bnfcry_id);
+            beneficiary.BeneficiaryType = GetDataValue(beneficiaryData.bnfcry);
+            beneficiary.SortOrder = GetDataValue(beneficiaryData.user_intrfc_sort_ord);
 
             return beneficiary;
         }
+
     }
 }

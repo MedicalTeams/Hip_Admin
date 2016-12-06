@@ -7,7 +7,7 @@
    
     <table class="searchCriteriaTable" style="font-size:16px">
       <tr><td><label style="font-size:1em;padding:0;margin:0">Click a bold type title below to navigate to section</label></td></tr>
-          @if (SessionData.Current.LoggedInUser.IsAuthorizedToEditClientManagement())
+        @if (SessionData.Current.LoggedInUser.IsAuthorizedToEditClientManagement())
         {
             <tr>
                 <td>
@@ -24,6 +24,16 @@
                 <td>
                     <a href="~/DataManagement" style="padding:0;margin:0;;text-decoration:none"><h5>Database Management</h5></a>
                     Administrators can manage constants and records
+                </td>
+            </tr>
+        }
+
+        @if (SessionData.Current.LoggedInUser.IsAuthorizedToEditVisits())
+        {
+            <tr>
+                <td>
+                    <a href="~/VisitManagement" style="padding:0;margin:0;;text-decoration:none"><h5>Visit Management</h5></a>
+                    Data Clerks can edit and create new visits
                 </td>
             </tr>
         }

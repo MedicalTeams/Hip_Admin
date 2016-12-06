@@ -32,8 +32,7 @@ namespace HealthInformationProgram.Data.Repositories
             {
                 using ( var ctx = new ClinicDataContext(connString) )
                 {
-
-                    return ctx.ovs.Where(v => v.rvisit_id == id).FirstOrDefault();
+                    return ctx.ovs.Where(v => v.ov_id == id).FirstOrDefault();
                 }
             }
             catch ( Exception ex )
