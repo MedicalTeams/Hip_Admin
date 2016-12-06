@@ -27,7 +27,7 @@ namespace HealthInformationProgram.Data
                 visitDiag.OfficeVisitId = item.ov_id;
                 visitDiag.OtherDiagnosisDescription = item.oth_diag_descn;
                 visitDiag.OtherSupplementalDiagnosisDescription = item.oth_splmtl_diag_descn;
-                if (item.lkup_splmtl_diag_cat.splmtl_diag_cat_id.HasValue)
+                if (item.splmtl_diag_id.HasValue)
                 {
                     visitDiag.SupplementalDiagnosisCategoryId = Convert.ToDecimal(diagnosisData.GetSupplementalDiagnosis(item.splmtl_diag_id.Value).DiagnosisId);
                     visitDiag.SupplementalDiagnosisCategoryName = diagnosisData.GetSupplementalDiagnosis(item.splmtl_diag_id.Value).SupplementalDiagnosisDescription;
