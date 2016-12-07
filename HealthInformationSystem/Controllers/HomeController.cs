@@ -19,6 +19,7 @@ namespace HealthInformationProgram.Controllers
 {
     public class HomeController : Controller
     {
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult Index()
         {
 

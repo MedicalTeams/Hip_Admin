@@ -20,6 +20,7 @@ namespace HealthInformationProgram.Controllers
         // GET: /Account/Login
 
         [AllowAnonymous]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
