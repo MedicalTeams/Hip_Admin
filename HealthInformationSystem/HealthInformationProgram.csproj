@@ -429,6 +429,7 @@
     <Content Include="Views\VisitManagement\Index.cshtml" />
     <Content Include="Views\VisitManagement\VisitDetailsPartialView.cshtml" />
     <Content Include="Views\VisitManagement\VisistDiagnosisPartialView.cshtml" />
+    <Content Include="Views\VisitManagement\AddNewOfficeVisitDiagnosisPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

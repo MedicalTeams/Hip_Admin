@@ -1,4 +1,4 @@
-﻿@using HealthInformationProgram.Models.ViewModels
+﻿@using HealthInformationProgram.Models.ViewModels.Common
 @using HealthInformationProgram.SessionObject
 @model HealthInformationProgram.Models.ViewModels.VisitManagementViewModel
 
@@ -15,7 +15,16 @@
     {
         @Html.Partial("VisitSearchPartialView", Model)
         @Html.Partial("VisitDetailsPartialView", Model)
-        @Html.Partial("VisistDiagnosisPartialView", Model)
+
+        if (((Model.ModelState == HIPViewModelStates.AddNewOfficeVisitDiagnosis) ||
+                    (Model.ModelState == HIPViewModelStates.EditOfficeVisitDiagnosis)))
+        {
+            @Html.Partial("AddNewOfficeVisitDiagnosisPartialView", Model)
+        }
+        else
+        {
+            @Html.Partial("VisistDiagnosisPartialView", Model)
+        }
     }
 }
 else

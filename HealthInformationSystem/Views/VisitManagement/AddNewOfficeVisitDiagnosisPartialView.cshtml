@@ -1,0 +1,100 @@
+﻿
+@using HealthInformationProgram.Models.ViewModels.Common
+@model HealthInformationProgram.Models.ViewModels.VisitManagementViewModel
+
+<div class="body searchCriteria">
+
+    <fieldset class="scheduler-border">
+
+    @if (Model.ModelState == HIPViewModelStates.AddNewOfficeVisitDiagnosis)
+    {
+        <legend class="legend-border">Add New Office Visit Diagnoisis</legend>
+    }
+    else
+    {
+        <legend class="legend-border">Edit Office Visit Diagnoisis</legend>
+    }
+
+    <table class="searchCriteriaTable" style="margin-top:10px;">
+
+        <tr>
+            <td class="rightJustifiedLabelTableCell">
+                <div class="editor-label">
+                    @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.DiganosisName)
+                </div>
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.DiganosisName)
+            </td>
+
+            <td class="rightJustifiedLabelTableCell">
+                <div class="editor-label">
+                    @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OtherDiagnosisDescription)
+                </div>
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OtherDiagnosisDescription)
+            </td>
+     
+        </tr>
+
+        <tr>
+
+            <td class="rightJustifiedLabelTableCell">
+                <div class="editor-label">
+                    @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisName)
+                </div>
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisName)
+            </td>
+
+            <td class="rightJustifiedLabelTableCell">
+                <div class="editor-label">
+                    @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OtherSupplementalDiagnosisDescription)
+                </div>
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OtherSupplementalDiagnosisDescription)
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td class="rightJustifiedLabelTableCell">
+                <div class="editor-label">
+                    @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisCategoryName)
+                </div>
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisCategoryName)
+            </td>
+
+            <td class="rightJustifiedLabelTableCell">
+                <div class="editor-label">
+                    @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.ContactTreatmentCount)
+                </div>
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.ContactTreatmentCount)
+            </td>
+        </tr>
+    </table>
+
+        <table class="searchCriteriaTable" style="margin-top:10px;">
+
+            <tr>
+                <td style="text-align:left">
+                    <button id="SaveEditOfficeVisitDiagnosisButton" type="submit" class="btn btn-primary btn-xs" name="operation" value="SaveEditOfficeVisitDiagnosis">Save</button>
+                </td>
+                <td style="text-align:left">
+                    <button id="CancelSaveEditOfficeVisitDiagnosisButton" type="submit" class="btn btn-primary btn-xs" name="operation" value="CancelSaveEditOfficeVisitDiagnosis">Cancel</button>
+                </td>
+            </tr>
+
+        </table>
+
+    </fieldset>
+
+</div>

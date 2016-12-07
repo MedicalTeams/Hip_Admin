@@ -60,6 +60,22 @@ namespace HealthInformationProgram.Data.Repositories
             }
         }
 
+        public List<lkup_splmtl_diag> GetAllSupplementalDiagnosisForGivenDiagnosisId(decimal diagnosisId)
+        {
+            try
+            {
+                using (var ctx = new ClinicDataContext(connString))
+                {
+
+                    return ctx.lkup_splmtl_diag.OrderBy(x => x.diag_id == diagnosisId).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public int CreateSupplementalDiagnosis(lkup_splmtl_diag entity)
         {
             try

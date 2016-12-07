@@ -11,7 +11,6 @@ namespace HealthInformationProgram.Controllers
     public class ReportController : Controller
     {
         // GET: Report
-        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult Index(string id)
         {
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)

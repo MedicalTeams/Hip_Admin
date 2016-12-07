@@ -7,12 +7,12 @@ namespace HealthInformationProgram.Models.ViewModels.Common
 {
     public enum HIPViewModelStates
     {
-        Initial, EditUser, AddNewUser, FindVisit, EditOfficeVisit, AddNewOfficeVisit
+        Initial, EditUser, AddNewUser, FindVisit, EditOfficeVisit, AddNewOfficeVisit, EditOfficeVisitDiagnosis, AddNewOfficeVisitDiagnosis
     };
 
     public enum HIPUserActionResult
     {
-        None, VisitFound, VisitNotFound, OfficeVisitSaved
+        None, VisitFound, VisitNotFound, OfficeVisitSaved, AddedNewOfficeVisit
     };
 
     public class HIPAdminCommonViewModel
@@ -50,6 +50,12 @@ namespace HealthInformationProgram.Models.ViewModels.Common
         public void ResetUserActionResponse()
         {
             _userActionResponse = HIPUserActionResult.None;
+        }
+
+        public void ResetModelStates()
+        {
+            ResetModelState();
+            ResetUserActionResponse();            
         }
     }
 }

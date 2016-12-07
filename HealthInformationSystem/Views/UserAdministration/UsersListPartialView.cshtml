@@ -1,0 +1,63 @@
+﻿
+@model HealthInformationProgram.Models.ViewModels.UsersAdministrationUsersViewModel
+
+@if (Model.SystemUsers != null)
+{
+    <div class="body-content four-rounded-corners form-data">
+
+        <fieldset class="scheduler-border">
+
+            <legend class="legend-border">Existing Users</legend>
+
+            <div class="large-scrollable-area">
+
+                <table id="ExistingUsersTable" class="searchResultsTable">
+
+                    <tr>
+                        <th>
+                        </th>
+                        <th>
+                            First Name
+                        </th>
+                        <th>
+                            Last Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                    <tr>
+
+                        @for (int index = 0; index < Model.SystemUsers.Count(); index++)
+                        {
+                        <tr>
+                            <td>
+                                <button id="ViewClaimDetailsButton" class="btn btn-primary btn-xs" name="operation" value=@string.Format("UserAdministrationEditUser_{0}", Model.SystemUsers[index].userId)>Edit</button>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.SystemUsers[index].firstname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.SystemUsers[index].lastname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.SystemUsers[index].email)
+                            </td>
+                        </tr>
+                        }
+
+                    </table>
+
+                </div>
+
+                <table class="tableBottomButtonTable">
+                    <tr>
+                        <td>
+                            <button id="AddNewUserButton" class="btn btn-primary btn-xs" name="operation" value="AddNewUser" )>Add New User</button>
+                        </td>
+                    </tr>
+                </table>
+
+            </fieldset>
+
+        </div>
+}

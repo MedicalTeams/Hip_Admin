@@ -36,11 +36,8 @@ namespace HealthInformationProgram.Data
                 visitDiag.UpdatedBy = item.rec_updt_user_id_cd;
                 visitDiag.CreateDate = item.rec_creat_dt.ToShortDateString();
                 visitDiag.CreatedBy = item.rec_creat_user_id_cd;
-
-
-
+                
                 list.Add(visitDiag);
-
             }
 
             return list;

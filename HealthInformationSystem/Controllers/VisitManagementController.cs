@@ -10,7 +10,6 @@ using HealthInformationProgram.Models.ViewModels.Common;
 
 namespace HealthInformationProgram.Controllers
 {
-    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")] 
     public class VisitManagementController : Controller
     {
         // GET: VisitManagement
@@ -22,20 +21,47 @@ namespace HealthInformationProgram.Controllers
         [HttpPost]
         public ActionResult Index(VisitManagementViewModel visitManagementViewModel, string operation)
         {
-            if(operation == "FindVisit")
+
+            if (operation == "NewOfficeVisitSearch")
             {
-                SessionData.Current.VisitManagementViewModel.ModelState = HIPViewModelStates.FindVisit;
-                SessionData.Current.VisitManagementViewModel.VisitIdSearchStringFilter = visitManagementViewModel.VisitIdSearchStringFilter;
-
-                if (ModelState.IsValid)
-                {
-                    SessionData.Current.VisitManagementViewModel.FindVisitByVisitId();
-                }
-
+                SessionData.Current.VisitManagementViewModel.SetupNewOfficeVisitSearch();
             }
-            if (operation == "AddNewVisit")
+            if (operation == "FindVisit")
+            {
+                SessionData.Current.VisitManagementViewModel.SetupFindVisit(visitManagementViewModel.VisitIdSearchStringFilter);
+            }
+            if (operation == "AddNewOfficeVisit")
             {
                 SessionData.Current.VisitManagementViewModel.SetupAddNewOfficeVisit();
+            }
+            if (operation == "EditOfficeVisit")
+            {
+                SessionData.Current.VisitManagementViewModel.SetupEditOfficeVisit();
+            }
+            if(operation == "CancelSaveEditOfficeVisit")
+            {
+                SessionData.Current.VisitManagementViewModel.SetupCancelSaveEditOfficeVisit();
+            }
+            if (operation == "SaveEditOfficeVisit")
+            {
+                SessionData.Current.VisitManagementViewModel.SetupCancelSaveEditOfficeVisit();
+            }
+            if (operation == "AddNewOfficeVisitDiagnosis")
+            {
+                SessionData.Current.VisitManagementViewModel.SetupAddNewOfficeVisitDiagnosis();
+            }
+            if (operation.Contains("EditOfficeVisitDiagnosis_"))
+            {
+                string selectedOfficeVisitDiagnosisId = string.Format(operation.Replace("EditOfficeVisitDiagnosis_", ""));
+                SessionData.Current.VisitManagementViewModel.SetupEditOfficeVisitDiagnosis(selectedOfficeVisitDiagnosisId);
+            }
+            if (operation == "CancelSaveEditOfficeVisitDiagnosis")
+            {
+                SessionData.Current.VisitManagementViewModel.SetupCancelSaveEditOfficeVisitDiagnosis();
+            }
+            if (operation == "SaveEditOfficeVisitDiagnosis")
+            {
+                SessionData.Current.VisitManagementViewModel.SetupCancelSaveEditOfficeVisitDiagnosis();
             }
 
             return View(SessionData.Current.VisitManagementViewModel);

@@ -1,0 +1,194 @@
+﻿@using HealthInformationProgram.Models.ViewModels
+@model HealthInformationProgram.Models.ViewModels.UsersAdministrationUsersViewModel
+
+@{
+    ViewBag.Title = "Hip Admin - User Administration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Hip Admin - User Administration</title>
+        @Styles.Render("~/Content/css")
+        <link href="~/Content/Site.css" rel="stylesheet" type="text/css">
+        <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+    </head>
+
+    @using (Html.BeginForm("UserAdministration", "Home", FormMethod.Post))
+    {
+        <body>
+            @if (Model.ModelState == HIPViewModelStates.Initial)
+            {
+                @Html.Partial("UsersListPartialView", Model)
+            }
+            else
+            {
+            <div class="body-content form-data">
+
+                @if (Model.ModelState == HIPViewModelStates.AddNewUser)
+                {
+                    <div class="centeredDiv"><h2>Add New User</h2></div>
+                }
+                else
+                {
+                    <div class="centeredDiv"><h2>Edit User</h2></div>
+                }
+
+                <fieldset class="scheduler-border">
+
+                    @if (Model.ModelState == HIPViewModelStates.EditUser)
+                    {
+                        @Html.HiddenFor(model => model.SelectedUser.userId)
+                        @Html.HiddenFor(model => model.SelectedUser.createDate)
+                        @Html.HiddenFor(model => model.SelectedUser.createdBy)
+                        @Html.HiddenFor(model => model.ModelState)
+                    }
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <table class="errorMessageTable">
+                            <tr>
+                                <td>
+                                    @Html.ValidationSummary(false)
+                                </td>
+                            </tr>
+                        </table>
+                    }
+
+                    <legend class="legend-border">User Details</legend>
+
+                    @if (Model.ModelState == HIPViewModelStates.EditUser)
+                    {
+                        if (string.IsNullOrEmpty(Model.SelectedUser.email) || string.IsNullOrWhiteSpace(Model.SelectedUser.email))
+                        {
+                            <table class="searchCriteriaTable">
+                                <tr>
+                                    <td>
+                                        <div class="alert alert-danger">
+                                            <p>@string.Format("Could not find User.....")</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                    }
+
+                    <table class="searchCriteriaTable">
+
+                        <tr>
+                            <td class="rightJustifiedLabelTableCell">
+                                <div class="editor-label">
+                                    @Html.LabelFor(model => model.SelectedUser.email)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="editor-field">
+                                    @if (Model.ModelState == HIPViewModelStates.AddNewUser)
+                                    {
+                                        @Html.TextBoxFor(model => model.SelectedUser.email)
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(model => model.SelectedUser.email, new { disabled = "disabled" })
+                                        @Html.HiddenFor(model => model.SelectedUser.email)
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="rightJustifiedLabelTableCell">
+                                <div class="editor-label">
+                                    @Html.LabelFor(model => model.SelectedUser.firstname)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.SelectedUser.firstname)
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="rightJustifiedLabelTableCell">
+                                <div class="editor-label">
+                                    @Html.LabelFor(model => model.SelectedUser.lastname)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="editor-label">
+                                    @Html.TextBoxFor(model => model.SelectedUser.lastname)
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="rightJustifiedLabelTableCell">
+                                <div class="editor-label">
+                                    @Html.LabelFor(model => model.UnEncryptedPassword)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="editor-label">
+                                    @Html.TextBoxFor(model => model.UnEncryptedPassword)
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </fieldset>
+
+                <fieldset class="scheduler-border">
+
+                    <legend class="legend-border">User Roles</legend>
+
+                    <table class="searchCriteriaTable">
+
+                        @for (int index = 0; index < Model.BoundUserRolesListForSelectedUser.Count(); index++)
+                        {
+                            @Html.HiddenFor(model => model.BoundUserRolesListForSelectedUser[index].RoleId)
+                            @Html.HiddenFor(model => model.BoundUserRolesListForSelectedUser[index].RoleName)
+
+                            <tr>
+                                <td>
+                                    @Html.CheckBoxFor(model => model.BoundUserRolesListForSelectedUser[index].UserIsInRole)
+                                </td>
+                                <td>
+                                    <label>@Model.BoundUserRolesListForSelectedUser[index].RoleName</label>
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+
+                </fieldset>
+
+                @if (Model.ModelState == HIPViewModelStates.AddNewUser)
+                {
+                    <table class="tableBottomButtonTable">
+                        <tr>
+                            <td>
+                                <button id="SaveAddNewUserButton" type="submit" class="btn btn-primary" name="operation" value="SaveAddNewUser">Add New</button>
+                                <button id="CancelAddNewUserButton" type="submit" class="btn cancel" name="operation" value="CancelAddNewUser">Cancel</button>
+                            </td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                    <table class="tableBottomButtonTable">
+                        <tr>
+                            <td>
+                                <button id="SaveEditUserButton" type="submit" class="btn btn-primary" name="operation" value="SaveEditUser">Save</button>
+                                <button id="CancelEditUserButton" type="submit" class="btn cancel" name="operation" value="CancelEditUser">Cancel</button>
+                            </td>
+                        </tr>
+                    </table>
+                }
+
+            </div>
+            }
+        </body>
+    }
+
+</html>

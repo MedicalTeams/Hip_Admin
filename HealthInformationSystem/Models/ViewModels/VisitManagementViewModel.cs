@@ -7,6 +7,8 @@ using System.ComponentModel;
 using HealthInformationProgram.Data;
 using HealthInformationProgram.Models.ViewModels.Common;
 using HealthInformationProgram.BAL;
+using HealthInformationProgram.CustomExtensions;
+using System.Web.Mvc;
 
 namespace HealthInformationProgram.Models.ViewModels
 {  
@@ -54,6 +56,19 @@ namespace HealthInformationProgram.Models.ViewModels
             }
         }
 
+        private OfficeVisitDiagnosisModel _addNewEditOfficeVisitDiagnosis = null;
+        public OfficeVisitDiagnosisModel AddNewEditOfficeVisitDiagnosis
+        {
+            get
+            {
+                return _addNewEditOfficeVisitDiagnosis;
+            }
+            set
+            {
+                _addNewEditOfficeVisitDiagnosis = value;
+            }
+        }
+
         public void FindVisitByVisitId()
         {
             _visitSearchResult = _visitManagementLogic.FindVisitByVisitId(_visitIdSearchStringFilter);
@@ -68,10 +83,113 @@ namespace HealthInformationProgram.Models.ViewModels
             }
         }
 
+        public void SetupFindVisit(string visitIdSearchString)
+        {
+            _visitIdSearchStringFilter = visitIdSearchString;
+            _modelState = HIPViewModelStates.FindVisit;            
+            FindVisitByVisitId();
+        }
+
+        public void SetupNewOfficeVisitSearch()
+        {
+            _modelState = HIPViewModelStates.Initial;
+            _visitIdSearchStringFilter = string.Empty;
+            _visitSearchResult = null;
+        }
+
         public void SetupAddNewOfficeVisit()
         {
             _modelState = HIPViewModelStates.AddNewOfficeVisit;
+            _userActionResponse = HIPUserActionResult.None;
+            _addNewEditOfficeVisit = new OfficeVisitModel();
+        }
+
+        public void SetupEditOfficeVisit()
+        {
+            _modelState = HIPViewModelStates.EditOfficeVisit;
             _addNewEditOfficeVisit = _visitSearchResult;
+        }
+
+        public void SetupCancelSaveEditOfficeVisit()
+        {
+            if(_visitIdSearchStringFilter.IsNOTNullNorEmptyNorWhiteSpace())
+            {
+                SetupFindVisit(_visitIdSearchStringFilter);
+            }
+            else
+            {
+                ResetModelStates();
+            }
+        }
+
+        public void SetupAddNewOfficeVisitDiagnosis()
+        {
+            _modelState = HIPViewModelStates.AddNewOfficeVisitDiagnosis;
+            _userActionResponse = HIPUserActionResult.None;
+            _addNewEditOfficeVisitDiagnosis = new OfficeVisitDiagnosisModel();
+        }
+
+        public void SetupEditOfficeVisitDiagnosis(string officeVisitDiagnosisId)
+        {
+            OfficeVisitDiagnosisModel officeVisitDiagnosisModelToEdit = null;
+
+            decimal officeVisitDiagnosisIdAsDecimal = 0;
+            if (decimal.TryParse(officeVisitDiagnosisId, out officeVisitDiagnosisIdAsDecimal))
+            {
+                _modelState = HIPViewModelStates.EditOfficeVisitDiagnosis;
+
+                officeVisitDiagnosisModelToEdit = (from officevisitsearchresultdiagnosis in _visitSearchResult.OfficeVisitDiagnosis
+                                                   where officevisitsearchresultdiagnosis.OfficeVisitDiagnosisId == officeVisitDiagnosisIdAsDecimal
+                                                   select officevisitsearchresultdiagnosis).FirstOrDefault();
+
+                if (officeVisitDiagnosisModelToEdit != null)
+                {
+                    _addNewEditOfficeVisitDiagnosis = officeVisitDiagnosisModelToEdit;
+                    ModelState = HIPViewModelStates.EditOfficeVisitDiagnosis;
+                }
+            }
+        }
+
+        public void SetupCancelSaveEditOfficeVisitDiagnosis()
+        {
+            if (_visitIdSearchStringFilter.IsNOTNullNorEmptyNorWhiteSpace())
+            {
+                SetupFindVisit(_visitIdSearchStringFilter);
+            }
+            else
+            {
+                ResetModelStates();
+            }
+        }
+
+        public List<SelectListItem> DiagnosisAsSelectListItems()
+        {
+            return _visitManagementLogic.DiagnosisAsSelectListItems();
+        }
+
+        public List<SelectListItem> SupplimentalDiagnosisAsSelectListItems(string DiagnosisId)
+        {
+            return _visitManagementLogic.SupplimentalDiagnosisAsSelectListItems(DiagnosisId);
+        }
+
+        public List<SelectListItem> GendersAsSelectListItems()
+        {
+            return _visitManagementLogic.GendersAsSelectListItems();
+        }
+
+        public List<SelectListItem> RefugeeStatusAsSelectListItems()
+        {
+            return _visitManagementLogic.RefugeeStatusAsSelectListItems();
+        }
+
+        public List<SelectListItem> NewOrRevisitStatusAsSelectListItems()
+        {
+            return _visitManagementLogic.NewOrRevisitStatusAsSelectListItems();
+        }
+
+        public List<SelectListItem> SettlementandHealthCentresAsSelectListItems()
+        {
+            return _visitManagementLogic.SettlementandHealthCentresAsSelectListItems();
         }
     }
 }

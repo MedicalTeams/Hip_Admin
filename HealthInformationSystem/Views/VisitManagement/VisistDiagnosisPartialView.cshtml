@@ -1,1 +1,98 @@
-﻿
+﻿@using HealthInformationProgram.Models.ViewModels.Common
+@model HealthInformationProgram.Models.ViewModels.VisitManagementViewModel
+
+@if (((Model.ModelState == HIPViewModelStates.FindVisit) || (Model.UserActionResponse == HIPUserActionResult.AddedNewOfficeVisit)) && 
+    (Model.VisitSearchResult != null))
+{
+    <div class="body searchCriteria">
+
+        <fieldset class="scheduler-border">
+
+            <legend class="legend-border">Visit Diagnosis</legend>
+
+            @if (Model.VisitSearchResult.OfficeVisitDiagnosis.Count() > 0)
+            {
+                <table class="searchResultsTable">
+                    <tr>
+                        <th>
+                        </th>
+                        <th>
+                            @Html.LabelFor(model => model.VisitSearchResult.OfficeVisitDiagnosis[0].DiganosisName)
+                        </th>
+                        <th>
+                            @Html.LabelFor(model => model.VisitSearchResult.OfficeVisitDiagnosis[0].OtherDiagnosisDescription)
+                        </th>
+                        <th>
+                            @Html.LabelFor(model => model.VisitSearchResult.OfficeVisitDiagnosis[0].SupplementalDiagnosisName)
+                        </th>
+                        <th>
+                            @Html.LabelFor(model => model.VisitSearchResult.OfficeVisitDiagnosis[0].OtherSupplementalDiagnosisDescription)
+                        </th>
+                        <th>
+                            @Html.LabelFor(model => model.VisitSearchResult.OfficeVisitDiagnosis[0].SupplementalDiagnosisCategoryName)
+                        </th>
+                        <th>
+                            @Html.LabelFor(model => model.VisitSearchResult.OfficeVisitDiagnosis[0].ContactTreatmentCount)
+                        </th>
+                    </tr>
+
+                    @for (int index = 0; index < Model.VisitSearchResult.OfficeVisitDiagnosis.Count(); index++)
+                    {
+                        @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].OfficeVisitDiagnosisId)
+                        @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].OfficeVisitId)
+                        @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].DiagnosisId)
+                        @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].SupplementalDiagnosisId)
+                        @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].SupplementalDiagnosisCategoryId)
+                        @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].OtherSupplementalDiagnosisDescription)
+                        @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].ContactTreatmentCount)
+
+                        <tr>
+                            <td>
+                                <button id="EditOfficeVisitDiagnosisButton" class="btn btn-primary btn-xs" name="operation" value=@string.Format("EditOfficeVisitDiagnosis_{0}", Model.VisitSearchResult.OfficeVisitDiagnosis[index].OfficeVisitDiagnosisId)>Edit Diagnosis</button>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].DiganosisName)
+                                @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].DiganosisName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].OtherDiagnosisDescription)
+                                @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].OtherDiagnosisDescription)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].SupplementalDiagnosisName)
+                                @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].SupplementalDiagnosisName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].OtherSupplementalDiagnosisDescription)
+                                @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].OtherSupplementalDiagnosisDescription)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].SupplementalDiagnosisCategoryName)
+                                @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].SupplementalDiagnosisCategoryName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].ContactTreatmentCount)
+                                @Html.HiddenFor(modelItem => modelItem.VisitSearchResult.OfficeVisitDiagnosis[index].ContactTreatmentCount)
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            }                
+
+                <table class="searchCriteriaTable" style="margin-top:10px;">
+
+                    <tr>
+
+                        <td style="text-align:left">
+                            <button id="AddNewOfficeVisitDiagnosisButton" type="submit" class="btn btn-primary btn-xs" name="operation" value="AddNewOfficeVisitDiagnosis">Add New Diagnosis</button>
+                        </td>
+
+                    </tr>
+
+                </table>
+
+        </fieldset>
+
+    </div>
+}

@@ -13,7 +13,6 @@ namespace HealthInformationProgram.Controllers
     public class DataManagementController : Controller
     {
         // GET: DataManagement
-        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult Index()
         {
             if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)

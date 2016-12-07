@@ -5,13 +5,13 @@ using System.Web;
 
 namespace HealthInformationProgram.Data
 {
-    public class GenderData : BaseHipData
+    public class GenderData:BaseHipData
     {
         public List<Models.GenderModel> GetAll()
         {
             var genderList = new List<Models.GenderModel>();
             var repo = new Data.Repositories.LookupGenderRepository();
-            var dataList = repo.GetAll();
+            var dataList =repo.GetAll();
 
             foreach (var gender in dataList)
             {
@@ -44,7 +44,5 @@ namespace HealthInformationProgram.Data
 
             return gender;
         }
-
-        
     }
 }

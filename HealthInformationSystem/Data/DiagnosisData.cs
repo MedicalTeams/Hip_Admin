@@ -18,7 +18,7 @@ namespace HealthInformationProgram.Data
             try
             {
                 var dataList = repo.GetAll();
-                foreach ( var item in dataList )
+                foreach (var item in dataList)
                 {
                     var diagView = new DiagnosisModel();
                     diagView.DiagnosisId = GetDataValue(item.diag_id);
@@ -38,7 +38,7 @@ namespace HealthInformationProgram.Data
 
                 }
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -96,7 +96,7 @@ namespace HealthInformationProgram.Data
             var repo = new DiagnosisRepository();
             var dataModel = new HealthInformationProgram.Data.Tables.lkup_diag();
 
-           
+
             dataModel.diag_id = Convert.ToDecimal(model.DiagnosisId);
             dataModel.diag_descn = model.DiagnosisDescription;
             dataModel.diag_stat = model.DiagnosisStatus;
@@ -108,7 +108,7 @@ namespace HealthInformationProgram.Data
             dataModel.rec_creat_dt = DateTime.Now;
             dataModel.rec_creat_user_id_cd = model.CreatedBy;
             dataModel.rec_updt_dt = DateTime.Now;
-            dataModel.rec_updt_user_id_cd = model.UpdatedBy; 
+            dataModel.rec_updt_user_id_cd = model.UpdatedBy;
 
             try
             {
@@ -116,7 +116,7 @@ namespace HealthInformationProgram.Data
                 var returnCode = repo.CreateDiagnosis(dataModel);
                 return returnCode;
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -129,7 +129,7 @@ namespace HealthInformationProgram.Data
             var dataModel = new HealthInformationProgram.Data.Tables.lkup_diag();
 
 
-           
+
             dataModel.diag_id = Convert.ToDecimal(model.DiagnosisId);
             dataModel.diag_stat = model.DiagnosisStatus;
             dataModel.diag_descn = model.DiagnosisDescription;
@@ -147,7 +147,7 @@ namespace HealthInformationProgram.Data
                 var returnCode = repo.Update(dataModel);
                 return returnCode;
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -164,7 +164,7 @@ namespace HealthInformationProgram.Data
             var repo = new HealthInformationProgram.Data.Repositories.SupplementalDiagnosisCategoryRepository();
 
             var dataList = repo.GetAll();
-            foreach ( var item in dataList )
+            foreach (var item in dataList)
             {
                 var cat = new SupplementalDiagnosisCategoryModel();
 
@@ -178,8 +178,6 @@ namespace HealthInformationProgram.Data
                 cat.UpdateDate = GetDataValue(item.rec_updt_dt);
                 cat.CreatedBy = GetDataValue(item.rec_creat_user_id_cd);
                 cat.CreateDate = GetDataValue(item.rec_creat_dt);
-
-
 
                 categories.Add(cat);
             }
@@ -205,8 +203,6 @@ namespace HealthInformationProgram.Data
             cat.CreatedBy = GetDataValue(dataItem.rec_creat_user_id_cd);
             cat.CreateDate = GetDataValue(dataItem.rec_creat_dt);
 
-
-
             return cat;
         }
         public SupplementalDiagnosisCategoryModel GetSupplementalCategoryByCategory(string category)
@@ -229,8 +225,6 @@ namespace HealthInformationProgram.Data
             cat.CreatedBy = GetDataValue(dataItem.rec_creat_user_id_cd);
             cat.CreateDate = GetDataValue(dataItem.rec_creat_dt);
 
-
-
             return cat;
         }
         public int CreateDiagnosisCategory(SupplementalDiagnosisCategoryModel model)
@@ -239,7 +233,7 @@ namespace HealthInformationProgram.Data
             var repo = new SupplementalDiagnosisCategoryRepository();
             var dataModel = new HealthInformationProgram.Data.Tables.lkup_splmtl_diag_cat();
 
-          // dataModel.splmtl_diag_cat_id = Convert.ToDecimal(model.SupplementalDiagnosisCategoryId);
+            // dataModel.splmtl_diag_cat_id = Convert.ToDecimal(model.SupplementalDiagnosisCategoryId);
             dataModel.splmtl_diag_cat_stat = model.Status;
             dataModel.splmtl_diag_cat = model.SupplementalDiagnosisCategoryType;
             dataModel.user_intrfc_sort_ord = Convert.ToDecimal(model.SortOrder);
@@ -256,19 +250,15 @@ namespace HealthInformationProgram.Data
                 var returnCode = repo.CreateSupplementalDiagnosisCat(dataModel);
                 return returnCode;
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 throw ex;
             }
-
         }
         public int UpdateSupplementalDiagnosisCategory(SupplementalDiagnosisCategoryModel model)
         {
-
             var repo = new SupplementalDiagnosisCategoryRepository();
             var dataModel = new HealthInformationProgram.Data.Tables.lkup_splmtl_diag_cat();
-
-
 
             dataModel.splmtl_diag_cat_id = Convert.ToDecimal(model.SupplementalDiagnosisCategoryId);
             dataModel.splmtl_diag_cat_stat = model.Status;
@@ -286,7 +276,7 @@ namespace HealthInformationProgram.Data
                 var returnCode = repo.Update(dataModel);
                 return returnCode;
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -303,7 +293,7 @@ namespace HealthInformationProgram.Data
             var repo = new HealthInformationProgram.Data.Repositories.SupplementalDiagnosisRepository();
 
             var dataList = repo.GetAll();
-            foreach ( var item in dataList )
+            foreach (var item in dataList)
             {
                 var cat = new SupplementalDiagnosisModel();
 
@@ -326,11 +316,42 @@ namespace HealthInformationProgram.Data
             }
             return categories;
         }
+
+        public List<SupplementalDiagnosisModel> GetAllSupplementalDiagnosisForGivenDiagnosisId(decimal diagnosisId)
+        {
+            var categories = new List<SupplementalDiagnosisModel>();
+            var repo = new HealthInformationProgram.Data.Repositories.SupplementalDiagnosisRepository();
+
+            var dataList = repo.GetAllSupplementalDiagnosisForGivenDiagnosisId(diagnosisId);
+            foreach (var item in dataList)
+            {
+                var cat = new SupplementalDiagnosisModel();
+
+                cat.SupplementalDiagnosisId = GetDataValue(item.splmtl_diag_id);
+                cat.SupplementalDiagnosisDescription = GetDataValue(item.splmtl_diag_descn);
+                cat.DiagnosisId = GetDataValue(item.diag_id);
+                cat.Diagnosis = GetDiagnosis(item.diag_id).DiagnosisDescription;
+                cat.SortOrder = GetDataValue(item.user_intrfc_sort_ord);
+                cat.Status = GetDataValue(item.splmtl_diag_stat);
+                cat.SupplementalDiagnosisEffectiveStartDate = GetDataValue(item.splmtl_diag_strt_eff_dt);
+                cat.SupplementalDiagnosisEffectiveEndDate = GetDataValue(item.splmtl_diag_end_eff_dt);
+                cat.UpdatedBy = GetDataValue(item.rec_updt_user_id_cd);
+                cat.UpdateDate = GetDataValue(item.rec_updt_dt);
+                cat.CreatedBy = GetDataValue(item.rec_creat_user_id_cd);
+                cat.CreateDate = GetDataValue(item.rec_creat_dt);
+
+
+
+                categories.Add(cat);
+            }
+            return categories;
+        }
+
         public SupplementalDiagnosisModel GetSupplementalDiagnosis(string id)
         {
 
             var repo = new HealthInformationProgram.Data.Repositories.SupplementalDiagnosisRepository();
-       
+
             var dataItem = repo.GetSupplementalDiagnosis(Convert.ToDecimal(id));
 
 
@@ -428,7 +449,7 @@ namespace HealthInformationProgram.Data
                 var returnCode = repo.CreateSupplementalDiagnosis(dataModel);
                 return returnCode;
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -457,7 +478,7 @@ namespace HealthInformationProgram.Data
                 var returnCode = repo.Update(dataModel);
                 return returnCode;
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 throw ex;
             }

@@ -15,13 +15,15 @@ namespace HealthInformationProgram.Models
 
         }
 
-        [DisplayName("Facility Name")]
+        [DisplayName("Settlement and Health Centre")]
         public string FacililtyName { get; set; }
         public decimal FacilityId { get; set; }
 
         [DisplayName("Gender")]
         public string GenderName { get; set; }
         public decimal GenderId { get; set; }
+
+        [DisplayName("Refugee Status")]
         public string BeneficiaryName { get; set; }
         public decimal BeneficiaryId { get; set; }
 
@@ -39,12 +41,14 @@ namespace HealthInformationProgram.Models
         [DisplayName("Visit Date")]
         [DataType(DataType.Date)]
         public DateTime VisitDate { get; set; }
-        public decimal RevisitId { get; set; }
 
+        public decimal RevisitId { get; set; }
+        [DisplayName("New or Revisit")]
         public string RevisitName { get; set; }
 
         [DisplayName("Age")]
         public decimal Age { get; set; }
+
         public List<OfficeVisitDiagnosisModel> OfficeVisitDiagnosis { get; set; }
     }
 }
