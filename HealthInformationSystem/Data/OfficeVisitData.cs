@@ -21,7 +21,7 @@ namespace HealthInformationProgram.Data
             var beneficiaryData = new BeneficiaryData();
             var dataList = _officeVisitRepo.GetAll();
             var genderData = new GenderData();
-            var facilityHardwareData = new FacilityHardwareData();
+            var facilityData = new FacilityData();
 
             foreach (var item in dataList)
             {
@@ -30,7 +30,7 @@ namespace HealthInformationProgram.Data
                 visit.OpdId = item.opd_id;
                 visit.BeneficiaryId = item.bnfcry_id;
                 visit.BeneficiaryName = beneficiaryData.Get(item.bnfcry_id).BeneficiaryType;
-                visit.FacililtyName = facilityHardwareData.GetFacilityHardware(item.faclty_hw_invtry_id).FacilityId;
+                visit.FacililtyName = facilityData.GetFacility(item.faclty_id).HealthCareFacility;
                 visit.FacilityId = item.faclty_id;
                 visit.GenderId = item.gndr_id;
                 visit.GenderName = genderData.Get(item.gndr_id).GenderDescription;
@@ -73,7 +73,7 @@ namespace HealthInformationProgram.Data
                 visit.GenderName = genderData.Get(item.gndr_id).GenderDescription;
                 visit.OfficeVisitDiagnosis = visitDiag.GetByVisit(item.ov_id);
                 visit.Age = item.infnt_age_mos;
-
+                visit.StaffMemberName = item.staff_mbr_name;
                 visit.CreateDate = item.rec_creat_dt.ToShortDateString();
                 visit.CreatedBy = item.rec_creat_user_id_cd;
                 visit.UpdateDate = item.rec_updt_dt.ToShortDateString();

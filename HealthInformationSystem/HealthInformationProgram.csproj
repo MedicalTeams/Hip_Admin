@@ -360,6 +360,7 @@
     <None Include="Properties\PublishProfiles\hip-admin - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\hip-admin - Prod.pubxml" />
     <None Include="Properties\PublishProfiles\hip-admin-HipProduction - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\HipAdmin - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.0.0.intellisense.js" />
     <Content Include="ReportViewerWebForm.aspx" />
     <Content Include="Scripts\jquery-3.0.0.js" />
