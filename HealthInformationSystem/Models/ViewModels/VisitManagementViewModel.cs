@@ -11,7 +11,7 @@ using HealthInformationProgram.CustomExtensions;
 using System.Web.Mvc;
 
 namespace HealthInformationProgram.Models.ViewModels
-{  
+{
     public class VisitManagementViewModel : HIPAdminCommonViewModel
     {
         private VisitManagementLogic _visitManagementLogic = new VisitManagementLogic();
@@ -73,7 +73,7 @@ namespace HealthInformationProgram.Models.ViewModels
         {
             _visitSearchResult = _visitManagementLogic.FindVisitByVisitId(_visitIdSearchStringFilter);
 
-            if(_visitSearchResult != null)
+            if (_visitSearchResult != null)
             {
                 UserActionResponse = HIPUserActionResult.VisitFound;
             }
@@ -86,7 +86,7 @@ namespace HealthInformationProgram.Models.ViewModels
         public void SetupFindVisit(string visitIdSearchString)
         {
             _visitIdSearchStringFilter = visitIdSearchString;
-            _modelState = HIPViewModelStates.FindVisit;            
+            _modelState = HIPViewModelStates.FindVisit;
             FindVisitByVisitId();
         }
 
@@ -112,7 +112,7 @@ namespace HealthInformationProgram.Models.ViewModels
 
         public void SetupCancelSaveEditOfficeVisit()
         {
-            if(_visitIdSearchStringFilter.IsNOTNullNorEmptyNorWhiteSpace())
+            if (_visitIdSearchStringFilter.IsNOTNullNorEmptyNorWhiteSpace())
             {
                 SetupFindVisit(_visitIdSearchStringFilter);
             }
@@ -167,7 +167,7 @@ namespace HealthInformationProgram.Models.ViewModels
             return _visitManagementLogic.DiagnosisAsSelectListItems();
         }
 
-        public List<SelectListItem> SupplimentalDiagnosisAsSelectListItems(string DiagnosisId)
+        public List<SelectListItem> SupplimentalDiagnosisAsSelectListItems(decimal DiagnosisId)
         {
             return _visitManagementLogic.SupplimentalDiagnosisAsSelectListItems(DiagnosisId);
         }
@@ -190,6 +190,11 @@ namespace HealthInformationProgram.Models.ViewModels
         public List<SelectListItem> SettlementandHealthCentresAsSelectListItems()
         {
             return _visitManagementLogic.SettlementandHealthCentresAsSelectListItems();
+        }
+
+        public List<SelectListItem> SupplementalDiagnosisCategoryNamesAsSelectListItems()
+        {
+            return _visitManagementLogic.SupplementalDiagnosisCategoryNamesAsSelectListItems();
         }
     }
 }

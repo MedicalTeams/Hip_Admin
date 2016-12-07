@@ -24,7 +24,7 @@
                 </div>
             </td>
             <td>
-                @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.DiganosisName)
+                @Html.DropDownListFor(model => model.AddNewEditOfficeVisitDiagnosis.DiagnosisId, new SelectList(Model.DiagnosisAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.DiagnosisId), new { style = "width:150px", id = "facilityDropDownBox" })
             </td>
 
             <td class="rightJustifiedLabelTableCell">
@@ -46,7 +46,7 @@
                 </div>
             </td>
             <td>
-                @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisName)
+                @Html.DropDownListFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisId, new SelectList(Model.SupplimentalDiagnosisAsSelectListItems(Model.AddNewEditOfficeVisitDiagnosis.DiagnosisId), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisId), new { style = "width:150px", id = "facilityDropDownBox" })
             </td>
 
             <td class="rightJustifiedLabelTableCell">
@@ -68,7 +68,7 @@
                 </div>
             </td>
             <td>
-                @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisCategoryName)
+                @Html.DropDownListFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisCategoryId, new SelectList(Model.SupplementalDiagnosisCategoryNamesAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisCategoryId), new { style = "width:150px", id = "facilityDropDownBox" })
             </td>
 
             <td class="rightJustifiedLabelTableCell">
