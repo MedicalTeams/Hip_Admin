@@ -47,25 +47,21 @@ namespace HealthInformationProgram.BAL
             return diagnosisAsSelectListItems;
         }
 
-        public List<SelectListItem> SupplimentalDiagnosisAsSelectListItems(string DiagnosisId)
+        public List<SelectListItem> SupplimentalDiagnosisAsSelectListItems(decimal DiagnosisId)
         {
             List<SelectListItem> supplimentalDiagnosisAsSelectListItems = new List<SelectListItem>();
 
-            decimal DiagnosisIdAsDecimal = 0;
-            if (decimal.TryParse(DiagnosisId, out DiagnosisIdAsDecimal))
+            DiagnosisData diagnosisData = new DiagnosisData();
+            List<SupplementalDiagnosisModel> allSupplementalDiagnosis = diagnosisData.GetAllSupplementalDiagnosisForGivenDiagnosisId(DiagnosisId);
+
+            foreach (SupplementalDiagnosisModel supplementalDiagnosisModel in allSupplementalDiagnosis)
             {
-                DiagnosisData diagnosisData = new DiagnosisData();
-                List<SupplementalDiagnosisModel> allSupplementalDiagnosis = diagnosisData.GetAllSupplementalDiagnosisForGivenDiagnosisId(DiagnosisIdAsDecimal);
+                SelectListItem supplementalDiagnoisisAsSelectListItem = new SelectListItem();
 
-                foreach (SupplementalDiagnosisModel supplementalDiagnosisModel in allSupplementalDiagnosis)
-                {
-                    SelectListItem supplementalDiagnoisisAsSelectListItem = new SelectListItem();
+                supplementalDiagnoisisAsSelectListItem.Text = supplementalDiagnosisModel.SupplementalDiagnosisDescription;
+                supplementalDiagnoisisAsSelectListItem.Value = supplementalDiagnosisModel.SupplementalDiagnosisId;
 
-                    supplementalDiagnoisisAsSelectListItem.Text = supplementalDiagnosisModel.SupplementalDiagnosisDescription;
-                    supplementalDiagnoisisAsSelectListItem.Value = supplementalDiagnosisModel.SupplementalDiagnosisId;
-
-                    supplimentalDiagnosisAsSelectListItems.Add(supplementalDiagnoisisAsSelectListItem);
-                }
+                supplimentalDiagnosisAsSelectListItems.Add(supplementalDiagnoisisAsSelectListItem);
             }
 
             return supplimentalDiagnosisAsSelectListItems;
@@ -149,6 +145,26 @@ namespace HealthInformationProgram.BAL
             }
 
             return settlementandHealthCentresAsSelectListItemsAsSelectListItems;
+        }
+
+        public List<SelectListItem> SupplementalDiagnosisCategoryNamesAsSelectListItems()
+        {
+            List<SelectListItem> supplementalDiagnosisCategoryNamesAsSelectListItems = new List<SelectListItem>();
+
+            DiagnosisData diagnosisData = new DiagnosisData();
+            List<SupplementalDiagnosisCategoryModel> allSupplementalDiagnosisCategoryNames = diagnosisData.GetAllSupplementalCategories();
+
+            foreach (SupplementalDiagnosisCategoryModel supplementalDiagnosisCategory in allSupplementalDiagnosisCategoryNames)
+            {
+                SelectListItem supplementalDiagnosisCategoryAsSelectListItem = new SelectListItem();
+
+                supplementalDiagnosisCategoryAsSelectListItem.Text = supplementalDiagnosisCategory.SupplementalDiagnosisCategoryType;
+                supplementalDiagnosisCategoryAsSelectListItem.Value = supplementalDiagnosisCategory.SupplementalDiagnosisCategoryId;
+
+                supplementalDiagnosisCategoryNamesAsSelectListItems.Add(supplementalDiagnosisCategoryAsSelectListItem);
+            }
+
+            return supplementalDiagnosisCategoryNamesAsSelectListItems;
         }
     }
 }
