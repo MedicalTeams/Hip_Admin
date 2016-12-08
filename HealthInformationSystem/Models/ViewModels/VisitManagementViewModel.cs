@@ -209,6 +209,7 @@ namespace HealthInformationProgram.Models.ViewModels
         public void SaveOfficeVisitDiagnosis(OfficeVisitDiagnosisModel officeVisitDiagnosisModel)
         {
             _addNewEditOfficeVisitDiagnosis = _visitManagementLogic.SaveOfficeVisitDiagnosis(officeVisitDiagnosisModel);
+            SetupFindVisit(_visitIdSearchStringFilter);
         }
 
         public bool IsValidModelDespiteWhatItIsSaying(ICollection<ModelState> modelStateValues)
