@@ -11,7 +11,7 @@ namespace HealthInformationProgram.Models
         [Display(Name = "Hardware Id")]
         public string FacilityHardwareInventoryId { get; set; }
         [Display(Name = "Facility Id")]
-        [Required]
+        [Required(ErrorMessage ="Facility Hardware is required") ]
         public string FacilityId { get; set; }
         [Display(Name = "Facility")]
         public string Facility { get; set; }
