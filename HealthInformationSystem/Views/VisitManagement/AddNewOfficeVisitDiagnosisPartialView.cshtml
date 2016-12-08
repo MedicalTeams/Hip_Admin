@@ -24,7 +24,7 @@
                 </div>
             </td>
             <td>
-                @Html.DropDownListFor(model => model.AddNewEditOfficeVisitDiagnosis.DiagnosisId, new SelectList(Model.DiagnosisAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.DiagnosisId), new { style = "width:150px", id = "facilityDropDownBox" })
+                @Html.DropDownListFor(model => model.AddNewEditOfficeVisitDiagnosis.DiagnosisId, new SelectList(Model.DiagnosisAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.DiagnosisId), new { onchange = "this.form.action='/VisitManagement?operation=OnDiagnosisChange';this.form.submit();" })
             </td>
 
             <td class="rightJustifiedLabelTableCell">

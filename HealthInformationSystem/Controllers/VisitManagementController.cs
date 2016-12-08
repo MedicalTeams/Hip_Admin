@@ -39,7 +39,7 @@ namespace HealthInformationProgram.Controllers
             {
                 SessionData.Current.VisitManagementViewModel.SetupEditOfficeVisit();
             }
-            if(operation == "CancelSaveEditOfficeVisit")
+            if (operation == "CancelSaveEditOfficeVisit")
             {
                 SessionData.Current.VisitManagementViewModel.SetupCancelSaveEditOfficeVisit();
             }
@@ -70,8 +70,19 @@ namespace HealthInformationProgram.Controllers
                     SessionData.Current.VisitManagementViewModel.SaveOfficeVisitDiagnosis(visitManagementViewModel.AddNewEditOfficeVisitDiagnosis);
                 }
             }
+            if(operation == "OnDiagnosisChange")
+            {
+                SessionData.Current.VisitManagementViewModel.AddNewEditOfficeVisitDiagnosis = visitManagementViewModel.AddNewEditOfficeVisitDiagnosis;
+            }
 
             return View(SessionData.Current.VisitManagementViewModel);
+        }
+
+        [HttpPost]
+        [Route("VisitManagement/TestMethod/")]
+        public ActionResult TestMethod(VisitManagementViewModel visitManagementViewModel, string operation)
+        {
+            return View(visitManagementViewModel);
         }
     }
 }
