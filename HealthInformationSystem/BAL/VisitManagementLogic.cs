@@ -7,6 +7,7 @@ using HealthInformationProgram.CustomExtensions;
 using HealthInformationProgram.Models;
 using HealthInformationProgram.Data;
 using HealthInformationProgram.Data.Tables;
+using HealthInformationProgram.Data.Repositories;
 
 namespace HealthInformationProgram.BAL
 {
@@ -165,6 +166,45 @@ namespace HealthInformationProgram.BAL
             }
 
             return supplementalDiagnosisCategoryNamesAsSelectListItems;
+        }
+
+        public void SaveOfficeVisit(OfficeVisitModel officeVisitModel)
+        {
+            OfficeVisitData officeVisitData = new OfficeVisitData();
+
+            FacilityHardwareInventoryRespository FacilityHardwareInventoryRespository =
+                new FacilityHardwareInventoryRespository();
+
+            List<faclty_hw_invtry> allFacilityHardwareInventoryRecords = FacilityHardwareInventoryRespository.GetAll();
+            faclty_hw_invtry facilityHardwareInventory = (from webAdminFacilityHardwareInventoryIds in allFacilityHardwareInventoryRecords
+                                                          where webAdminFacilityHardwareInventoryIds.itm_descn == "Website- Hip Admin"
+                                                          select webAdminFacilityHardwareInventoryIds).FirstOrDefault();
+            if (facilityHardwareInventory != null)
+            {
+                if (officeVisitModel.OfficeVisitId > 0)
+                {
+                    officeVisitModel.FacilityHardwareId = (decimal)facilityHardwareInventory.faclty_hw_invtry_id;
+                    officeVisitData.UpdateVisit(officeVisitModel);
+                }
+                else
+                {
+                    officeVisitData.CreateVisit(officeVisitModel);
+                }
+            }
+        }
+
+        public void SaveOfficeVisitDiagnosis(OfficeVisitDiagnosisModel officeVisitDiagnosisModel)
+        {
+            OfficeVisitDiagnosisData officeVisitDiagnosisData = new OfficeVisitDiagnosisData();
+
+            if (officeVisitDiagnosisModel.OfficeVisitId > 0)
+            {
+                //officeVisitDiagnosisData.UpdateVisitDiagnosis(officeVisitDiagnosisModel);
+            }
+            else
+            {
+                //officeVisitDiagnosisData.CreateVisitDiagnosis(officeVisitDiagnosisModel);
+            }            
         }
     }
 }
