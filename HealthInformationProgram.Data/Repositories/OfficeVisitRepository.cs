@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HealthInformationProgram.Data.DataContext;
 using HealthInformationProgram.Data.Tables;
+using System.Data.Entity.Validation;
 
 namespace HealthInformationProgram.Data.Repositories
 {
@@ -45,7 +46,7 @@ namespace HealthInformationProgram.Data.Repositories
             try
             {
 
-                using ( var ctx = new ClinicDataContext(connString) )
+                using (var ctx = new ClinicDataContext(connString))
                 {
                     ctx.ovs.Add(entity);
                     int result = ctx.SaveChanges();
@@ -53,7 +54,11 @@ namespace HealthInformationProgram.Data.Repositories
                     return result;
                 }
             }
-            catch ( Exception ex )
+            catch (DbEntityValidationException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
