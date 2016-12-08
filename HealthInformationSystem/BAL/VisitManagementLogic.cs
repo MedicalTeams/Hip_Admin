@@ -199,11 +199,11 @@ namespace HealthInformationProgram.BAL
 
             if (officeVisitDiagnosisModel.OfficeVisitId > 0)
             {
-                //officeVisitDiagnosisData.UpdateVisitDiagnosis(officeVisitDiagnosisModel);
+                officeVisitDiagnosisData.UpdateOfficeVisitDiagnosis(officeVisitDiagnosisModel);
             }
             else
             {
-                //officeVisitDiagnosisData.CreateVisitDiagnosis(officeVisitDiagnosisModel);
+                officeVisitDiagnosisData.CreateOfficeVisitDiagnosis(officeVisitDiagnosisModel);
             }            
         }
     }
