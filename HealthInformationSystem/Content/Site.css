@@ -1014,6 +1014,8 @@ tr.pager td
     text-align: center !important;
 }
 
+.date-picker {  background: white; }
+
 /* Spin.js spinner divs
 ----------------------------------------------------------*/
 

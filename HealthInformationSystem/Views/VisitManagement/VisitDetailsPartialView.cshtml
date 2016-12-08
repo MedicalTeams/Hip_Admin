@@ -151,7 +151,7 @@
                         @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
                     (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
                         {
-                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.VisitDate, new { @class = "datefield", @type = "date" })
+                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.VisitDate, new { @class = "date-picker" })
                             @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.VisitDate)
                         }
                         else
@@ -322,6 +322,11 @@
 
     </fieldset>
 
-
-
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        // This will make every element with the class "date-picker" into a DatePicker element
+        $('.date-picker').datepicker();
+    })
+</script>
