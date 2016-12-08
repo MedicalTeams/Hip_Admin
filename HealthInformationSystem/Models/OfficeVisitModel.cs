@@ -38,14 +38,26 @@ namespace HealthInformationProgram.Models
 
         public decimal FacilityHardwareId { get; set; }
 
+        public string _staffMemberName = string.Empty;
         [DisplayName("Staff Member")]
         [Required]
-        public string StaffMemberName { get; set; }
+        public string StaffMemberName
+        {
+            get
+            {
+                return _staffMemberName;
+            }
+
+            set
+            {
+                _staffMemberName = value;
+            }
+        }
 
         private DateTime _visitDate = DateTime.Now;
         [DisplayName("Visit Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-mm-yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:mm/dd/yyyy}")]
         [Required]
         public DateTime VisitDate
         {

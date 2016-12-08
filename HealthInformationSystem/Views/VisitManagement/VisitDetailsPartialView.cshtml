@@ -75,7 +75,7 @@
     (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
                         {
                             @Html.DropDownListFor(model => model.AddNewEditOfficeVisit.FacilityId, new SelectList(Model.SettlementandHealthCentresAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisit.FacilityId), new { style = "width:150px", id = "facilityDropDownBox" })
-                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.FacililtyName)
+                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.FacilityId)
                         }
                         else
                         {
@@ -156,7 +156,7 @@
                         @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
                     (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
                         {
-                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.VisitDate, "{0:dd-mm-yyyy}", new { @class = "date-picker" })
+                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.VisitDate, "{0:mm/dd/yyyy}", new { @class = "date-picker" })
                             @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.VisitDate)
                         }
                         else
@@ -185,7 +185,7 @@
             (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
                         {
                             @Html.DropDownListFor(model => model.AddNewEditOfficeVisit.GenderId, new SelectList(Model.GendersAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisit.GenderId), new { style = "width:150px", id = "genderDropDownBox" })
-                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.GenderName)
+                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.GenderId)
                         }
                         else
                         {
@@ -239,7 +239,7 @@
             (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
                         {
                             @Html.DropDownListFor(model => model.AddNewEditOfficeVisit.BeneficiaryId, new SelectList(Model.RefugeeStatusAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisit.BeneficiaryId), new { style = "width:150px", id = "refugeeStatusDropDownBox" })
-                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.BeneficiaryName)
+                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.BeneficiaryId)
                         }
                         else
                         {
@@ -264,8 +264,8 @@
                         @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
     (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
                         {
-                            @Html.DropDownListFor(model => model.VisitSearchResult.RevisitId, new SelectList(Model.NewOrRevisitStatusAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisit.RevisitId), new { style = "width:150px", id = "revisitDropDownBox" })
-                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.RevisitName)
+                            @Html.DropDownListFor(model => model.AddNewEditOfficeVisit.RevisitId, new SelectList(Model.NewOrRevisitStatusAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisit.RevisitId), new { style = "width:150px", id = "revisitDropDownBox" })
+                            @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.RevisitId)
                         }
                         else
                         {

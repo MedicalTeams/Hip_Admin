@@ -42,17 +42,16 @@ namespace HealthInformationProgram.Models.ViewModels
                 _visitSearchResult = value;
             }
         }
-
-        private OfficeVisitModel _addNewEditOfficeVisit = null;
+        
         public OfficeVisitModel AddNewEditOfficeVisit
         {
             get
             {
-                return _addNewEditOfficeVisit;
+                return _visitSearchResult;
             }
             set
             {
-                _addNewEditOfficeVisit = value;
+                _visitSearchResult = value;
             }
         }
 
@@ -101,13 +100,12 @@ namespace HealthInformationProgram.Models.ViewModels
         {
             _modelState = HIPViewModelStates.AddNewOfficeVisit;
             _userActionResponse = HIPUserActionResult.None;
-            _addNewEditOfficeVisit = new OfficeVisitModel();
+            _visitSearchResult = new OfficeVisitModel();
         }
 
         public void SetupEditOfficeVisit()
         {
             _modelState = HIPViewModelStates.EditOfficeVisit;
-            _addNewEditOfficeVisit = _visitSearchResult;
         }
 
         public void SetupCancelSaveEditOfficeVisit()
