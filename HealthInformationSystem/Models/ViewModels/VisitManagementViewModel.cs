@@ -202,12 +202,95 @@ namespace HealthInformationProgram.Models.ViewModels
 
         public void SaveOfficeVisit(OfficeVisitModel officeVisitModel)
         {
-            _visitManagementLogic.SaveOfficeVisit(officeVisitModel);
+            _visitSearchResult = _visitManagementLogic.SaveOfficeVisit(officeVisitModel);
+            _visitIdSearchStringFilter = _visitSearchResult.OfficeVisitId.ToString();
         }
 
         public void SaveOfficeVisitDiagnosis(OfficeVisitDiagnosisModel officeVisitDiagnosisModel)
         {
-            _visitManagementLogic.SaveOfficeVisitDiagnosis(officeVisitDiagnosisModel);
+            _addNewEditOfficeVisitDiagnosis = _visitManagementLogic.SaveOfficeVisitDiagnosis(officeVisitDiagnosisModel);
+        }
+
+        public bool IsValidModelDespiteWhatItIsSaying(ICollection<ModelState> modelStateValues)
+        {
+            bool isValidModelDespiteWhatItIsSaying = true;
+            foreach (ModelState modelState in modelStateValues)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    if (error.ErrorMessage.Contains(" field is required."))
+                    {
+                        string valueRequired = string.Format(error.ErrorMessage.Replace(" field is required.", ""));
+                        valueRequired = string.Format(valueRequired.Replace("The ", ""));
+
+                        if (valueRequired == "FacilityId")
+                        {
+                            if ((AddNewEditOfficeVisit.FacilityId == null) ||
+                                (AddNewEditOfficeVisit.FacilityId <= 0))
+                            {
+                                isValidModelDespiteWhatItIsSaying = false;
+                            }
+                        }
+                        else if (valueRequired == "GenderId")
+                        {
+                            if ((AddNewEditOfficeVisit.GenderId == null) ||
+                                (AddNewEditOfficeVisit.GenderId <= 0))
+                            {
+                                isValidModelDespiteWhatItIsSaying = false;
+                            }
+                        }
+                        else if (valueRequired == "BeneficiaryId")
+                        {
+                            if ((AddNewEditOfficeVisit.BeneficiaryId == null) ||
+                                (AddNewEditOfficeVisit.BeneficiaryId <= 0))
+                            {
+                                isValidModelDespiteWhatItIsSaying = false;
+                            }
+                        }
+                        else if (valueRequired == "Staff Member")
+                        {
+                            if (AddNewEditOfficeVisit.StaffMemberName.IsNullOrEmptyOrWhiteSpace())
+                            {
+                                isValidModelDespiteWhatItIsSaying = false;
+                            }
+                        }
+                        else if (valueRequired == "RevisitId")
+                        {
+                            if ((AddNewEditOfficeVisit.RevisitId == null) ||
+                                (AddNewEditOfficeVisit.RevisitId <= 0))
+                            {
+                                isValidModelDespiteWhatItIsSaying = false;
+                            }
+                        }
+                        else if (valueRequired == "Age")
+                        {
+                            if ((AddNewEditOfficeVisit.Age == null) ||
+                                (AddNewEditOfficeVisit.Age <= 0))
+                            {
+                                isValidModelDespiteWhatItIsSaying = false;
+                            }
+                        }
+                        else if (valueRequired == "DiagnosisId")
+                        {
+                            if ((_addNewEditOfficeVisitDiagnosis.DiagnosisId == null) ||
+                                (_addNewEditOfficeVisitDiagnosis.DiagnosisId <= 0))
+                            {
+                                isValidModelDespiteWhatItIsSaying = false;
+                            }
+                        }
+                        else
+                        {
+                            isValidModelDespiteWhatItIsSaying = false;
+                        }
+                    }
+                    else
+                    {
+                        isValidModelDespiteWhatItIsSaying = false;
+                    }
+                }
+            }
+
+            return isValidModelDespiteWhatItIsSaying;
         }
     }
 }

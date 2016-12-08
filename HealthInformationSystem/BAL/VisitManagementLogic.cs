@@ -182,7 +182,7 @@ namespace HealthInformationProgram.BAL
             return supplementalDiagnosisCategoryNamesAsSelectListItems;
         }
 
-        public void SaveOfficeVisit(OfficeVisitModel officeVisitModel)
+        public OfficeVisitModel SaveOfficeVisit(OfficeVisitModel officeVisitModel)
         {
             OfficeVisitData officeVisitData = new OfficeVisitData();
 
@@ -205,9 +205,11 @@ namespace HealthInformationProgram.BAL
                     officeVisitData.CreateVisit(officeVisitModel);
                 }
             }
+
+            return officeVisitModel;
         }
 
-        public void SaveOfficeVisitDiagnosis(OfficeVisitDiagnosisModel officeVisitDiagnosisModel)
+        public OfficeVisitDiagnosisModel SaveOfficeVisitDiagnosis(OfficeVisitDiagnosisModel officeVisitDiagnosisModel)
         {
             OfficeVisitDiagnosisData officeVisitDiagnosisData = new OfficeVisitDiagnosisData();
 
@@ -218,7 +220,9 @@ namespace HealthInformationProgram.BAL
             else
             {
                 officeVisitDiagnosisData.CreateOfficeVisitDiagnosis(officeVisitDiagnosisModel);
-            }            
+            }
+
+            return officeVisitDiagnosisModel;
         }
     }
 }

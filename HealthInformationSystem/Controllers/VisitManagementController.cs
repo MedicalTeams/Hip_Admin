@@ -56,77 +56,12 @@ namespace HealthInformationProgram.Controllers
                 }
                 else
                 {
-                    bool isValidModelDespiteWhatItIsSaying = true;
-                    foreach (ModelState modelState in ViewData.ModelState.Values)
-                    {
-                        foreach (ModelError error in modelState.Errors)
-                        {                            
-                            if(error.ErrorMessage.Contains(" field is required."))
-                            {
-                                string valueRequired = string.Format(error.ErrorMessage.Replace(" field is required.", ""));
-                                valueRequired = string.Format(valueRequired.Replace("The ", ""));
+                    SessionData.Current.VisitManagementViewModel.AddNewEditOfficeVisit = visitManagementViewModel.AddNewEditOfficeVisit;
 
-                                if(valueRequired == "FacilityId")
-                                {
-                                    if((visitManagementViewModel.AddNewEditOfficeVisit.FacilityId == null) ||
-                                        (visitManagementViewModel.AddNewEditOfficeVisit.FacilityId <= 0))
-                                    {
-                                        isValidModelDespiteWhatItIsSaying = false;
-                                    }
-                                }
-                                else if(valueRequired == "GenderId")
-                                {
-                                    if ((visitManagementViewModel.AddNewEditOfficeVisit.GenderId == null) ||
-                                        (visitManagementViewModel.AddNewEditOfficeVisit.GenderId <= 0))
-                                    {
-                                        isValidModelDespiteWhatItIsSaying = false;
-                                    }
-                                }
-                                else if (valueRequired == "BeneficiaryId")
-                                {
-                                    if ((visitManagementViewModel.AddNewEditOfficeVisit.BeneficiaryId == null) ||
-                                        (visitManagementViewModel.AddNewEditOfficeVisit.BeneficiaryId <= 0))
-                                    {
-                                        isValidModelDespiteWhatItIsSaying = false;
-                                    }
-                                }
-                                else if (valueRequired == "StaffMemberName")
-                                {
-                                    if (visitManagementViewModel.AddNewEditOfficeVisit.StaffMemberName.IsNullOrEmptyOrWhiteSpace())
-                                    {
-                                        isValidModelDespiteWhatItIsSaying = false;
-                                    }
-                                }
-                                else if (valueRequired == "RevisitId")
-                                {
-                                    if ((visitManagementViewModel.AddNewEditOfficeVisit.RevisitId == null) ||
-                                        (visitManagementViewModel.AddNewEditOfficeVisit.RevisitId <= 0))
-                                    {
-                                        isValidModelDespiteWhatItIsSaying = false;
-                                    }
-                                }
-                                else if (valueRequired == "Age")
-                                {
-                                    if ((visitManagementViewModel.AddNewEditOfficeVisit.Age == null) ||
-                                        (visitManagementViewModel.AddNewEditOfficeVisit.Age <= 0))
-                                    {
-                                        isValidModelDespiteWhatItIsSaying = false;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                isValidModelDespiteWhatItIsSaying = false;
-                            }
-                        }
-                    }
-
-                    if(isValidModelDespiteWhatItIsSaying)
+                    if (SessionData.Current.VisitManagementViewModel.IsValidModelDespiteWhatItIsSaying(ViewData.ModelState.Values))
                     {
                         SessionData.Current.VisitManagementViewModel.SaveOfficeVisit(visitManagementViewModel.AddNewEditOfficeVisit);
                     }
-
-                    SessionData.Current.VisitManagementViewModel.AddNewEditOfficeVisit = visitManagementViewModel.AddNewEditOfficeVisit;
                 }
             }
             if (operation == "AddNewOfficeVisitDiagnosis")
@@ -150,6 +85,15 @@ namespace HealthInformationProgram.Controllers
                 if (ModelState.IsValid)
                 {
                     SessionData.Current.VisitManagementViewModel.SaveOfficeVisitDiagnosis(visitManagementViewModel.AddNewEditOfficeVisitDiagnosis);
+                }
+                else
+                {
+                    SessionData.Current.VisitManagementViewModel.AddNewEditOfficeVisitDiagnosis = visitManagementViewModel.AddNewEditOfficeVisitDiagnosis;
+
+                    if (SessionData.Current.VisitManagementViewModel.IsValidModelDespiteWhatItIsSaying(ViewData.ModelState.Values))
+                    {
+                        SessionData.Current.VisitManagementViewModel.SaveOfficeVisitDiagnosis(visitManagementViewModel.AddNewEditOfficeVisitDiagnosis);
+                    }
                 }
             }
             if(operation == "OnDiagnosisChange")
