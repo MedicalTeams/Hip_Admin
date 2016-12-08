@@ -40,6 +40,7 @@ namespace HealthInformationProgram.Models
 
         [DisplayName("Visit Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-mm-yyyy}")]
         public DateTime VisitDate { get; set; }
 
         public decimal RevisitId { get; set; }

@@ -151,7 +151,7 @@
                         @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
                     (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
                         {
-                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.VisitDate, new { @class = "date-picker" })
+                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.VisitDate, "{0:dd-mm-yyyy}", new { @class = "date-picker" })
                             @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.VisitDate)
                         }
                         else
@@ -259,7 +259,7 @@
                         @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
     (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
                         {
-                            @Html.DropDownListFor(model => model.VisitSearchResult.RevisitId, new SelectList(Model.NewOrRevisitStatusAsSelectListItems(), "Value", "Text", Model.VisitSearchResult.RevisitId), new { style = "width:150px", id = "revisitDropDownBox" })
+                            @Html.DropDownListFor(model => model.VisitSearchResult.RevisitId, new SelectList(Model.NewOrRevisitStatusAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisit.RevisitId), new { style = "width:150px", id = "revisitDropDownBox" })
                             @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.RevisitName)
                         }
                         else
