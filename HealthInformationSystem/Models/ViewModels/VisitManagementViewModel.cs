@@ -202,12 +202,13 @@ namespace HealthInformationProgram.Models.ViewModels
 
         public void SaveOfficeVisit(OfficeVisitModel officeVisitModel)
         {
-            _visitManagementLogic.SaveOfficeVisit(officeVisitModel);
+            _visitSearchResult = _visitManagementLogic.SaveOfficeVisit(officeVisitModel);
+            _visitIdSearchStringFilter = _visitSearchResult.OfficeVisitId.ToString();
         }
 
         public void SaveOfficeVisitDiagnosis(OfficeVisitDiagnosisModel officeVisitDiagnosisModel)
         {
-            _visitManagementLogic.SaveOfficeVisitDiagnosis(officeVisitDiagnosisModel);
+            _addNewEditOfficeVisitDiagnosis = _visitManagementLogic.SaveOfficeVisitDiagnosis(officeVisitDiagnosisModel);
         }
 
         public bool IsValidModelDespiteWhatItIsSaying(ICollection<ModelState> modelStateValues)
