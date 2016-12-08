@@ -31,6 +31,8 @@ namespace HealthInformationProgram.BAL
         public List<SelectListItem> DiagnosisAsSelectListItems()
         {
             List<SelectListItem> diagnosisAsSelectListItems = new List<SelectListItem>();
+            SelectListItem blankSelectListItem = new SelectListItem { Text = "", Value = "" };
+            diagnosisAsSelectListItems.Add(blankSelectListItem);
 
             DiagnosisData diagnosisData = new DiagnosisData();
             List<DiagnosisModel> allDiagnosis = diagnosisData.GetAllDiagnosis();
@@ -51,6 +53,8 @@ namespace HealthInformationProgram.BAL
         public List<SelectListItem> SupplimentalDiagnosisAsSelectListItems(decimal DiagnosisId)
         {
             List<SelectListItem> supplimentalDiagnosisAsSelectListItems = new List<SelectListItem>();
+            SelectListItem blankSelectListItem = new SelectListItem { Text = "", Value = "" };
+            supplimentalDiagnosisAsSelectListItems.Add(blankSelectListItem);
 
             DiagnosisData diagnosisData = new DiagnosisData();
             List<SupplementalDiagnosisModel> allSupplementalDiagnosis = diagnosisData.GetAllSupplementalDiagnosisForGivenDiagnosisId(DiagnosisId);
@@ -71,6 +75,8 @@ namespace HealthInformationProgram.BAL
         public List<SelectListItem> GendersAsSelectListItems()
         {
             List<SelectListItem> gendersAsSelectListItems = new List<SelectListItem>();
+            SelectListItem blankSelectListItem = new SelectListItem { Text = "", Value = "" };
+            gendersAsSelectListItems.Add(blankSelectListItem);
 
             var repo = new HealthInformationProgram.Data.Repositories.LookupGenderRepository();
             List<lkup_gndr> allGenders = repo.GetAll();
@@ -91,6 +97,8 @@ namespace HealthInformationProgram.BAL
         public List<SelectListItem> RefugeeStatusAsSelectListItems()
         {
             List<SelectListItem> refugeeStatusesAsSelectListItems = new List<SelectListItem>();
+            SelectListItem blankSelectListItem = new SelectListItem { Text = "", Value = "" };
+            refugeeStatusesAsSelectListItems.Add(blankSelectListItem);
 
             var repo = new HealthInformationProgram.Data.Repositories.LookupBeneficiaryTypeRepository();
             List<lkup_bnfcry> allRefugeeStatus = repo.GetAll();
@@ -111,6 +119,8 @@ namespace HealthInformationProgram.BAL
         public List<SelectListItem> NewOrRevisitStatusAsSelectListItems()
         {
             List<SelectListItem> newOrRevisitStatusAsSelectListItems = new List<SelectListItem>();
+            SelectListItem blankSelectListItem = new SelectListItem { Text = "", Value = "" };
+            newOrRevisitStatusAsSelectListItems.Add(blankSelectListItem);
 
             RevisitData revisitData = new RevisitData();
             List<RevisitModel> allRevisitData = revisitData.GetAllRevisits();
@@ -131,6 +141,8 @@ namespace HealthInformationProgram.BAL
         public List<SelectListItem> SettlementandHealthCentresAsSelectListItems()
         {
             List<SelectListItem> settlementandHealthCentresAsSelectListItemsAsSelectListItems = new List<SelectListItem>();
+            SelectListItem blankSelectListItem = new SelectListItem { Text = "", Value = "" };
+            settlementandHealthCentresAsSelectListItemsAsSelectListItems.Add(blankSelectListItem);
 
             FacilityData facilityData = new FacilityData();
             List<FacilityModel> allFacilities = facilityData.GetFacilityList();
@@ -151,6 +163,8 @@ namespace HealthInformationProgram.BAL
         public List<SelectListItem> SupplementalDiagnosisCategoryNamesAsSelectListItems()
         {
             List<SelectListItem> supplementalDiagnosisCategoryNamesAsSelectListItems = new List<SelectListItem>();
+            SelectListItem blankSelectListItem = new SelectListItem { Text = "", Value = "" };
+            supplementalDiagnosisCategoryNamesAsSelectListItems.Add(blankSelectListItem);
 
             DiagnosisData diagnosisData = new DiagnosisData();
             List<SupplementalDiagnosisCategoryModel> allSupplementalDiagnosisCategoryNames = diagnosisData.GetAllSupplementalCategories();

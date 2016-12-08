@@ -89,11 +89,11 @@ namespace HealthInformationProgram.Data
         public int UpdateVisit(Models.OfficeVisitModel officeVisit)
         {
             var dataOfficeVisit = new Data.Tables.ov();
-            dataOfficeVisit.bnfcry_id = officeVisit.BeneficiaryId;
+            dataOfficeVisit.bnfcry_id = (decimal)officeVisit.BeneficiaryId;
             dataOfficeVisit.dt_of_visit = officeVisit.VisitDate;
             dataOfficeVisit.faclty_hw_invtry_id = officeVisit.FacilityHardwareId;
-            dataOfficeVisit.faclty_id = officeVisit.FacilityId;
-            dataOfficeVisit.gndr_id = officeVisit.GenderId;
+            dataOfficeVisit.faclty_id = (decimal)officeVisit.FacilityId;
+            dataOfficeVisit.gndr_id = (decimal)officeVisit.GenderId;
             dataOfficeVisit.infnt_age_mos = officeVisit.Age;
             dataOfficeVisit.opd_id = officeVisit.OpdId;
             dataOfficeVisit.ov_id = officeVisit.OfficeVisitId;
@@ -106,11 +106,11 @@ namespace HealthInformationProgram.Data
         public int CreateVisit(Models.OfficeVisitModel officeVisit)
         {
             var dataOfficeVisit = new Data.Tables.ov();
-            dataOfficeVisit.bnfcry_id = officeVisit.BeneficiaryId;
+            dataOfficeVisit.bnfcry_id = (decimal)officeVisit.BeneficiaryId;
             dataOfficeVisit.dt_of_visit = officeVisit.VisitDate;
             dataOfficeVisit.faclty_hw_invtry_id = officeVisit.FacilityHardwareId;
-            dataOfficeVisit.faclty_id = officeVisit.FacilityId;
-            dataOfficeVisit.gndr_id = officeVisit.GenderId;
+            dataOfficeVisit.faclty_id = (decimal)officeVisit.FacilityId;
+            dataOfficeVisit.gndr_id = (decimal)officeVisit.GenderId;
             dataOfficeVisit.infnt_age_mos = officeVisit.Age;
             dataOfficeVisit.opd_id = officeVisit.OpdId;
             dataOfficeVisit.ov_id = officeVisit.OfficeVisitId;

@@ -17,15 +17,16 @@ namespace HealthInformationProgram.Models
 
         [DisplayName("Settlement and Health Centre")]
         public string FacililtyName { get; set; }
-        public decimal FacilityId { get; set; }
+        public decimal? FacilityId { get; set; }
 
         [DisplayName("Gender")]
         public string GenderName { get; set; }
-        public decimal GenderId { get; set; }
+        public decimal? GenderId { get; set; }
 
         [DisplayName("Refugee Status")]
         public string BeneficiaryName { get; set; }
-        public decimal BeneficiaryId { get; set; }
+
+        public decimal? BeneficiaryId { get; set; }
 
         [DisplayName("OPD Id")]
         public decimal OpdId { get; set; }
@@ -43,7 +44,7 @@ namespace HealthInformationProgram.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-mm-yyyy}")]
         public DateTime VisitDate { get; set; }
 
-        public decimal RevisitId { get; set; }
+        public decimal? RevisitId { get; set; }
         [DisplayName("New or Revisit")]
         public string RevisitName { get; set; }
 

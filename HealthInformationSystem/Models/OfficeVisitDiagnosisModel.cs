@@ -12,15 +12,15 @@ namespace HealthInformationProgram.Models
         public decimal OfficeVisitDiagnosisId { get; set; }
         public decimal OfficeVisitId { get; set; }
 
-        public decimal DiagnosisId { get; set; }
+        public decimal? DiagnosisId { get; set; }
         [DisplayName("Diagnosis")]
         public string DiganosisName { get; set; }
 
-        public decimal SupplementalDiagnosisId { get; set; }
+        public decimal? SupplementalDiagnosisId { get; set; }
         [DisplayName("Supplemental Diagnosis")]
         public string SupplementalDiagnosisName { get; set; }
 
-        public decimal SupplementalDiagnosisCategoryId { get; set; }
+        public decimal? SupplementalDiagnosisCategoryId { get; set; }
 
         [DisplayName("Injury Location")]
         public string SupplementalDiagnosisCategoryName { get; set; }

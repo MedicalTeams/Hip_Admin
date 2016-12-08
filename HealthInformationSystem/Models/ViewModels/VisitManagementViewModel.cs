@@ -167,9 +167,14 @@ namespace HealthInformationProgram.Models.ViewModels
             return _visitManagementLogic.DiagnosisAsSelectListItems();
         }
 
-        public List<SelectListItem> SupplimentalDiagnosisAsSelectListItems(decimal DiagnosisId)
+        public List<SelectListItem> SupplimentalDiagnosisAsSelectListItems(decimal? DiagnosisId)
         {
-            return _visitManagementLogic.SupplimentalDiagnosisAsSelectListItems(DiagnosisId);
+            if(DiagnosisId == null)
+            {
+                DiagnosisId = 0;
+            }
+
+            return _visitManagementLogic.SupplimentalDiagnosisAsSelectListItems((decimal)DiagnosisId);
         }
 
         public List<SelectListItem> GendersAsSelectListItems()

@@ -52,7 +52,7 @@ namespace HealthInformationProgram.Data
             var dataModel = new Data.Tables.ov_diag();
 
             dataModel.ov_id = officeVisitDiag.OfficeVisitId;
-            dataModel.diag_id = officeVisitDiag.DiagnosisId;
+            dataModel.diag_id = (decimal)officeVisitDiag.DiagnosisId;
             dataModel.splmtl_diag_id = officeVisitDiag.SupplementalDiagnosisId;
             dataModel.cntct_trmnt_cnt = officeVisitDiag.ContactTreatmentCount;
             dataModel.splmtl_diag_cat_id = officeVisitDiag.SupplementalDiagnosisCategoryId;
@@ -81,7 +81,7 @@ namespace HealthInformationProgram.Data
             var dataModel = new Data.Tables.ov_diag();
             dataModel.ov_diag_id = officeVisitDiag.OfficeVisitDiagnosisId;
             dataModel.ov_id = officeVisitDiag.OfficeVisitId;
-            dataModel.diag_id = officeVisitDiag.DiagnosisId;
+            dataModel.diag_id = (decimal)officeVisitDiag.DiagnosisId;
             dataModel.splmtl_diag_id = officeVisitDiag.SupplementalDiagnosisId;
             dataModel.cntct_trmnt_cnt = officeVisitDiag.ContactTreatmentCount;
             dataModel.splmtl_diag_cat_id = officeVisitDiag.SupplementalDiagnosisCategoryId;
