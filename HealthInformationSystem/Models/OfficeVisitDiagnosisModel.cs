@@ -12,7 +12,8 @@ namespace HealthInformationProgram.Models
         public decimal OfficeVisitDiagnosisId { get; set; }
         public decimal OfficeVisitId { get; set; }
 
-        public decimal? DiagnosisId { get; set; }
+        [Required]
+        public decimal? DiagnosisId { get; set; }        
         [DisplayName("Diagnosis")]
         public string DiganosisName { get; set; }
 
