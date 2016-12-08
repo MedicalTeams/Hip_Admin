@@ -67,16 +67,10 @@ namespace HealthInformationProgram.Data
 
 
           return  officeVisitDiagRepo.CreateOfficeDiagnosis(dataModel);
-
-
-
-
         }
+
         public int UpdateOfficeVisitDiagnosis(Models.OfficeVisitDiagnosisModel officeVisitDiag)
         {
-
-
-
             var officeVisitDiagRepo = new Data.Repositories.OfficeVisitDiagnosisRepository();
             var dataModel = new Data.Tables.ov_diag();
             dataModel.ov_diag_id = officeVisitDiag.OfficeVisitDiagnosisId;
@@ -93,10 +87,6 @@ namespace HealthInformationProgram.Data
 
 
             return officeVisitDiagRepo.Update(dataModel);
-
-
-
-
         }
     }
 }
