@@ -156,7 +156,7 @@
                         @if ((Model.ModelState == HIPViewModelStates.EditOfficeVisit) ||
                     (Model.ModelState == HIPViewModelStates.AddNewOfficeVisit))
                         {
-                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.VisitDate, "{0:mm/dd/yyyy}", new { @class = "date-picker" })
+                            @Html.TextBoxFor(model => model.AddNewEditOfficeVisit.VisitDate, "{0:MM/dd/yyyy}", new { @class = "date-picker" })
                             @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisit.VisitDate)
                         }
                         else

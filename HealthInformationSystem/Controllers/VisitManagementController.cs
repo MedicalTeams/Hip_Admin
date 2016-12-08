@@ -7,6 +7,7 @@ using HealthInformationProgram.Data;
 using HealthInformationProgram.SessionObject;
 using HealthInformationProgram.Models.ViewModels;
 using HealthInformationProgram.Models.ViewModels.Common;
+using HealthInformationProgram.CustomExtensions;
 
 namespace HealthInformationProgram.Controllers
 {
@@ -23,7 +24,6 @@ namespace HealthInformationProgram.Controllers
         [HttpPost]
         public ActionResult Index(VisitManagementViewModel visitManagementViewModel, string operation)
         {
-
             if (operation == "NewOfficeVisitSearch")
             {
                 SessionData.Current.VisitManagementViewModel.SetupNewOfficeVisitSearch();
@@ -50,16 +50,83 @@ namespace HealthInformationProgram.Controllers
             }
             if (operation == "SaveEditOfficeVisit")
             {
-                if (TryValidateModel(visitManagementViewModel.AddNewEditOfficeVisit))
+                if (ModelState.IsValid)
                 {
                     SessionData.Current.VisitManagementViewModel.SaveOfficeVisit(visitManagementViewModel.AddNewEditOfficeVisit);
                 }
                 else
                 {
-                    var errors = ModelState
-                        .Where(x => x.Value.Errors.Count > 0)
-                        .Select(x => new { x.Key, x.Value.Errors })
-                        .ToArray();
+                    bool isValidModelDespiteWhatItIsSaying = true;
+                    foreach (ModelState modelState in ViewData.ModelState.Values)
+                    {
+                        foreach (ModelError error in modelState.Errors)
+                        {                            
+                            if(error.ErrorMessage.Contains(" field is required."))
+                            {
+                                string valueRequired = string.Format(error.ErrorMessage.Replace(" field is required.", ""));
+                                valueRequired = string.Format(valueRequired.Replace("The ", ""));
+
+                                if(valueRequired == "FacilityId")
+                                {
+                                    if((visitManagementViewModel.AddNewEditOfficeVisit.FacilityId == null) ||
+                                        (visitManagementViewModel.AddNewEditOfficeVisit.FacilityId <= 0))
+                                    {
+                                        isValidModelDespiteWhatItIsSaying = false;
+                                    }
+                                }
+                                else if(valueRequired == "GenderId")
+                                {
+                                    if ((visitManagementViewModel.AddNewEditOfficeVisit.GenderId == null) ||
+                                        (visitManagementViewModel.AddNewEditOfficeVisit.GenderId <= 0))
+                                    {
+                                        isValidModelDespiteWhatItIsSaying = false;
+                                    }
+                                }
+                                else if (valueRequired == "BeneficiaryId")
+                                {
+                                    if ((visitManagementViewModel.AddNewEditOfficeVisit.BeneficiaryId == null) ||
+                                        (visitManagementViewModel.AddNewEditOfficeVisit.BeneficiaryId <= 0))
+                                    {
+                                        isValidModelDespiteWhatItIsSaying = false;
+                                    }
+                                }
+                                else if (valueRequired == "StaffMemberName")
+                                {
+                                    if (visitManagementViewModel.AddNewEditOfficeVisit.StaffMemberName.IsNullOrEmptyOrWhiteSpace())
+                                    {
+                                        isValidModelDespiteWhatItIsSaying = false;
+                                    }
+                                }
+                                else if (valueRequired == "RevisitId")
+                                {
+                                    if ((visitManagementViewModel.AddNewEditOfficeVisit.RevisitId == null) ||
+                                        (visitManagementViewModel.AddNewEditOfficeVisit.RevisitId <= 0))
+                                    {
+                                        isValidModelDespiteWhatItIsSaying = false;
+                                    }
+                                }
+                                else if (valueRequired == "Age")
+                                {
+                                    if ((visitManagementViewModel.AddNewEditOfficeVisit.Age == null) ||
+                                        (visitManagementViewModel.AddNewEditOfficeVisit.Age <= 0))
+                                    {
+                                        isValidModelDespiteWhatItIsSaying = false;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                isValidModelDespiteWhatItIsSaying = false;
+                            }
+                        }
+                    }
+
+                    if(isValidModelDespiteWhatItIsSaying)
+                    {
+                        SessionData.Current.VisitManagementViewModel.SaveOfficeVisit(visitManagementViewModel.AddNewEditOfficeVisit);
+                    }
+
+                    SessionData.Current.VisitManagementViewModel.AddNewEditOfficeVisit = visitManagementViewModel.AddNewEditOfficeVisit;
                 }
             }
             if (operation == "AddNewOfficeVisitDiagnosis")
@@ -92,13 +159,6 @@ namespace HealthInformationProgram.Controllers
             }
 
             return View(SessionData.Current.VisitManagementViewModel);
-        }
-
-        [HttpPost]
-        [Route("VisitManagement/TestMethod/")]
-        public ActionResult TestMethod(VisitManagementViewModel visitManagementViewModel, string operation)
-        {
-            return View(visitManagementViewModel);
         }
     }
 }
