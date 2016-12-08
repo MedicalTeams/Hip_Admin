@@ -57,7 +57,7 @@ namespace HealthInformationProgram.Models
         private DateTime _visitDate = DateTime.Now;
         [DisplayName("Visit Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:mm/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Required]
         public DateTime VisitDate
         {
