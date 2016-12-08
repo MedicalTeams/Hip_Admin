@@ -66,8 +66,8 @@ namespace HealthInformationProgram.Data.Repositories
             {
                 using (var ctx = new ClinicDataContext(connString))
                 {
-
-                    return ctx.lkup_splmtl_diag.OrderBy(x => x.diag_id == diagnosisId).ToList();
+                    
+                    return ctx.lkup_splmtl_diag.Where(x => x.diag_id == diagnosisId).ToList(); ;
                 }
             }
             catch (Exception ex)
