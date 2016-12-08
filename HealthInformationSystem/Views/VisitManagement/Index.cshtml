@@ -30,12 +30,18 @@
 }
 else
 {
-    <div class="body searchCriteria">
-        <div class="user-message">
-            <p>
-                You are currently NOT AUTHORIZED to use the Visit Management feature of the Health Information Program - for authorization please see your administrator.
-            </p>
+    if (!SessionData.Current.LoggedInUser.IsLoggedIn())
+    {
+        Response.Redirect("/Account/Login");
+    }
+    else
+    {
+        <div class="body searchCriteria">
+            <div class="user-message">
+                <p>
+                    You are currently NOT AUTHORIZED to use the Visit Management feature of the Health Information Program - for authorization please see your administrator.
+                </p>
+            </div>
         </div>
-    </div>
+    }
 }
-
