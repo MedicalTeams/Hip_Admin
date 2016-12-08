@@ -94,8 +94,8 @@ namespace HealthInformationProgram.Data
             dataOfficeVisit.faclty_hw_invtry_id = officeVisit.FacilityHardwareId;
             dataOfficeVisit.faclty_id = (decimal)officeVisit.FacilityId;
             dataOfficeVisit.gndr_id = (decimal)officeVisit.GenderId;
-            dataOfficeVisit.infnt_age_mos = officeVisit.Age;
-            dataOfficeVisit.opd_id = officeVisit.OpdId;
+            dataOfficeVisit.infnt_age_mos = (decimal)officeVisit.Age;
+            dataOfficeVisit.opd_id = (decimal)officeVisit.OpdId;
             dataOfficeVisit.ov_id = officeVisit.OfficeVisitId;
             dataOfficeVisit.rec_updt_dt = DateTime.UtcNow;
             dataOfficeVisit.rec_updt_user_id_cd = SessionData.Current.LoggedInUser.UserName;
@@ -111,8 +111,8 @@ namespace HealthInformationProgram.Data
             dataOfficeVisit.faclty_hw_invtry_id = officeVisit.FacilityHardwareId;
             dataOfficeVisit.faclty_id = (decimal)officeVisit.FacilityId;
             dataOfficeVisit.gndr_id = (decimal)officeVisit.GenderId;
-            dataOfficeVisit.infnt_age_mos = officeVisit.Age;
-            dataOfficeVisit.opd_id = officeVisit.OpdId;
+            dataOfficeVisit.infnt_age_mos = (decimal)officeVisit.Age;
+            dataOfficeVisit.opd_id = (decimal)officeVisit.OpdId;
             dataOfficeVisit.ov_id = officeVisit.OfficeVisitId;
             dataOfficeVisit.rec_updt_dt = DateTime.UtcNow;
             dataOfficeVisit.rec_updt_user_id_cd = SessionData.Current.LoggedInUser.UserName;

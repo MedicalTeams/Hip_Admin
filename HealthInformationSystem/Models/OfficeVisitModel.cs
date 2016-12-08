@@ -29,7 +29,7 @@ namespace HealthInformationProgram.Models
         public decimal? BeneficiaryId { get; set; }
 
         [DisplayName("OPD Id")]
-        public decimal OpdId { get; set; }
+        public decimal? OpdId { get; set; }
 
         [DisplayName("Visit Id")]
         public decimal OfficeVisitId { get; set; }
@@ -39,17 +39,29 @@ namespace HealthInformationProgram.Models
         [DisplayName("Staff Member")]
         public string StaffMemberName { get; set; }
 
+        private DateTime _visitDate = DateTime.Now;
         [DisplayName("Visit Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-mm-yyyy}")]
-        public DateTime VisitDate { get; set; }
+        public DateTime VisitDate
+        {
+            get
+            {
+                return _visitDate;
+            }
+
+            set
+            {
+                _visitDate = value;
+            }
+        }
 
         public decimal? RevisitId { get; set; }
         [DisplayName("New or Revisit")]
         public string RevisitName { get; set; }
 
         [DisplayName("Age")]
-        public decimal Age { get; set; }
+        public decimal? Age { get; set; }
 
         public List<OfficeVisitDiagnosisModel> OfficeVisitDiagnosis { get; set; }
     }
