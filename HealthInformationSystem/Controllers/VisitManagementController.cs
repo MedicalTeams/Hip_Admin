@@ -45,7 +45,10 @@ namespace HealthInformationProgram.Controllers
             }
             if (operation == "SaveEditOfficeVisit")
             {
-                SessionData.Current.VisitManagementViewModel.SetupCancelSaveEditOfficeVisit();
+                if (ModelState.IsValid)
+                {
+                    SessionData.Current.VisitManagementViewModel.SaveOfficeVisit(visitManagementViewModel.AddNewEditOfficeVisit);
+                }
             }
             if (operation == "AddNewOfficeVisitDiagnosis")
             {
@@ -62,7 +65,10 @@ namespace HealthInformationProgram.Controllers
             }
             if (operation == "SaveEditOfficeVisitDiagnosis")
             {
-                SessionData.Current.VisitManagementViewModel.SetupCancelSaveEditOfficeVisitDiagnosis();
+                if (ModelState.IsValid)
+                {
+                    SessionData.Current.VisitManagementViewModel.SaveOfficeVisitDiagnosis(visitManagementViewModel.AddNewEditOfficeVisitDiagnosis);
+                }
             }
 
             return View(SessionData.Current.VisitManagementViewModel);

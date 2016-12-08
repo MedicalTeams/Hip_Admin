@@ -196,5 +196,15 @@ namespace HealthInformationProgram.Models.ViewModels
         {
             return _visitManagementLogic.SupplementalDiagnosisCategoryNamesAsSelectListItems();
         }
+
+        public void SaveOfficeVisit(OfficeVisitModel officeVisitModel)
+        {
+            _visitManagementLogic.SaveOfficeVisit(officeVisitModel);
+        }
+
+        public void SaveOfficeVisitDiagnosis(OfficeVisitDiagnosisModel officeVisitDiagnosisModel)
+        {
+            _visitManagementLogic.SaveOfficeVisitDiagnosis(officeVisitDiagnosisModel);
+        }
     }
 }
