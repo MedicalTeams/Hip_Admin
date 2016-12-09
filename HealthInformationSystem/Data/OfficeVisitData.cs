@@ -23,6 +23,7 @@ namespace HealthInformationProgram.Data
             var genderData = new GenderData();
             var facilityHardwareData = new FacilityHardwareData();
             var facilityData = new FacilityData();
+            var revisitData = new RevisitData();
 
             foreach (var item in dataList)
             {
@@ -39,6 +40,7 @@ namespace HealthInformationProgram.Data
                 visit.Age = item.infnt_age_mos;
                 visit.FacilityHardwareId = item.faclty_hw_invtry_id;
                 visit.RevisitId = item.rvisit_id;
+                visit.RevisitName = revisitData.GetRevisit(item.rvisit_id).Description;
                 visit.StaffMemberName = item.staff_mbr_name;
                 visit.VisitDate = item.dt_of_visit;
                 visit.CreateDate = item.rec_creat_dt.ToShortDateString();
@@ -60,6 +62,7 @@ namespace HealthInformationProgram.Data
             Models.OfficeVisitModel visit = null;
             var facilityHardwareData = new FacilityHardwareData();
             var facilityData = new FacilityData();
+            var revisitData = new RevisitData();
 
             if (item != null)
             {
@@ -77,6 +80,7 @@ namespace HealthInformationProgram.Data
                 visit.OfficeVisitDiagnosis = visitDiag.GetByVisit(item.ov_id.Value);
                 visit.Age = item.infnt_age_mos;
                 visit.RevisitId = item.rvisit_id;
+                visit.RevisitName = revisitData.GetRevisit(item.rvisit_id).Description;
                 visit.VisitDate = item.dt_of_visit;
                 visit.CreateDate = item.rec_creat_dt.ToShortDateString();
                 visit.CreatedBy = item.rec_creat_user_id_cd;
