@@ -28,6 +28,7 @@
                 </td>
                 <td>
                     @Html.DropDownListFor(model => model.AddNewEditOfficeVisitDiagnosis.DiagnosisId, new SelectList(Model.DiagnosisAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.DiagnosisId), new { onchange = "this.form.action='/VisitManagement?operation=OnDiagnosisChange';this.form.submit();" })
+                    @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisitDiagnosis.DiagnosisId)
                 </td>
 
                 <td class="rightJustifiedLabelTableCell">
