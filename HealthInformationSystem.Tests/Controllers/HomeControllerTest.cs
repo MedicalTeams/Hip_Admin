@@ -28,13 +28,13 @@ namespace HealthInformationProgram.Tests.Controllers
 
         
 
-        [TestMethod]
-        public void Can_GetEntity()
-        {
-            // Arrange
-            HomeController controller = new HomeController();
+        //[TestMethod]
+        //public void Can_GetEntity()
+        //{
+        //    // Arrange
+        //    HomeController controller = new HomeController();
 
-            var result = controller.GetEntity("RevisitModel");
-        }
+        //    var result = controller.GetEntity("RevisitModel");
+        //}
     }
 }

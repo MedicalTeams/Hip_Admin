@@ -1,4 +1,4 @@
-﻿
+﻿@using HealthInformationProgram.SessionObject
 @{
     
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -79,6 +79,12 @@
         <script src="~/Scripts/jquery.validate.min.js"></script>
         <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
 </header>
+@if (!SessionData.Current.LoggedInUser.IsLoggedIn())
+    {
+        Response.Redirect("/Account/Login");
+    }
+else
+{
 <body>
     <h2>@ViewBag.Title</h2>
     <div id="createWrapper" class="createWrapper">
@@ -644,3 +650,4 @@
 </script>
 
 
+}

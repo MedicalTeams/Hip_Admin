@@ -30,35 +30,36 @@ namespace HealthInformationProgram.Controllers
 
             return View();
         }
-        
-        public ActionResult ClientManagement()
-        {
-            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Login", "Account");
-            }
 
-            ViewBag.Message = "Client Management";
-          //  var sysInfo = new FacilityHardwareData();
-          //  var app = sysInfo.GetCurrentApplicationVersion();
-            //ViewBag.Version
-           // TempData["Version"] = String.Format("Current application version is {0} released on {1}", app.ItemVersion, app.ReleaseDate); ;
-            return View();
-        }
-        public ActionResult DatabaseManagement()
-        {
-            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+        //public ActionResult ClientManagement()
+        //{
+        //    if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+        //    {
+        //        return RedirectToAction("Login", "Account");
+        //    }
 
-            //TODO: Set a default entity for initial load
-            TempData["Version"] = string.Empty;
-            return View();
-        }
+        //    ViewBag.Message = "Client Management";
+        //  //  var sysInfo = new FacilityHardwareData();
+        //  //  var app = sysInfo.GetCurrentApplicationVersion();
+        //    //ViewBag.Version
+        //   // TempData["Version"] = String.Format("Current application version is {0} released on {1}", app.ItemVersion, app.ReleaseDate); ;
+        //    return View();
+        //}
+        //public ActionResult DatabaseManagement()
+        //{
+        //    if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+        //    {
+        //        return RedirectToAction("Login", "Account");
+        //    }
+
+        //    //TODO: Set a default entity for initial load
+        //    TempData["Version"] = string.Empty;
+        //    return View();
+        //}
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult Users()
         {
-            if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            if (!SessionData.Current.LoggedInUser.IsLoggedIn() ||!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -100,7 +101,7 @@ namespace HealthInformationProgram.Controllers
             }
             else if ((operation != null) && (operation == "SaveAddNewUser"))
             {
-                if(ViewData.ModelState.IsValid)
+                if (ViewData.ModelState.IsValid)
                 {
                     usersAdministrationUsersViewModel.SaveAddNewUser();
                     return RedirectToAction("Users", "Home");
@@ -118,7 +119,7 @@ namespace HealthInformationProgram.Controllers
             {
                 return RedirectToAction("Users", "Home");
             }
-            
+
             return View(usersAdministrationUsersViewModel);
         }
 
@@ -133,22 +134,22 @@ namespace HealthInformationProgram.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-      
-        [HttpPost]
-        public ActionResult GetEntity(string entityName)
-        {
 
-            var jsonString = GetEntityDefinition(entityName);
-            return Json(jsonString);
-        }
-        [HttpPost]
-        public ActionResult Create(string modelName)
-        {
-            Type type = GetModelType(modelName);
-            var model = Activator.CreateInstance(type);
-            var view = GetPartialViewPath(modelName, model);
-            return view;
-        }
+        //[HttpPost]
+        //public ActionResult GetEntity(string entityName)
+        //{
+
+        //    var jsonString = GetEntityDefinition(entityName);
+        //    return Json(jsonString);
+        //}
+        //[HttpPost]
+        //public ActionResult Create(string modelName)
+        //{
+        //    Type type = GetModelType(modelName);
+        //    var model = Activator.CreateInstance(type);
+        //    var view = GetPartialViewPath(modelName, model);
+        //    return view;
+        //}
         /*
         [HttpPost]
         public ActionResult UpdateRawVisit(RawVisitModel model)
