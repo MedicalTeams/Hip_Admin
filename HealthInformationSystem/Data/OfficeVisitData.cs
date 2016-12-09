@@ -105,7 +105,7 @@ namespace HealthInformationProgram.Data
             return  _officeVisitRepo.Update(dataOfficeVisit);
 
         }
-        public int CreateVisit(Models.OfficeVisitModel officeVisit)
+        public decimal? CreateVisit(Models.OfficeVisitModel officeVisit)
         {
             var dataOfficeVisit = new Data.Tables.ov();
             dataOfficeVisit.bnfcry_id = (decimal)officeVisit.BeneficiaryId;

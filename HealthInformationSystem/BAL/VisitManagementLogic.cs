@@ -182,9 +182,10 @@ namespace HealthInformationProgram.BAL
             return supplementalDiagnosisCategoryNamesAsSelectListItems;
         }
 
-        public OfficeVisitModel SaveOfficeVisit(OfficeVisitModel officeVisitModel)
+        public decimal? SaveOfficeVisit(OfficeVisitModel officeVisitModel)
         {
             OfficeVisitData officeVisitData = new OfficeVisitData();
+            decimal? ov_idAfterSave = officeVisitModel.OfficeVisitId;
 
             FacilityHardwareInventoryRespository FacilityHardwareInventoryRespository =
                 new FacilityHardwareInventoryRespository();
@@ -202,11 +203,11 @@ namespace HealthInformationProgram.BAL
                 }
                 else
                 {
-                    officeVisitData.CreateVisit(officeVisitModel);
+                    ov_idAfterSave = officeVisitData.CreateVisit(officeVisitModel);
                 }
             }
 
-            return officeVisitModel;
+            return ov_idAfterSave;
         }
 
         public OfficeVisitDiagnosisModel SaveOfficeVisitDiagnosis(OfficeVisitDiagnosisModel officeVisitDiagnosisModel)

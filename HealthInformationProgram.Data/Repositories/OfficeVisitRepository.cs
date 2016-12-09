@@ -41,7 +41,7 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateOfficeVisit(ov entity)
+        public decimal? CreateOfficeVisit(ov entity)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace HealthInformationProgram.Data.Repositories
                     ctx.ovs.Add(entity);
                     int result = ctx.SaveChanges();
 
-                    return result;
+                    return entity.ov_id;
                 }
             }
             catch (DbEntityValidationException ex)

@@ -43,11 +43,8 @@ namespace HealthInformationProgram.Data
             return list;
         }
 
-        public int CreateOfficeVisitDiagnosis(Models.OfficeVisitDiagnosisModel officeVisitDiag)
+        public decimal CreateOfficeVisitDiagnosis(Models.OfficeVisitDiagnosisModel officeVisitDiag)
         {
-
-
-
             var officeVisitDiagRepo = new Data.Repositories.OfficeVisitDiagnosisRepository();
             var dataModel = new Data.Tables.ov_diag();
 
