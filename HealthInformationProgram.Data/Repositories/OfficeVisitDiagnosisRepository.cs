@@ -56,7 +56,7 @@ namespace HealthInformationProgram.Data.Repositories
                 throw ex;
             }
         }
-        public int CreateOfficeDiagnosis(ov_diag entity)
+        public decimal CreateOfficeDiagnosis(ov_diag entity)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace HealthInformationProgram.Data.Repositories
                     ctx.ov_diag.Add(entity);
                     int result = ctx.SaveChanges();
 
-                    return result;
+                    return entity.ov_id;
                 }
             }
             catch ( Exception ex )

@@ -202,8 +202,8 @@ namespace HealthInformationProgram.Models.ViewModels
 
         public void SaveOfficeVisit(OfficeVisitModel officeVisitModel)
         {
-            _visitSearchResult = _visitManagementLogic.SaveOfficeVisit(officeVisitModel);
-            _visitIdSearchStringFilter = _visitSearchResult.OfficeVisitId.ToString();
+            _visitIdSearchStringFilter = _visitManagementLogic.SaveOfficeVisit(officeVisitModel) != null? _visitManagementLogic.SaveOfficeVisit(officeVisitModel).ToString() : String.Empty;
+            SetupFindVisit(_visitIdSearchStringFilter);
         }
 
         public void SaveOfficeVisitDiagnosis(OfficeVisitDiagnosisModel officeVisitDiagnosisModel)
