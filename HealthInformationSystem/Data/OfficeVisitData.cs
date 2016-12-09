@@ -98,6 +98,7 @@ namespace HealthInformationProgram.Data
             dataOfficeVisit.infnt_age_mos = (decimal)officeVisit.Age;
             dataOfficeVisit.opd_id = (decimal)officeVisit.OpdId;
             dataOfficeVisit.ov_id = officeVisit.OfficeVisitId;
+            dataOfficeVisit.rvisit_id = officeVisit.RevisitId.Value;
             dataOfficeVisit.staff_mbr_name = officeVisit.StaffMemberName;
             dataOfficeVisit.rec_updt_dt = DateTime.UtcNow;
             dataOfficeVisit.rec_updt_user_id_cd = SessionData.Current.LoggedInUser.UserName;
@@ -116,6 +117,7 @@ namespace HealthInformationProgram.Data
             dataOfficeVisit.infnt_age_mos = (decimal)officeVisit.Age;
             dataOfficeVisit.opd_id = (decimal)officeVisit.OpdId;
             dataOfficeVisit.staff_mbr_name = officeVisit.StaffMemberName;
+            dataOfficeVisit.rvisit_id = officeVisit.RevisitId.Value;
             dataOfficeVisit.rec_updt_dt = DateTime.UtcNow;
             dataOfficeVisit.rec_updt_user_id_cd = SessionData.Current.LoggedInUser.UserName;
             dataOfficeVisit.rec_creat_dt = DateTime.UtcNow;
