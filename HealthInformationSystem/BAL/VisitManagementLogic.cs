@@ -214,7 +214,7 @@ namespace HealthInformationProgram.BAL
         {
             OfficeVisitDiagnosisData officeVisitDiagnosisData = new OfficeVisitDiagnosisData();
 
-            if (officeVisitDiagnosisModel.OfficeVisitId > 0)
+            if (officeVisitDiagnosisModel.OfficeVisitDiagnosisId > 0)
             {
                 officeVisitDiagnosisData.UpdateOfficeVisitDiagnosis(officeVisitDiagnosisModel);
             }
