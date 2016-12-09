@@ -78,7 +78,7 @@ namespace HealthInformationProgram.Models
         public string RevisitName { get; set; }
 
         [DisplayName("Age")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:000}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0}")]
         [Required]
         public decimal? Age { get; set; }
 

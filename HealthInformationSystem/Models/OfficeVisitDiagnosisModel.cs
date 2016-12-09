@@ -27,9 +27,11 @@ namespace HealthInformationProgram.Models
         public string SupplementalDiagnosisCategoryName { get; set; }
 
         [DisplayName("Other Diagnosis Description")]
+        [StringLength(100)]
         public string OtherDiagnosisDescription { get; set; }
 
         [DisplayName("Other Supplemental Diagnosis Description")]
+        [StringLength(100)]
         public string OtherSupplementalDiagnosisDescription { get; set; }
 
         [DisplayName("Contacts Treated")]
