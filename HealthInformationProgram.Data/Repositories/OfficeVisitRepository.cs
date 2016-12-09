@@ -45,6 +45,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
+                
 
                 using (var ctx = new ClinicDataContext(connString))
                 {

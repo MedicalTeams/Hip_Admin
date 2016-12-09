@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthInformationProgram.Data.Tables
 {
     public partial class ov_diag
     {
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public decimal ov_diag_id { get; set; }
         public decimal ov_id { get; set; }
         public Nullable<decimal> splmtl_diag_id { get; set; }
