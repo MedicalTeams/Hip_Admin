@@ -76,6 +76,7 @@ namespace HealthInformationProgram.Data
                 visit.GenderName = genderData.Get(item.gndr_id).GenderDescription;
                 visit.OfficeVisitDiagnosis = visitDiag.GetByVisit(item.ov_id.Value);
                 visit.Age = item.infnt_age_mos;
+                visit.RevisitId = item.rvisit_id;
                 visit.VisitDate = item.dt_of_visit;
                 visit.CreateDate = item.rec_creat_dt.ToShortDateString();
                 visit.CreatedBy = item.rec_creat_user_id_cd;
