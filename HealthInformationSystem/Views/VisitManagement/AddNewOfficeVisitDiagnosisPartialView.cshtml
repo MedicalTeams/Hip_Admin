@@ -6,81 +6,84 @@
 
     <fieldset class="scheduler-border">
 
-    @if (Model.ModelState == HIPViewModelStates.AddNewOfficeVisitDiagnosis)
-    {
-        <legend class="legend-border">Add New Office Visit Diagnoisis</legend>
-    }
-    else
-    {
-        <legend class="legend-border">Edit Office Visit Diagnoisis</legend>
-    }
+        @if (Model.ModelState == HIPViewModelStates.AddNewOfficeVisitDiagnosis)
+        {
+            <legend class="legend-border">Add New Office Visit Diagnoisis</legend>
+        }
+        else
+        {
+            <legend class="legend-border">Edit Office Visit Diagnoisis</legend>
+        }
 
-    <table class="searchCriteriaTable" style="margin-top:10px;">
+        @Html.HiddenFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OfficeVisitDiagnosisId)
+        @Html.HiddenFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OfficeVisitId)
 
-        <tr>
-            <td class="rightJustifiedLabelTableCell">
-                <div class="editor-label">
-                    @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.DiganosisName)
-                </div>
-            </td>
-            <td>
-                @Html.DropDownListFor(model => model.AddNewEditOfficeVisitDiagnosis.DiagnosisId, new SelectList(Model.DiagnosisAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.DiagnosisId), new { onchange = "this.form.action='/VisitManagement?operation=OnDiagnosisChange';this.form.submit();" })
-            </td>
+        <table class="searchCriteriaTable" style="margin-top:10px;">
 
-            <td class="rightJustifiedLabelTableCell">
-                <div class="editor-label">
-                    @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OtherDiagnosisDescription)
-                </div>
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OtherDiagnosisDescription)
-            </td>
+            <tr>
+                <td class="rightJustifiedLabelTableCell">
+                    <div class="editor-label">
+                        @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.DiganosisName)
+                    </div>
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => model.AddNewEditOfficeVisitDiagnosis.DiagnosisId, new SelectList(Model.DiagnosisAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.DiagnosisId), new { onchange = "this.form.action='/VisitManagement?operation=OnDiagnosisChange';this.form.submit();" })
+                </td>
+
+                <td class="rightJustifiedLabelTableCell">
+                    <div class="editor-label">
+                        @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OtherDiagnosisDescription)
+                    </div>
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OtherDiagnosisDescription)
+                </td>
      
-        </tr>
+            </tr>
 
-        <tr>
+            <tr>
 
-            <td class="rightJustifiedLabelTableCell">
-                <div class="editor-label">
-                    @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisName)
-                </div>
-            </td>
-            <td>
-                @Html.DropDownListFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisId, new SelectList(Model.SupplimentalDiagnosisAsSelectListItems(Model.AddNewEditOfficeVisitDiagnosis.DiagnosisId), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisId), new { style = "width:150px", id = "facilityDropDownBox" })
-            </td>
+                <td class="rightJustifiedLabelTableCell">
+                    <div class="editor-label">
+                        @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisName)
+                    </div>
+                </td>
+                <td>
+                    @Html.DropDownListFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisId, new SelectList(Model.SupplimentalDiagnosisAsSelectListItems(Model.AddNewEditOfficeVisitDiagnosis.DiagnosisId), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisId), new { style = "width:150px", id = "facilityDropDownBox" })
+                </td>
 
-            <td class="rightJustifiedLabelTableCell">
-                <div class="editor-label">
-                    @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OtherSupplementalDiagnosisDescription)
-                </div>
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OtherSupplementalDiagnosisDescription)
-            </td>
+                <td class="rightJustifiedLabelTableCell">
+                    <div class="editor-label">
+                        @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OtherSupplementalDiagnosisDescription)
+                    </div>
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.OtherSupplementalDiagnosisDescription)
+                </td>
 
-        </tr>
+            </tr>
 
-        <tr>
+            <tr>
 
-            <td class="rightJustifiedLabelTableCell">
-                <div class="editor-label">
-                    @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisCategoryName)
-                </div>
-            </td>
-            <td>
-                @Html.DropDownListFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisCategoryId, new SelectList(Model.SupplementalDiagnosisCategoryNamesAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisCategoryId), new { style = "width:150px", id = "facilityDropDownBox" })
-            </td>
+                <td class="rightJustifiedLabelTableCell">
+                    <div class="editor-label">
+                        @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisCategoryName)
+                    </div>
+                </td>
+                <td>
+                    @Html.DropDownListFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisCategoryId, new SelectList(Model.SupplementalDiagnosisCategoryNamesAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.SupplementalDiagnosisCategoryId), new { style = "width:150px", id = "facilityDropDownBox" })
+                </td>
 
-            <td class="rightJustifiedLabelTableCell">
-                <div class="editor-label">
-                    @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.ContactTreatmentCount)
-                </div>
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.ContactTreatmentCount)
-            </td>
-        </tr>
-    </table>
+                <td class="rightJustifiedLabelTableCell">
+                    <div class="editor-label">
+                        @Html.LabelFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.ContactTreatmentCount)
+                    </div>
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => modelItem.AddNewEditOfficeVisitDiagnosis.ContactTreatmentCount)
+                </td>
+            </tr>
+        </table>
 
         <table class="searchCriteriaTable" style="margin-top:10px;">
 
@@ -89,7 +92,7 @@
                     <button id="SaveEditOfficeVisitDiagnosisButton" type="submit" class="btn btn-primary btn-xs" name="operation" value="SaveEditOfficeVisitDiagnosis">Save</button>
                 </td>
                 <td style="text-align:left">
-                    <button id="CancelSaveEditOfficeVisitDiagnosisButton" type="submit" class="btn btn-primary btn-xs" name="operation" value="CancelSaveEditOfficeVisitDiagnosis">Cancel</button>
+                    <button id="CancelSaveEditOfficeVisitDiagnosisButton" type="submit" class="btn btn-primary btn-xs" formnovalidate name="operation" value="CancelSaveEditOfficeVisitDiagnosis">Cancel</button>
                 </td>
             </tr>
 

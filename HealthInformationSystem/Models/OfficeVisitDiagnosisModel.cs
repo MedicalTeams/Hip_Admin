@@ -35,6 +35,7 @@ namespace HealthInformationProgram.Models
         public string OtherSupplementalDiagnosisDescription { get; set; }
 
         [DisplayName("Contacts Treated")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0}")]
         public Nullable<decimal> ContactTreatmentCount { get; set; }
     }
 }

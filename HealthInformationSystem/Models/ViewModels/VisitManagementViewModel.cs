@@ -202,12 +202,22 @@ namespace HealthInformationProgram.Models.ViewModels
 
         public void SaveOfficeVisit(OfficeVisitModel officeVisitModel)
         {
-            _visitIdSearchStringFilter = _visitManagementLogic.SaveOfficeVisit(officeVisitModel) != null? _visitManagementLogic.SaveOfficeVisit(officeVisitModel).ToString() : String.Empty;
+            decimal? visitId = _visitManagementLogic.SaveOfficeVisit(officeVisitModel);
+            if(visitId == null)
+            {
+                _visitIdSearchStringFilter = string.Empty;
+            }
+            else
+            {
+                _visitIdSearchStringFilter = visitId.ToString();
+            }
+
             SetupFindVisit(_visitIdSearchStringFilter);
         }
 
         public void SaveOfficeVisitDiagnosis(OfficeVisitDiagnosisModel officeVisitDiagnosisModel)
         {
+            officeVisitDiagnosisModel.OfficeVisitId = _visitSearchResult.OfficeVisitId;
             _addNewEditOfficeVisitDiagnosis = _visitManagementLogic.SaveOfficeVisitDiagnosis(officeVisitDiagnosisModel);
             SetupFindVisit(_visitIdSearchStringFilter);
         }
