@@ -29,7 +29,7 @@
                     </div>
                 </td>
                 <td>
-                    @Html.DropDownListFor(model => model.AddNewEditOfficeVisitDiagnosis.DiagnosisId, new SelectList(Model.DiagnosisAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.DiagnosisId), new { onchange = "this.form.action='/VisitManagement?operation=OnDiagnosisChange';this.form.submit();" })
+                    @Html.DropDownListFor(model => model.AddNewEditOfficeVisitDiagnosis.DiagnosisId, new SelectList(Model.DiagnosisAsSelectListItems(), "Value", "Text", Model.AddNewEditOfficeVisitDiagnosis.DiagnosisId), new { onchange = "this.form.action='/VisitManagement?operation=OnDiagnosisChange';this.form.submit();", @id = "DiagnosisDropDownList" })
                     @Html.ValidationMessageFor(model => model.AddNewEditOfficeVisitDiagnosis.DiagnosisId)
                 </td>
 
