@@ -71,7 +71,7 @@ namespace HealthInformationProgram.Data.Repositories
             {
                 using ( var ctx = new ClinicDataContext(connString) )
                 {
-                    var officeVisit = ctx.ovs.FirstOrDefault(x => x.rvisit_id == entity.rvisit_id);
+                    var officeVisit = ctx.ovs.FirstOrDefault(x => x.ov_id == entity.ov_id);
                     if ( officeVisit == null )
                     {
                         throw new Exception("Record doesn't exist and cannot be updated");
