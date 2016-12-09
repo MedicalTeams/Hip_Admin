@@ -80,8 +80,8 @@ namespace HealthInformationProgram.Models
         public string RevisitName { get; set; }
 
         [DisplayName("Age")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0}")]
-        [Range(1, 200)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N}")]
+        [Range(0, 200)]
         [Required]
         public decimal? Age { get; set; }
 
