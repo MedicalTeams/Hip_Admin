@@ -94,6 +94,7 @@ namespace HealthInformationProgram.Data
         public int UpdateVisit(Models.OfficeVisitModel officeVisit)
         {
             var dataOfficeVisit = new Data.Tables.ov();
+            dataOfficeVisit.ov_id = (decimal)officeVisit.OfficeVisitId;
             dataOfficeVisit.bnfcry_id = (decimal)officeVisit.BeneficiaryId;
             dataOfficeVisit.dt_of_visit = officeVisit.VisitDate;
             dataOfficeVisit.faclty_hw_invtry_id = officeVisit.FacilityHardwareId;
