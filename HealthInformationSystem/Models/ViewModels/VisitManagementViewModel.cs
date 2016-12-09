@@ -217,6 +217,7 @@ namespace HealthInformationProgram.Models.ViewModels
 
         public void SaveOfficeVisitDiagnosis(OfficeVisitDiagnosisModel officeVisitDiagnosisModel)
         {
+            officeVisitDiagnosisModel.OfficeVisitId = _visitSearchResult.OfficeVisitId;
             _addNewEditOfficeVisitDiagnosis = _visitManagementLogic.SaveOfficeVisitDiagnosis(officeVisitDiagnosisModel);
             SetupFindVisit(_visitIdSearchStringFilter);
         }
