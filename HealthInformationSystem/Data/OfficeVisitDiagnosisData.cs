@@ -16,6 +16,8 @@ namespace HealthInformationProgram.Data
         {
             var list = new List<Models.OfficeVisitDiagnosisModel>();
             var diagnosisData = new DiagnosisData();
+            var supplimentalDaignosisData = new MulticastNotSupportedException();
+
             var dataList = _ovDiagRepo.GetDiagnosisByVisitId(officeVisitId);
             foreach (var item in dataList)
             {
@@ -23,6 +25,7 @@ namespace HealthInformationProgram.Data
                 visitDiag.ContactTreatmentCount = item.cntct_trmnt_cnt;
                 visitDiag.DiagnosisId = item.diag_id;
                 visitDiag.DiganosisName = diagnosisData.GetDiagnosis(item.diag_id).DiagnosisDescription;
+                visitDiag.SupplementalDiagnosisId = item.splmtl_diag_id;
                 visitDiag.OfficeVisitDiagnosisId = item.ov_diag_id;
                 visitDiag.OfficeVisitId = item.ov_id;
                 visitDiag.OtherDiagnosisDescription = item.oth_diag_descn;
