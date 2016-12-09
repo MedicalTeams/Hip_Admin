@@ -81,6 +81,7 @@ namespace HealthInformationProgram.Models
 
         [DisplayName("Age")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0}")]
+        [Range(1, 200)]
         [Required]
         public decimal? Age { get; set; }
 
