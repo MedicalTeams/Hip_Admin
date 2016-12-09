@@ -114,7 +114,7 @@ namespace HealthInformationProgram.Data
             dataOfficeVisit.faclty_id = (decimal)officeVisit.FacilityId;
             dataOfficeVisit.gndr_id = (decimal)officeVisit.GenderId;
             dataOfficeVisit.infnt_age_mos = (decimal)officeVisit.Age;
-            dataOfficeVisit.opd_id = (decimal)officeVisit.OpdId;
+            dataOfficeVisit.opd_id = officeVisit.OpdId == null? 0 : (decimal)officeVisit.OpdId;
             dataOfficeVisit.staff_mbr_name = officeVisit.StaffMemberName;
             dataOfficeVisit.rec_updt_dt = DateTime.UtcNow;
             dataOfficeVisit.rec_updt_user_id_cd = SessionData.Current.LoggedInUser.UserName;
