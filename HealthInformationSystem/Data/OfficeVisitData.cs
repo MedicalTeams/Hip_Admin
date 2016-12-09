@@ -105,6 +105,8 @@ namespace HealthInformationProgram.Data
             dataOfficeVisit.rvisit_id = (decimal)officeVisit.RevisitId;
             dataOfficeVisit.rvisit_id = officeVisit.RevisitId.Value;
             dataOfficeVisit.staff_mbr_name = officeVisit.StaffMemberName;
+            dataOfficeVisit.rec_creat_dt = DateTime.Parse(officeVisit.CreateDate);
+            dataOfficeVisit.rec_creat_user_id_cd = officeVisit.CreatedBy;
             dataOfficeVisit.rec_updt_dt = DateTime.UtcNow;
             dataOfficeVisit.rec_updt_user_id_cd = SessionData.Current.LoggedInUser.UserName;
 
