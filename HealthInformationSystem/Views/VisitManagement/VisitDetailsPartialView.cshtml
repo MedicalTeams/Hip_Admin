@@ -36,6 +36,7 @@
             @Html.HiddenFor(model => model.VisitSearchResult.BeneficiaryName)
             @Html.HiddenFor(model => model.VisitSearchResult.GenderId)
             @Html.HiddenFor(model => model.VisitSearchResult.FacilityId)
+            @Html.HiddenFor(model => model.VisitSearchResult.OfficeVisitId)
 
             if ((Model.ModelState != HIPViewModelStates.EditOfficeVisit) &&
                                     (Model.ModelState != HIPViewModelStates.AddNewOfficeVisit))
