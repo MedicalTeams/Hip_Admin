@@ -9,6 +9,7 @@ namespace HealthInformationProgram.Data.Mapping
         public ovMap()
         {
             // Primary Key
+            
             this.HasKey(t => t.ov_id);
 
             // Properties

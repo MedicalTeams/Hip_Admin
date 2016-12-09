@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthInformationProgram.Data.Tables
 {
@@ -13,8 +14,10 @@ namespace HealthInformationProgram.Data.Tables
         public decimal faclty_id { get; set; }
         public decimal gndr_id { get; set; }
         public decimal bnfcry_id { get; set; }
+       
         public decimal opd_id { get; set; }
-        public decimal ov_id { get; set; }
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        public Nullable<decimal> ov_id { get; set; }
         public decimal faclty_hw_invtry_id { get; set; }
         public System.DateTime dt_of_visit { get; set; }
         public string staff_mbr_name { get; set; }

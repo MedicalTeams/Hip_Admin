@@ -27,7 +27,7 @@ namespace HealthInformationProgram.Data
             foreach (var item in dataList)
             {
                 var visit = new Models.OfficeVisitModel();
-                visit.OfficeVisitId = item.ov_id;
+                visit.OfficeVisitId = item.ov_id.Value;
                 visit.OpdId = item.opd_id;
                 visit.BeneficiaryId = item.bnfcry_id;
                 visit.BeneficiaryName = beneficiaryData.Get(item.bnfcry_id).BeneficiaryType;
@@ -35,7 +35,7 @@ namespace HealthInformationProgram.Data
                 visit.FacilityId = item.faclty_id;
                 visit.GenderId = item.gndr_id;
                 visit.GenderName = genderData.Get(item.gndr_id).GenderDescription;
-                visit.OfficeVisitDiagnosis = visitDiag.GetByVisit(item.ov_id);
+                visit.OfficeVisitDiagnosis = visitDiag.GetByVisit(item.ov_id.Value);
                 visit.Age = item.infnt_age_mos;
                 visit.FacilityHardwareId = item.faclty_hw_invtry_id;
                 visit.RevisitId = item.rvisit_id;
@@ -65,7 +65,7 @@ namespace HealthInformationProgram.Data
             {
                 visit = new Models.OfficeVisitModel();
 
-                visit.OfficeVisitId = item.ov_id;
+                visit.OfficeVisitId = item.ov_id.Value;
                 visit.OpdId = item.opd_id;
                 visit.StaffMemberName = item.staff_mbr_name;
                 visit.BeneficiaryId = item.bnfcry_id;
@@ -74,7 +74,7 @@ namespace HealthInformationProgram.Data
                 visit.FacilityId = item.faclty_id;
                 visit.GenderId = item.gndr_id;
                 visit.GenderName = genderData.Get(item.gndr_id).GenderDescription;
-                visit.OfficeVisitDiagnosis = visitDiag.GetByVisit(item.ov_id);
+                visit.OfficeVisitDiagnosis = visitDiag.GetByVisit(item.ov_id.Value);
                 visit.Age = item.infnt_age_mos;
                 visit.VisitDate = item.dt_of_visit;
                 visit.CreateDate = item.rec_creat_dt.ToShortDateString();
@@ -114,7 +114,6 @@ namespace HealthInformationProgram.Data
             dataOfficeVisit.gndr_id = (decimal)officeVisit.GenderId;
             dataOfficeVisit.infnt_age_mos = (decimal)officeVisit.Age;
             dataOfficeVisit.opd_id = (decimal)officeVisit.OpdId;
-            dataOfficeVisit.ov_id = officeVisit.OfficeVisitId;
             dataOfficeVisit.staff_mbr_name = officeVisit.StaffMemberName;
             dataOfficeVisit.rec_updt_dt = DateTime.UtcNow;
             dataOfficeVisit.rec_updt_user_id_cd = SessionData.Current.LoggedInUser.UserName;
