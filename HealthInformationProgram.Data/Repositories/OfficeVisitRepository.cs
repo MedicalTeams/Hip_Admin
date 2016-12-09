@@ -80,7 +80,7 @@ namespace HealthInformationProgram.Data.Repositories
                     officeVisit.gndr_id = entity.gndr_id;
                     officeVisit.bnfcry_id = entity.bnfcry_id;
                     officeVisit.opd_id = entity.opd_id;
-                  
+                    officeVisit.infnt_age_mos = entity.infnt_age_mos;
                     officeVisit.faclty_hw_invtry_id = entity.faclty_hw_invtry_id;
 
                     officeVisit.dt_of_visit = entity.dt_of_visit;
