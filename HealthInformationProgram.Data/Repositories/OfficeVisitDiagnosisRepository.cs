@@ -88,7 +88,7 @@ namespace HealthInformationProgram.Data.Repositories
                     }
                     officeVisitDiagnonsis.ov_diag_id = entity.ov_diag_id;
                     officeVisitDiagnonsis.ov_id = entity.ov_id;
-                    officeVisitDiagnonsis.splmtl_diag_cat_id = entity.splmtl_diag_cat_id;
+                    officeVisitDiagnonsis.splmtl_diag_id = entity.splmtl_diag_id;
                     officeVisitDiagnonsis.diag_id = entity.diag_id;
                     officeVisitDiagnonsis.cntct_trmnt_cnt = entity.cntct_trmnt_cnt;
                     officeVisitDiagnonsis.splmtl_diag_cat_id = entity.splmtl_diag_cat_id;
