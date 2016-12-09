@@ -15,7 +15,7 @@
     </head>
     <body>
 
-        <div id="searching">
+        <div id="searching" class="searching">
             <div id="searchingcontent">
                 <p id="searchingspinner">
                     Searching...
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div id="loading">
+        <div id="loading" class="loading">
             <div id="loadingcontent">
                 <p id="loadingspinner">
                     Loading...
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <div id="saving">
+        <div id="saving" class="saving">
             <div id="savingcontent">
                 <p id="savingspinner">
                     Saving...
@@ -99,3 +99,10 @@
         @RenderSection("scripts", required: false)
     </body>
 </html>
+<script type="text/javascript">
+
+    //$(document).ready(function () {
+
+    //    $('.notificationDisplays').hide();
+    //});
+</script>

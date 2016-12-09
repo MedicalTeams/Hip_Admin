@@ -102,7 +102,6 @@ namespace HealthInformationProgram.Data
             dataOfficeVisit.infnt_age_mos = (decimal)officeVisit.Age;
             dataOfficeVisit.opd_id = officeVisit.OpdId == null ? 0 : (decimal)officeVisit.OpdId;
             dataOfficeVisit.rvisit_id = (decimal)officeVisit.RevisitId;
-            dataOfficeVisit.ov_id = officeVisit.OfficeVisitId;
             dataOfficeVisit.rvisit_id = officeVisit.RevisitId.Value;
             dataOfficeVisit.staff_mbr_name = officeVisit.StaffMemberName;
             dataOfficeVisit.rec_updt_dt = DateTime.UtcNow;
@@ -123,7 +122,6 @@ namespace HealthInformationProgram.Data
             dataOfficeVisit.opd_id = officeVisit.OpdId == null? 0 : (decimal)officeVisit.OpdId;
             dataOfficeVisit.rvisit_id = (decimal)officeVisit.RevisitId;
             dataOfficeVisit.staff_mbr_name = officeVisit.StaffMemberName;
-            dataOfficeVisit.rvisit_id = officeVisit.RevisitId.Value;
             dataOfficeVisit.rec_updt_dt = DateTime.UtcNow;
             dataOfficeVisit.rec_updt_user_id_cd = SessionData.Current.LoggedInUser.UserName;
             dataOfficeVisit.rec_creat_dt = DateTime.UtcNow;

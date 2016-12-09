@@ -145,7 +145,7 @@ namespace HealthInformationProgram.BAL
             settlementandHealthCentresAsSelectListItemsAsSelectListItems.Add(blankSelectListItem);
 
             FacilityData facilityData = new FacilityData();
-            List<FacilityModel> allFacilities = facilityData.GetFacilityList();
+            List<FacilityModel> allFacilities = facilityData.GetFacilityList().Where(x=>x.FacilityId != "-1").ToList();
 
             foreach (FacilityModel facility in allFacilities)
             {

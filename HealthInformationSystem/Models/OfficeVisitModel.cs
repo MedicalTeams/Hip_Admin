@@ -31,9 +31,11 @@ namespace HealthInformationProgram.Models
         public decimal? BeneficiaryId { get; set; }
 
         [DisplayName("OPD Id")]
+        [DisplayFormat(DataFormatString = "{0:0}", ApplyFormatInEditMode = true)]
         public decimal? OpdId { get; set; }
 
         [DisplayName("Visit Id")]
+        [DisplayFormat(DataFormatString = "{0:0}", ApplyFormatInEditMode = true)]
         public decimal OfficeVisitId { get; set; }
 
         public decimal FacilityHardwareId { get; set; }
