@@ -66,7 +66,7 @@ else
         });
     });
     $(function () {
-        $('#LoginButton').click(function () {
+        $('#AddNewOfficeVisitButton, #EditOfficeVisitButton, #CancelSaveEditOfficeVisitButton, #CancelSaveEditOfficeVisitDiagnosisButton, #AddNewOfficeVisitDiagnosisButton, #EditOfficeVisitDiagnosisButton').click(function () {
             $("#loading").fadeIn();
             var opts = {
                 lines: 12, // The number of lines to draw
@@ -84,7 +84,7 @@ else
         });
     });
     $(function () {
-        $('#SaveNewVisitButton').click(function () {
+        $('#SaveEditOfficeVisitButton, #SaveEditOfficeVisitDiagnosisButton').click(function () {
             $("#saving").fadeIn();
             var opts = {
                 lines: 12, // The number of lines to draw
