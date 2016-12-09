@@ -26,14 +26,15 @@ namespace HealthInformationProgram.Data
                 visitDiag.DiagnosisId = item.diag_id;
                 visitDiag.DiganosisName = diagnosisData.GetDiagnosis(item.diag_id).DiagnosisDescription;
                 visitDiag.SupplementalDiagnosisId = item.splmtl_diag_id;
+                visitDiag.SupplementalDiagnosisName = item.splmtl_diag_id != null ? diagnosisData.GetSupplementalDiagnosis((decimal)item.splmtl_diag_id).SupplementalDiagnosisDescription : String.Empty;
                 visitDiag.OfficeVisitDiagnosisId = item.ov_diag_id;
                 visitDiag.OfficeVisitId = item.ov_id;
                 visitDiag.OtherDiagnosisDescription = item.oth_diag_descn;
                 visitDiag.OtherSupplementalDiagnosisDescription = item.oth_splmtl_diag_descn;
-                if (item.splmtl_diag_id.HasValue)
+                if (item.splmtl_diag_cat_id.HasValue)
                 {
-                    visitDiag.SupplementalDiagnosisCategoryId = Convert.ToDecimal(diagnosisData.GetSupplementalDiagnosis(item.splmtl_diag_id.Value).DiagnosisId);
-                    visitDiag.SupplementalDiagnosisCategoryName = diagnosisData.GetSupplementalDiagnosis(item.splmtl_diag_id.Value).SupplementalDiagnosisDescription;
+                    visitDiag.SupplementalDiagnosisCategoryId = item.splmtl_diag_cat_id.Value;
+                    visitDiag.SupplementalDiagnosisCategoryName = diagnosisData.GetSupplementalCategory(item.splmtl_diag_cat_id.ToString()).SupplementalDiagnosisCategoryType;
                 }
                 visitDiag.UpdateDate = item.rec_updt_dt.ToShortDateString();
                 visitDiag.UpdatedBy = item.rec_updt_user_id_cd;
