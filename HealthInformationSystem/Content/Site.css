@@ -1019,7 +1019,7 @@ tr.pager td
 /* Spin.js spinner divs
 ----------------------------------------------------------*/
 
-#searching
+#searching, .searching
 {
     display:none;
     position:fixed;
@@ -1051,7 +1051,7 @@ tr.pager td
     padding-top:80px;
 }
 
-#loading
+#loading, .loading
 {
     display:none;
     position:fixed;
@@ -1083,7 +1083,7 @@ tr.pager td
     padding-top:80px;
 }
 
-#saving
+#saving, .saving
 {
     display:none;
     position:fixed;
