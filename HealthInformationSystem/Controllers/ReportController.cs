@@ -22,7 +22,7 @@ namespace HealthInformationProgram.Controllers
             TempData["Version"] = string.Empty;
             if (id == null)
             {
-                id = "3.0 Morbidity";
+                id = "HIP Dashboard";
             }
             GetReport(id);
             ViewBag.ReportName = id;
