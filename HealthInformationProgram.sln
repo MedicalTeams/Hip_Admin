@@ -3,8 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthInformationProgram", "HealthInformationSystem\HealthInformationProgram.csproj", "{1991A459-C56F-4037-820F-5DB1F556B548}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthInformationProgram.Tests", "HealthInformationSystem.Tests\HealthInformationProgram.Tests.csproj", "{6C75AB8C-BC25-4023-B5B4-E34C913EF5AA}"
-EndProject
+# Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthInformationProgram.Tests", "HealthInformationSystem.Tests\HealthInformationProgram.Tests.csproj", "{6C75AB8C-BC25-4023-B5B4-E34C913EF5AA}"
+# EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthInformationProgram.Data", "HealthInformationProgram.Data\HealthInformationProgram.Data.csproj", "{13372C48-9121-4432-8C17-5E72C3FF3C57}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFMappingProject", "EFMappingProject\EFMappingProject.csproj", "{F977247E-B44F-4577-B4AC-AE8C48A21466}"
