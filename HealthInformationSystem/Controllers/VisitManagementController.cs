@@ -8,7 +8,17 @@ namespace HealthInformationProgram.Controllers
     {
         private VisitManagementViewModel VisitManagementViewModel
         {
-            get { return (VisitManagementViewModel)Session["VisitManagementViewModel"]; }
+            get {
+                var viewModel = Session["VisitManagementViewModel"] as VisitManagementViewModel;
+
+                if (viewModel == null)
+                {
+                    viewModel = new VisitManagementViewModel();
+                    Session["VisitManagementViewModel"] = viewModel;
+                }
+
+                return viewModel;
+            }
         }
 
         // GET: VisitManagement

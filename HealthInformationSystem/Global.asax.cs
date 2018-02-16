@@ -25,10 +25,5 @@ namespace HealthInformationProgram
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
         }
-
-        void Session_OnStart(object sender, EventArgs e)
-        {
-            Session["VisitManagementViewModel"] = new VisitManagementViewModel();
-        }
     }
 }
