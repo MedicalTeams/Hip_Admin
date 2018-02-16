@@ -19,7 +19,7 @@ namespace HealthInformationProgram.Models.ViewModels
             {
                 if (_systemUsers == null)
                 {
-                    using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = new MTIUserRolesEntityDataModel())
+                    using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = MTIUserRolesEntityDataModel.CreateForLoggedInUser())
                     {
                         _systemUsers = (from users in mtiUserRolesEntityDataModel.users
                                         select users).ToList();
@@ -47,7 +47,7 @@ namespace HealthInformationProgram.Models.ViewModels
 
         public void SetSelectedUser(Guid userGuid)
         {
-            using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = new MTIUserRolesEntityDataModel())
+            using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = MTIUserRolesEntityDataModel.CreateForLoggedInUser())
             {
                 if (userGuid != Guid.Empty)
                 {
@@ -94,7 +94,7 @@ namespace HealthInformationProgram.Models.ViewModels
         {
             _boundUserRolesListForSelectedUser.Clear();
 
-            using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = new MTIUserRolesEntityDataModel())
+            using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = MTIUserRolesEntityDataModel.CreateForLoggedInUser())
             {
                 List<role> allRoles = (from allroles in mtiUserRolesEntityDataModel.roles
                                        select allroles).ToList();

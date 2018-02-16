@@ -2,15 +2,30 @@ namespace HealthInformationProgram.Models
 {
     using System;
     using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
+    using HealthInformationProgram.Data;
+    using HealthInformationProgram.SessionObject;
 
     public partial class MTIUserRolesEntityDataModel : DbContext
     {
-        public MTIUserRolesEntityDataModel()
-            : base("name=SqlAzure_Clinic")
+        public static MTIUserRolesEntityDataModel Create(string countryCode)
         {
+            if (string.IsNullOrEmpty(countryCode))
+                throw new ArgumentNullException(nameof(countryCode));
+
+            return new MTIUserRolesEntityDataModel(ConnectionStringHelper.GetConnectionStringName(countryCode));
         }
+
+        public static MTIUserRolesEntityDataModel CreateForLoggedInUser()
+        {
+            var countryCode = SessionData.Current.LoggedInUser?.Country.Code;
+
+            if (string.IsNullOrEmpty(countryCode))
+                throw new InvalidOperationException("Current user does not have a country associated with the current session. Reestablish the session and try again.");
+
+            return new MTIUserRolesEntityDataModel(ConnectionStringHelper.GetConnectionStringName(countryCode));
+        }
+
+        public MTIUserRolesEntityDataModel(string connectionStringName) : base(connectionStringName) { }
 
         public virtual DbSet<role> roles { get; set; }
         public virtual DbSet<user> users { get; set; }

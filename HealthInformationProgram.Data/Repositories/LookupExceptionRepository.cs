@@ -13,7 +13,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_exceptions.ToList();
@@ -30,7 +30,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_exceptions.Where(v => v.err_cd == id).FirstOrDefault();

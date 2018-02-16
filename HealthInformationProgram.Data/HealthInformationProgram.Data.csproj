@@ -47,13 +47,17 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
+    <Compile Include="BoundUserRoles.cs" />
     <Compile Include="Connections.cs" />
+    <Compile Include="ConnectionStringHelper.cs" />
+    <Compile Include="Countries.cs" />
+    <Compile Include="Country.cs" />
     <Compile Include="DataContext\ClinicDataContext.cs" />
     <Compile Include="Mapping\curr_sys_infoMap.cs" />
     <Compile Include="Mapping\diag_alert_thrshldMap.cs" />
@@ -88,6 +92,7 @@
     <Compile Include="Mapping\vw_lkup_sti_diagMap.cs" />
     <Compile Include="Mapping\vw_ov_detailsMap.cs" />
     <Compile Include="Mapping\vw_raw_data_errsMap.cs" />
+    <Compile Include="MTIUserRolesEntityDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\LookupExceptionRepository.cs" />
@@ -106,6 +111,10 @@
     <Compile Include="Repositories\FacilityHardwareInventoryRespository.cs" />
     <Compile Include="Repositories\RevisitRepository.cs" />
     <Compile Include="Repositories\SupplementalDiagnosisCategoryRepository.cs" />
+    <Compile Include="Repositories\UserAdministrationRepository.cs" />
+    <Compile Include="role.cs" />
+    <Compile Include="SessionData\LoggedInUserSessionData\LoggedInUserSessionData.cs" />
+    <Compile Include="SessionData\SessionData.cs" />
     <Compile Include="Tables\curr_sys_info.cs" />
     <Compile Include="Tables\diag_alert_thrshld.cs" />
     <Compile Include="Tables\faclty_hw_invtry.cs" />
@@ -139,6 +148,10 @@
     <Compile Include="Tables\vw_lkup_sti_diag.cs" />
     <Compile Include="Tables\vw_ov_details.cs" />
     <Compile Include="Tables\vw_raw_data_errs.cs" />
+    <Compile Include="UniqueUserEmailAddressAttribute.cs" />
+    <Compile Include="user.cs" />
+    <Compile Include="UserAdministrationLogic.cs" />
+    <Compile Include="userrole.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

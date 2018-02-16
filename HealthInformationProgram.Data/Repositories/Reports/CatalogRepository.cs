@@ -13,15 +13,15 @@ namespace HealthInformationProgram.Data.Repositories.Reports
         private string connString;
         public CatalogRepository()
         {
-            var config = new Configuration();
-            connString = config.GetConnection("reportServer");
+            var connections = new Connections();
+            connString = connections.GetReportConnection();
         }
 
         public List<Catalog> GetAllReports()
         {
             
             var reportList = new List<Catalog>();
-            using (var ctx = new ClinicDataContext(connString))
+            using (var ctx = ClinicDataContext.CreateForLoggedInUser())
             {
              reportList=   ctx.Catalog.ToList();
             }

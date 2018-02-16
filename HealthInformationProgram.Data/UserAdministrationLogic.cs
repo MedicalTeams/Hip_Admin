@@ -13,7 +13,7 @@ namespace HealthInformationProgram.BAL
 
         public user SaveUser(user userToSave)
         {
-            using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = new MTIUserRolesEntityDataModel())
+            using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = MTIUserRolesEntityDataModel.CreateForLoggedInUser())
             {
                 userToSave = _userAdministrationRepository.SaveUser(userToSave, mtiUserRolesEntityDataModel);
             }
@@ -23,7 +23,7 @@ namespace HealthInformationProgram.BAL
 
         public void SaveUserRoles(Guid userId, List<BoundUserRole> boundUserRolesListForSelectedUser)
         {
-            using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = new MTIUserRolesEntityDataModel())
+            using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = MTIUserRolesEntityDataModel.CreateForLoggedInUser())
             {
                 _userAdministrationRepository.DeleteAllRolesForUser(userId, mtiUserRolesEntityDataModel);
 
@@ -41,7 +41,7 @@ namespace HealthInformationProgram.BAL
         {
             user userWithEmail = null;
 
-            using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = new MTIUserRolesEntityDataModel())
+            using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = MTIUserRolesEntityDataModel.CreateForLoggedInUser())
             {
                 userWithEmail = _userAdministrationRepository.GetUserFromEmail(eMailAddress, mtiUserRolesEntityDataModel);
             }

@@ -15,7 +15,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using (var ctx = new ClinicDataContext(connString))
+                using (var ctx = ClinicDataContext.CreateForLoggedInUser())
                 {
 
                     return ctx.lkup_diag.OrderBy(x => x.user_intrfc_sort_ord).ToList();
@@ -32,7 +32,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using (var ctx = new ClinicDataContext(connString))
+                using (var ctx = ClinicDataContext.CreateForLoggedInUser())
                 {
 
                     return ctx.lkup_diag.Where(v => v.diag_id == id).FirstOrDefault();
@@ -48,7 +48,7 @@ namespace HealthInformationProgram.Data.Repositories
             try
             {
 
-                using (var ctx = new ClinicDataContext(connString))
+                using (var ctx = ClinicDataContext.CreateForLoggedInUser())
                 {
 
                     IdentityInsertOn<lkup_diag>(ctx, entity);
@@ -85,7 +85,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using (var ctx = new ClinicDataContext(connString))
+                using (var ctx = ClinicDataContext.CreateForLoggedInUser())
                 {
                     var lookupDiagnosis = ctx.lkup_diag.FirstOrDefault(x => x.diag_id == entity.diag_id);
                     if (lookupDiagnosis == null)

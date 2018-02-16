@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
+using HealthInformationProgram.Data;
 using HealthInformationProgram.Models;
 using HealthInformationProgram.SessionObject;
 
@@ -7,52 +9,37 @@ namespace HealthInformationProgram.Security
 {
     public class UserLogin
     {
-        public static bool LoginUser(string userName, string password)
+        private static int key = 129;
+
+        public static bool LoginUser(string countryCode, string userName, string password)
         {
+            var country = Countries.SupportedCountries.FirstOrDefault(c => string.Equals(c.Code, countryCode, System.StringComparison.CurrentCultureIgnoreCase));
+
+            if (country == null)
+                throw new ArgumentException($"A country with the code of {countryCode} is not currently supported. Please select a country from the supported list and try again.", nameof(countryCode));
+
             bool IsValidLogin = false;
             
-            using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = new MTIUserRolesEntityDataModel())
+            using (var mtiUserRolesEntityDataModel = MTIUserRolesEntityDataModel.Create(countryCode))
             {
-                if (IsValidUserName(userName))
-                {
-                    user loggedInUser = (from users in mtiUserRolesEntityDataModel.users
-                                         where (users.email != null) && (users.email.Trim().ToLower() == userName.Trim().ToLower())
-                                         select users).FirstOrDefault();
+                user loggedInUser = (from users in mtiUserRolesEntityDataModel.users
+                                     where users.email != null && users.email.Trim().ToLower() == userName.Trim().ToLower()
+                                     select users).FirstOrDefault();
 
-                    if((loggedInUser != null) && (!string.IsNullOrEmpty(loggedInUser.password)) && 
-                        (!string.IsNullOrWhiteSpace(loggedInUser.password)) &&
-                        (loggedInUser.password == EncryptDecryptPassword(password.ToString())))
-                    {
-                        IsValidLogin = true;
-                        SessionData.Current.LoggedInUser.LoggedInUserId = loggedInUser.userId;
-                        SessionData.Current.LoggedInUser.UserName = loggedInUser.email;
-                    }
+                if(loggedInUser != null && !string.IsNullOrEmpty(loggedInUser.password) && 
+                    !string.IsNullOrWhiteSpace(loggedInUser.password) &&
+                    loggedInUser.password == EncryptDecryptPassword(password.ToString()))
+                {
+                    IsValidLogin = true;
+                    SessionData.Current.LoggedInUser.LoggedInUserId = loggedInUser.userId;
+                    SessionData.Current.LoggedInUser.UserName = loggedInUser.email;
+                    SessionData.Current.LoggedInUser.Country = country;
                 }
             }
             
             return IsValidLogin;
         }
 
-        public static bool IsValidUserName(string userName)
-        {
-            bool isValidUserName = false;
-
-            using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = new MTIUserRolesEntityDataModel())
-            {
-                var user = (from users in mtiUserRolesEntityDataModel.users
-                                            where (users.email != null) && (users.email.Trim().ToLower() == userName.Trim().ToLower())
-                                            select users).FirstOrDefault();
-
-                if (user != null)
-                {
-                    isValidUserName = true;
-                }
-            }
-            
-            return isValidUserName;
-        }
-
-        private static int key = 129;
         public static string EncryptDecryptPassword(string textToEncrypt)
         {
             StringBuilder inSb = new StringBuilder(textToEncrypt);
@@ -66,6 +53,5 @@ namespace HealthInformationProgram.Security
             }
             return outSb.ToString();
         }
-
     }
 }

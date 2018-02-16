@@ -14,7 +14,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.curr_sys_info.ToList();
@@ -31,7 +31,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.curr_sys_info.Where(v => v.curr_sys_id == id).FirstOrDefault();
@@ -46,7 +46,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.curr_sys_info.OrderByDescending(c=>c.dt_of_rlse).FirstOrDefault();
@@ -62,7 +62,7 @@ namespace HealthInformationProgram.Data.Repositories
             try
             {
 
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     ctx.curr_sys_info.Add(entity);
                     int result = ctx.SaveChanges();
@@ -80,7 +80,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     var currentSystem = ctx.curr_sys_info.FirstOrDefault(x => x.curr_sys_id == entity.curr_sys_id);
                     if ( currentSystem == null )

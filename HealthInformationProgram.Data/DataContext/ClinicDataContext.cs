@@ -1,22 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
 using HealthInformationProgram.Data.Mapping;
-
 using HealthInformationProgram.Data.Tables;
+using HealthInformationProgram.SessionObject;
 
 namespace HealthInformationProgram.Data.DataContext
 {
     public class ClinicDataContext :DbContext
     {
-        
+        public static ClinicDataContext Create(string countryCode)
+        {
+            if (string.IsNullOrEmpty(countryCode))
+                throw new ArgumentNullException(nameof(countryCode));
 
-        public ClinicDataContext(string connectionString)
-            : base(connectionString)
-        { }
+            return new ClinicDataContext(ConnectionStringHelper.GetConnectionStringName(countryCode));
+        }
 
+        public static ClinicDataContext CreateForLoggedInUser()
+        {
+            var countryCode = SessionData.Current.LoggedInUser?.Country.Code;
+
+            if (string.IsNullOrEmpty(countryCode))
+                throw new InvalidOperationException("Current user does not have a country associated with the current session. Reestablish the session and try again.");
+
+            return new ClinicDataContext(ConnectionStringHelper.GetConnectionStringName(countryCode));
+        }
+
+        private ClinicDataContext(string connectionString) : base(connectionString) { }
 
         public DbSet<curr_sys_info> curr_sys_info { get; set; }
         public DbSet<diag_alert_thrshld> diag_alert_thrshld { get; set; }

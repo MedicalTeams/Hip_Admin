@@ -15,7 +15,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_splmtl_diag.OrderBy(x => x.user_intrfc_sort_ord).ToList();
@@ -32,7 +32,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_splmtl_diag.Where(v => v.splmtl_diag_id == id).FirstOrDefault();
@@ -48,7 +48,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_splmtl_diag.Where(v => v.splmtl_diag_descn == description).FirstOrDefault();
@@ -64,7 +64,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using (var ctx = new ClinicDataContext(connString))
+                using (var ctx = ClinicDataContext.CreateForLoggedInUser())
                 {
                     
                     return ctx.lkup_splmtl_diag.Where(x => x.diag_id == diagnosisId).ToList(); ;
@@ -81,7 +81,7 @@ namespace HealthInformationProgram.Data.Repositories
             try
             {
 
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     IdentityInsertOn<lkup_splmtl_diag>(ctx, entity);
                     ctx.Entry(entity).State = System.Data.Entity.EntityState.Added;
@@ -109,7 +109,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     var supplementalDiagnosis = ctx.lkup_splmtl_diag.FirstOrDefault(x => x.splmtl_diag_id == entity.splmtl_diag_id);
                     if ( supplementalDiagnosis == null )

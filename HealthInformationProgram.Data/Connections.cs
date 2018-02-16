@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace HealthInformationProgram.Data
 {
-   public  class Connections
+    public sealed class Connections
     {
         private string reportConnectionString = string.Empty;
         public Connections()
         {
-            var config = new Configuration();
-            reportConnectionString = config.GetConnection("reportServer");
+            reportConnectionString = ConfigurationManager.ConnectionStrings["reportServer"].ConnectionString;
         }
 
         public  string GetReportConnection()

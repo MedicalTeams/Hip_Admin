@@ -15,7 +15,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using (var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_splmtl_diag_cat.OrderBy(x => x.user_intrfc_sort_ord).ToList();
@@ -32,7 +32,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_splmtl_diag_cat.Where(v => v.splmtl_diag_cat_id == id).FirstOrDefault();
@@ -48,7 +48,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_splmtl_diag_cat.Where(v => v.splmtl_diag_cat == category).FirstOrDefault();
@@ -64,7 +64,7 @@ namespace HealthInformationProgram.Data.Repositories
             try
             {
 
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     IdentityInsertOn<lkup_splmtl_diag_cat>(ctx, entity);
                     ctx.Entry(entity).State = System.Data.Entity.EntityState.Added;
@@ -91,7 +91,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     var supplementalDiagnosisCategories = ctx.lkup_splmtl_diag_cat.FirstOrDefault(x => x.splmtl_diag_cat_id == entity.splmtl_diag_cat_id);
                     if ( supplementalDiagnosisCategories == null )

@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -241,16 +242,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="BAL\UserAdministrationLogic.cs" />
     <Compile Include="BAL\VisitManagementLogic.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientManagementController.cs" />
     <Compile Include="Controllers\DataManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="CustomAttributes\PasswordRequirementsAttribute.cs" />
-    <Compile Include="CustomAttributes\UniqueUserEmailAddressAttribute.cs" />
     <Compile Include="CustomExtensions\StringExtensions.cs" />
-    <Compile Include="DAL\UserAdministrationRepository.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\VisitManagementController.cs" />
     <Compile Include="Data\BaseHipData.cs" />
@@ -271,7 +269,6 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\BeneficiaryModel.cs" />
-    <Compile Include="Models\BoundUserRoles.cs" />
     <Compile Include="Models\CurrentSystemInformationModel.cs" />
     <Compile Include="Models\DiagnosisModel.cs" />
     <Compile Include="Models\DiagnosisAlertThresholdModel.cs" />
@@ -279,27 +276,20 @@
     <Compile Include="Models\FacilityHardwareInventoryModel.cs" />
     <Compile Include="Models\FacilityModel.cs" />
     <Compile Include="Models\GenderModel.cs" />
-    <Compile Include="Models\MTIUserRolesEntityDataModel.cs" />
     <Compile Include="Models\OfficeVisitDiagnosisModel.cs" />
     <Compile Include="Models\OfficeVisitModel.cs" />
     <Compile Include="Models\OrganizationModel.cs" />
     <Compile Include="Models\RawVisitModel.cs" />
     <Compile Include="Models\ReportsViewModel.cs" />
     <Compile Include="Models\RevisitModel.cs" />
-    <Compile Include="Models\role.cs" />
     <Compile Include="Models\SupplementalDiagnosisModel.cs" />
     <Compile Include="Models\SupplementalDiagnosisCategoryModel.cs" />
-    <Compile Include="Models\user.cs" />
-    <Compile Include="Models\userrole.cs" />
     <Compile Include="Models\ViewModels\Common\HIPAdminCommonViewModel.cs" />
     <Compile Include="Models\ViewModels\UsersAdministrationUsersViewModel.cs" />
     <Compile Include="Models\ViewModels\VisitManagementViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ReportServerCredentials.cs" />
     <Compile Include="Security\UserLogin.cs" />
-    <Compile Include="SessionData\LoggedInUserSessionData\LoggedInUserSessionData.cs" />
-    <Compile Include="SessionData\SessionData.cs" />
-    <Compile Include="SessionData\VisitManagementSessionData\VisitManagementSessionData.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +309,7 @@
       <Link>SqlServerTypes\x86\SqlServerSpatial110.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\bd-flag.png" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -352,6 +343,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\ug-flag.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ClassDiagram1.cd" />

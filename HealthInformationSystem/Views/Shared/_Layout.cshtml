@@ -76,6 +76,14 @@
 
                         </ul>
                     </nav>
+                    @if (SessionData.Current.LoggedInUser.IsLoggedIn())
+                    {
+                      <br />
+                      <div class="float-left" style="padding: 5px">
+                        <img src="@Url.Content("~/content/" + SessionData.Current.LoggedInUser.Country.Code + "-flag.png")" alt="Country Flag" width="75" height="50" />
+                        <span style="color: red; font-size: 1.3em;font-weight: 600">You are now seeing data for @SessionData.Current.LoggedInUser.Country.Name</span>
+                      </div>
+                    }
                 </div>
             </div>
         </header>

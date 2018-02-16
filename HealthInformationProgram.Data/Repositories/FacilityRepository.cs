@@ -16,7 +16,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_faclty.OrderBy(x=>x.user_intrfc_sort_ord).ToList();
@@ -33,7 +33,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_faclty.Where(v => v.faclty_id == id).FirstOrDefault();
@@ -49,7 +49,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_faclty.Where(v => v.orgzn_id == id).FirstOrDefault();
@@ -65,7 +65,7 @@ namespace HealthInformationProgram.Data.Repositories
             try
             {
 
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     IdentityInsertOn<lkup_faclty>(ctx, entity);
                     ctx.Entry(entity).State = System.Data.Entity.EntityState.Added;
@@ -92,7 +92,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     var currentFacility = ctx.lkup_faclty.FirstOrDefault(x => x.faclty_id == entity.faclty_id);
                     if ( currentFacility == null )

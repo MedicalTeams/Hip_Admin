@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using HealthInformationProgram.Models.ViewModels;
 
 namespace HealthInformationProgram
 {
@@ -23,6 +24,11 @@ namespace HealthInformationProgram
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+        }
+
+        void Session_OnStart(object sender, EventArgs e)
+        {
+            Session["VisitManagementViewModel"] = new VisitManagementViewModel();
         }
     }
 }

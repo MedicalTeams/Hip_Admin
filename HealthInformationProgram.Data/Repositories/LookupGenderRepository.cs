@@ -14,7 +14,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
          try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_gndr.ToList();
@@ -31,7 +31,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_gndr.Where(v=>v.gndr_id == id).FirstOrDefault();
@@ -47,7 +47,7 @@ namespace HealthInformationProgram.Data.Repositories
             try
             {
 
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     ctx.lkup_gndr.Add(entity);
                     int result = ctx.SaveChanges();
@@ -65,7 +65,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     var lookupRevisit = ctx.lkup_gndr.FirstOrDefault(x => x.gndr_id == entity.gndr_id);
                     if ( lookupRevisit == null )

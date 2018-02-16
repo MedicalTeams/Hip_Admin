@@ -10,6 +10,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using HealthInformationProgram.Models;
 using HealthInformationProgram.SessionObject;
+using HealthInformationProgram.Data;
 
 namespace HealthInformationProgram.Controllers
 {
@@ -24,6 +25,9 @@ namespace HealthInformationProgram.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            ViewBag.Countries = Countries.SupportedCountries.Select(c => new SelectListItem { Text = c.Name, Value = c.Code })
+                                                            .ToArray();
+
             return View();
         }
 
@@ -35,10 +39,10 @@ namespace HealthInformationProgram.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if ( ModelState.IsValid && Security.UserLogin.LoginUser(model.UserName, model.Password) )
+            if ( ModelState.IsValid && Security.UserLogin.LoginUser(model.CountryCode, model.UserName, model.Password) )
             {
                 FormsAuthentication.SetAuthCookie(model.UserName, false);
-                var role= SessionData.Current.LoggedInUser.LoggedInUsersRoles.ElementAt(0);
+                SessionData.Permissions role= SessionData.Current.LoggedInUser.LoggedInUsersRoles.FirstOrDefault();
 
                 switch (role.ToString())
                 {
@@ -55,6 +59,9 @@ namespace HealthInformationProgram.Controllers
 
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ViewBag.Countries = Countries.SupportedCountries.Select(c => new SelectListItem { Text = c.Name, Value = c.Code })
+                                                            .ToArray();
+
             return View(model);
         }
 

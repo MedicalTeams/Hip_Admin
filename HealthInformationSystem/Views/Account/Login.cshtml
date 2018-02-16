@@ -17,6 +17,11 @@
     <fieldset>
         <ol>
             <li>
+              @Html.LabelFor(m => m.CountryCode)
+              @Html.DropDownListFor(m=> m.CountryCode, (IEnumerable<SelectListItem>)ViewBag.Countries)
+              @Html.ValidationMessageFor(m => m.CountryCode)
+            </li>
+            <li>
                 @Html.LabelFor(m => m.UserName)
                 @Html.TextBoxFor(m => m.UserName)
                 @Html.ValidationMessageFor(m => m.UserName)

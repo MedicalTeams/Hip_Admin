@@ -8,15 +8,6 @@ namespace HealthInformationProgram.Data.Repositories
 {
     public class BaseRepository
     {
-        internal string connString = string.Empty;
-
-        public BaseRepository()
-        {
-            var config = new Configuration();
-            connString = config.GetConnection("SqlAzure_Clinic");
-        
-        }
-
         public static void IdentityInsertOn<T>(ClinicDataContext ctx, T entity)
         {
             var name = entity.GetType().Name;

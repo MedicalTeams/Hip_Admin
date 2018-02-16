@@ -17,7 +17,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.faclty_hw_invtry.ToList();
@@ -34,7 +34,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.faclty_hw_invtry.Where(f => f.faclty_hw_invtry_id == id).FirstOrDefault();
@@ -51,7 +51,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.faclty_hw_invtry.Where(f => f.faclty_id == facilityId).FirstOrDefault();
@@ -68,7 +68,7 @@ namespace HealthInformationProgram.Data.Repositories
             try
             {
 
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     IdentityInsertOn<faclty_hw_invtry>(ctx, entity);
                     ctx.Entry(entity).State = System.Data.Entity.EntityState.Added;
@@ -95,7 +95,7 @@ namespace HealthInformationProgram.Data.Repositories
             try
             {
 
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     var currentEntity = ctx.faclty_hw_invtry.FirstOrDefault(f => f.faclty_hw_invtry_id == entity.faclty_hw_invtry_id);
                     if ( currentEntity == null )

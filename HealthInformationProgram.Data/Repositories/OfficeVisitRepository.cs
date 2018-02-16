@@ -14,7 +14,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.ovs.ToList();
@@ -31,7 +31,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     return ctx.ovs.Where(v => v.ov_id == id).FirstOrDefault();
                 }
@@ -47,7 +47,7 @@ namespace HealthInformationProgram.Data.Repositories
             {
                 
 
-                using (var ctx = new ClinicDataContext(connString))
+                using (var ctx = ClinicDataContext.CreateForLoggedInUser())
                 {
                     ctx.ovs.Add(entity);
                     int result = ctx.SaveChanges();
@@ -69,7 +69,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     var officeVisit = ctx.ovs.FirstOrDefault(x => x.ov_id == entity.ov_id);
                     if ( officeVisit == null )

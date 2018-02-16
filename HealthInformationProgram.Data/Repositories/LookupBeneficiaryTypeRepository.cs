@@ -14,7 +14,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
          try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_bnfcry.ToList();
@@ -31,7 +31,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.lkup_bnfcry.Where(v=>v.bnfcry_id == id).FirstOrDefault();
@@ -47,7 +47,7 @@ namespace HealthInformationProgram.Data.Repositories
             try
             {
 
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     ctx.lkup_bnfcry.Add(entity);
                     int result = ctx.SaveChanges();
@@ -65,7 +65,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     var lookupBeneficiary = ctx.lkup_bnfcry.FirstOrDefault(x => x.bnfcry_id == entity.bnfcry_id);
                     if (lookupBeneficiary == null )

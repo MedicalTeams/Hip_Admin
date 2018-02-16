@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using HealthInformationProgram.Data;
 using HealthInformationProgram.Models;
 
 namespace HealthInformationProgram.SessionObject
@@ -21,39 +22,19 @@ namespace HealthInformationProgram.SessionObject
         // Using this class to store logged in user data
         public class User
         {
-            Guid _loggedInUserId = new Guid();
+            List<Permissions> _loggedInUsersPermissions;
 
-            public Guid LoggedInUserId
+            public User()
             {
-                get
-                {
-                    return _loggedInUserId;
-                }
-
-                set
-                {
-                    _loggedInUserId = value;
-                }
-            }
-            public string UserName
-            {
-                get;set;
+                LoggedInUserId = new Guid();
             }
 
-            public bool IsLoggedIn()
-            {
-                bool isLoggedIn = false;
+            public Guid LoggedInUserId { get; set; }
 
-                if(_loggedInUserId != Guid.Empty)
-                {
-                    isLoggedIn = true;
-                }
+            public string UserName { get; set; }
 
+            public Country Country { get; set; }
 
-                return isLoggedIn;
-            }
-
-            List<Permissions> _loggedInUsersPermissions = null;
             public List<Permissions> LoggedInUsersRoles
             {
                 get
@@ -63,17 +44,29 @@ namespace HealthInformationProgram.SessionObject
                 }
             }
 
+            public bool IsLoggedIn()
+            {
+                bool isLoggedIn = false;
+
+                if(LoggedInUserId != Guid.Empty)
+                {
+                    isLoggedIn = true;
+                }
+
+                return isLoggedIn;
+            }
+
             private List<Permissions> GetLoggedInUsersPermissions()
             {
                 List<Permissions> userPermissions = new List<Permissions>();
 
-                if (_loggedInUserId != Guid.Empty)
+                if (LoggedInUserId != Guid.Empty)
                 {
-                    using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = new MTIUserRolesEntityDataModel())
+                    using (MTIUserRolesEntityDataModel mtiUserRolesEntityDataModel = MTIUserRolesEntityDataModel.CreateForLoggedInUser())
                     {
                         List<string> loggedInUsersRoles = (from rolesforuser in mtiUserRolesEntityDataModel.userroles
                                                            join rolesofuser in mtiUserRolesEntityDataModel.roles on rolesforuser.roleId equals rolesofuser.roleId
-                                                           where rolesforuser.userId == _loggedInUserId
+                                                           where rolesforuser.userId == LoggedInUserId
                                                            select rolesofuser.roleName).ToList();
                         
                         foreach(string userRole in loggedInUsersRoles)

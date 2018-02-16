@@ -59,6 +59,10 @@ namespace HealthInformationProgram.Models
     public class LoginModel
     {
         [Required]
+        [Display(Name = "Country")]
+        public string CountryCode { get; set; }
+
+        [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
 

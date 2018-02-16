@@ -13,7 +13,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.diag_alert_thrshld.ToList();
@@ -30,7 +30,7 @@ namespace HealthInformationProgram.Data.Repositories
 
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
 
                     return ctx.diag_alert_thrshld.Where(v => v.diag_alert_thrshld_id == id).FirstOrDefault();
@@ -46,7 +46,7 @@ namespace HealthInformationProgram.Data.Repositories
             try
             {
 
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     ctx.diag_alert_thrshld.Add(entity);
                     int result = ctx.SaveChanges();
@@ -64,7 +64,7 @@ namespace HealthInformationProgram.Data.Repositories
         {
             try
             {
-                using ( var ctx = new ClinicDataContext(connString) )
+                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
                 {
                     var diagnosisAlertThreshold = ctx.diag_alert_thrshld.FirstOrDefault(x => x.diag_alert_thrshld_id == entity.diag_alert_thrshld_id);
                     if ( diagnosisAlertThreshold == null )
