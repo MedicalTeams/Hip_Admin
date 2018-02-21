@@ -78,34 +78,26 @@ namespace HealthInformationProgram.Data.Repositories
 
         public int Update(curr_sys_info entity)
         {
-            try
+            using (var ctx = ClinicDataContext.CreateForLoggedInUser())
             {
-                using ( var ctx = ClinicDataContext.CreateForLoggedInUser() )
+                var currentSystem = ctx.curr_sys_info.FirstOrDefault(x => x.curr_sys_id == entity.curr_sys_id);
+                if (currentSystem == null)
                 {
-                    var currentSystem = ctx.curr_sys_info.FirstOrDefault(x => x.curr_sys_id == entity.curr_sys_id);
-                    if ( currentSystem == null )
-                    {
-                        throw new Exception("Record doesn't exist and cannot be updated");
-                    }
-                    currentSystem.curr_sys_id = entity.curr_sys_id;
-                    currentSystem.itm_vrsn = entity.itm_vrsn;
-                    currentSystem.itm_descn = entity.itm_descn;
-                    currentSystem.dt_of_rlse = entity.dt_of_rlse;
-
-
-
-                    ctx.Entry(currentSystem).State = System.Data.Entity.EntityState.Modified;
-
-                    int result = ctx.SaveChanges();
-
-                    return result;
+                    throw new Exception("Record doesn't exist and cannot be updated");
                 }
-            }
-            catch ( Exception ex )
-            {
-                throw ex;
-            }
+                currentSystem.curr_sys_id = entity.curr_sys_id;
+                currentSystem.itm_vrsn = entity.itm_vrsn;
+                currentSystem.itm_descn = entity.itm_descn;
+                currentSystem.dt_of_rlse = entity.dt_of_rlse;
 
+
+
+                ctx.Entry(currentSystem).State = System.Data.Entity.EntityState.Modified;
+
+                int result = ctx.SaveChanges();
+
+                return result;
+            }
         }
     }
 }

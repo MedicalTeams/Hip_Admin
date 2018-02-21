@@ -154,7 +154,7 @@ namespace HealthInformationProgram.Controllers
                     viewResult = PartialView("~/Views/DataManagement/CreateFacility/_CreateFacility.cshtml", model);
                     break;
                 case "FacilityHardwareInventoryModel":
-                    viewResult = PartialView("~/Views/DataManagement/CreateFacility/_CreateFacilityHardware.cshtml", model);
+                    viewResult = PartialView("~/Views/ClientManagement/CreateFacility/_CreateFacilityHardware.cshtml", model);
                     break;
                 case "OrganizationModel":
                     viewResult = PartialView("~/Views/DataManagement/CreateOrganization/_CreateOrganization.cshtml", model);
