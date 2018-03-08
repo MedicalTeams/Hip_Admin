@@ -13,39 +13,24 @@
 
 <style>
 
-    .reportViewer {
-        min-height: 200px !important;
-    }
+    .reportViewer { min-height: 200px !important; }
 </style>
+@{ string countryName = SessionData.Current.LoggedInUser.Country.Name; }
 
-@if (SessionData.Current.LoggedInUser.Country.Code == "bd")
-{
-    @Html.ActionLink("HIP Dashboard", "Index", new { id = "HIP Dashboard - Bangladesh" })
-    @Html.ActionLink("3.0 Morbidity", "Index", new { id = "3.0 Morbidity - Bangladesh" })
-    @Html.ActionLink("Visit Details", "Index", new { id = "Visit Details - Bangladesh" })
-    @Html.ActionLink("Tally Details", "Index", new { id = "Tally Details - Bangladesh" })
-}
-else
-{
-    @Html.ActionLink("HIP Dashboard", "Index", new { id = "HIP Dashboard" })
-    @Html.ActionLink("3.0 Morbidity", "Index", new { id = "3.0 Morbidity" })
+@Html.ActionLink("HIP Dashboard", "Index", new { id = "HIP Dashboard - " + countryName })
+@Html.ActionLink("3.0 Morbidity", "Index", new { id = "3.0 Morbidity - " + countryName })
+@Html.ActionLink("Visit Details", "Index", new { id = "Visit Details - " + countryName })
+@Html.ActionLink("Tally Details", "Index", new { id = "Tally Details - " + countryName })
 
-    @*@Html.ActionLink("3.1 Consultation", "Report", new { id = "3.1 Consultation" })
+@*@Html.ActionLink("3.1 Consultation", "Report", new { id = "3.1 Consultation" })
 
-        @Html.ActionLink("3.2 Morbidity", "Report", new { id = "3.2 Morbidity" })
+    @Html.ActionLink("3.2 Morbidity", "Report", new { id = "3.2 Morbidity" })
 
-        @Html.ActionLink("3.4 STI", "Report", new { id = "3.4 STI" })
-        @Html.ActionLink("3.5 Chronic Disease" , "Report", new { id = "3.5 Chronic Disease"})
-        @Html.ActionLink("3.6 Mental Illness", "Report", new { id = "3.6 Mental Illness" })
+    @Html.ActionLink("3.4 STI", "Report", new { id = "3.4 STI" })
+    @Html.ActionLink("3.5 Chronic Disease" , "Report", new { id = "3.5 Chronic Disease"})
+    @Html.ActionLink("3.6 Mental Illness", "Report", new { id = "3.6 Mental Illness" })
 
-        @Html.ActionLink("3.7 Injuries", "Report", new { id = "3.7 Injuries" })*@
-
-    @Html.ActionLink("Visit Details", "Index", new { id = "Visit Details" })
-    @Html.ActionLink("Tally Details", "Index", new { id = "Tally Details" })
-}
-
-
-
+    @Html.ActionLink("3.7 Injuries", "Report", new { id = "3.7 Injuries" })*@
 <div>
     <span>Current report: @ViewBag.ReportName</span>
     @*<select id="reportSelector">
@@ -63,15 +48,9 @@ else
 </div>
 
 <style>
-    .reportViewer, div#ReportViewer1 {
-        width: 100% !important;
-        height: 1000px !important;
-    }
+    .reportViewer, div#ReportViewer1 { width: 100% !important; height: 1000px !important; }
 
-    iframe {
-        border: none !important;
-        min-height: 500px !important;
-    }
+    iframe { border: none !important; min-height: 500px !important; }
 </style>
 
 @*<script>
