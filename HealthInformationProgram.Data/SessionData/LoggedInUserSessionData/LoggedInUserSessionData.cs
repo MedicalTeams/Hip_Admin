@@ -98,7 +98,7 @@ namespace HealthInformationProgram.SessionObject
                 return userPermissions;
             }
 
-            public bool IsAuthroizedToViewDatabaseManagement()
+            public bool IsAuthorizedToViewDatabaseManagement()
             {
                 bool isAuthorizedToEditThisReview = LoggedInUsersRoles.Contains(Permissions.Admin) ||
                     LoggedInUsersRoles.Contains(Permissions.ViewDataManagement) ||
@@ -107,7 +107,7 @@ namespace HealthInformationProgram.SessionObject
                 return isAuthorizedToEditThisReview;
             }
 
-            public bool IsAuthroizedToEditDatabaseManagement()
+            public bool IsAuthorizedToEditDatabaseManagement()
             {
                 bool isAuthorizedToEditThisReview = LoggedInUsersRoles.Contains(Permissions.Admin) ||
                     LoggedInUsersRoles.Contains(Permissions.EditDataManagement);
