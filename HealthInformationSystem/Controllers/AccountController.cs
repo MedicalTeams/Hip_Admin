@@ -25,8 +25,7 @@ namespace HealthInformationProgram.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            ViewBag.Countries = Countries.SupportedCountries.Select(c => new SelectListItem { Text = c.Name, Value = c.Code })
-                                                            .ToArray();
+            PopulateCountries();
 
             return View();
         }
@@ -44,6 +43,16 @@ namespace HealthInformationProgram.Controllers
                 FormsAuthentication.SetAuthCookie(model.UserName, false);
                 SessionData.Permissions role= SessionData.Current.LoggedInUser.LoggedInUsersRoles.FirstOrDefault();
 
+                var settingsCookie = new HttpCookie("/HIPAdminSettings")
+                {
+                    Expires = DateTime.MaxValue,
+                    HttpOnly = true
+                };
+
+                settingsCookie.Values.Add("lastLoggedInCountry", model.CountryCode);
+
+                Response.Cookies.Add(settingsCookie);
+
                 switch (role.ToString())
                 {
                     case "ViewReports":
@@ -59,10 +68,18 @@ namespace HealthInformationProgram.Controllers
 
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
-            ViewBag.Countries = Countries.SupportedCountries.Select(c => new SelectListItem { Text = c.Name, Value = c.Code })
-                                                            .ToArray();
+            PopulateCountries();
 
             return View(model);
+        }
+
+        private void PopulateCountries()
+        {
+            var settingsCooke = Request.Cookies["/HIPAdminSettings"];
+
+            var selectedValue = settingsCooke?.Values["lastLoggedInCountry"] ?? "ug";
+
+            ViewBag.Countries = new SelectList(Countries.SupportedCountries, nameof(Country.Code), nameof(Country.Name), selectedValue);
         }
 
         //
